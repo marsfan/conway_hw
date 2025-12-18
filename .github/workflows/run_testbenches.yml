@@ -24,7 +24,7 @@ jobs:
         run: pip install --user pipenv
 
       - name: Setup Python Virtual Environment
-        run: pipenv update
+        run: pipenv install
 
       - name: Compile VHDL
         run: pipenv run python3 run.py --compile
