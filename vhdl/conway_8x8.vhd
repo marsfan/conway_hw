@@ -27,15 +27,16 @@ architecture RTL of CONWAY_8x8 is
         );
     end component CELL_GRID;
 
-    component D_FLIP_FLOP is
-        generic (width : positive);
+    component REG is
+        generic (width : positive := 1);
         port (
             D     : in std_logic_vector((width - 1) downto 0);
+            WE    : in std_logic;
             CLK   : in std_logic;
             RESET : in std_logic;
             Q     : out std_logic_vector((width - 1) downto 0)
         );
-    end component D_FLIP_FLOP;
+    end component REG;
 
     signal GATED_CLK : std_logic;
     signal MEM_IN    : std_logic_vector(63 downto 0);
@@ -49,10 +50,11 @@ begin
 
     MEM_IN <= INITIAL_STATE when LOAD_RUN = '0' else GRID_OUT;
 
-    memory : D_FLIP_FLOP
+    memory : REG
         generic map(width => 64)
         port map(
             D => MEM_IN,
+            WE => '1',
             CLK => GATED_CLK,
             RESET => '0',
             Q => MEM_OUT
