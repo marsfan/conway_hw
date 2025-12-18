@@ -55,7 +55,7 @@ def calc_result(
         return False
     elif not me and num_alive == 3:
         # Rule 4: If dead and three neighbors, lives (reproduction)
-        return False
+        return True
     else:
         # All other cases are dead and should stay dead
         return False
@@ -79,13 +79,14 @@ def main() -> None:
     simplified = simplify_logic(product_of_sums, deep=True, force=True)
 
     simplified_str = (
-        re.sub(r"~(\w+)", r"(NOT \1)", str(simplified))
+        re.sub(r"~(\w+)", r"(NOT \1)", str(product_of_sums))
         .replace("|", "OR")
         .replace("&", "\n    AND")
         .upper()
     )
 
     print(simplified_str)
+    print(len(simplified_str))
 
 
 if __name__ == "__main__":
