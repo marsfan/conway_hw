@@ -5,14 +5,13 @@ name = "pypi"
 
 [packages]
 sympy = "*"
-cocotb = "~=2.0"
 pytest = "*"
 vunit-hdl = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.13"
+python_version = "3.14"
 
 # FIXME: Removee this section once vunit 5.0 is out. Needed to deal with GHDL on newer ubuntu versions
 [pipenv]
