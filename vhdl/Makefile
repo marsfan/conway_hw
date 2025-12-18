@@ -35,7 +35,7 @@ all: $(ALL_MODULES)
 
 # Prepare for building with GHDL -m
 configure:
-	mkdir -p work waveforms
+	-mkdir work waveforms
 	$(GG) -i $(GFLAGS) *.vhd
 
 # FIXME: This should be clearer. Maybe in some fore of %: %.vhd
