@@ -3,6 +3,10 @@
 --- the output shift register from serial in as well, so that after load the
 --- output register holds the current state, instead of having a "lag"
 
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -31,7 +35,7 @@ entity SYSTEM_MEMORY_V3 is
 end entity SYSTEM_MEMORY_V3;
 
 architecture RTL of SYSTEM_MEMORY_V3 is
-    
+
 
 
     -- Input shift register memory
@@ -95,7 +99,7 @@ begin
              end if;
         end if;
     end process;
-    
+
 
     -- Write input shift register values to parallel output.
     SYSTEM_MEM_OUT <= INPUT_SR;

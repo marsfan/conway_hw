@@ -1,4 +1,8 @@
 --- Memory for the system
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -37,7 +41,7 @@ begin
     -- Mux to select input source
     MEM_IN <= INITIAL_IN when LOAD_RUN = '0' else GRID_IN;
 
-    memory : REG 
+    memory : REG
     generic map (width => data_size)
     port map (
         D => MEM_IN,

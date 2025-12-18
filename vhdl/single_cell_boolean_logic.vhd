@@ -7,6 +7,10 @@
 ---
 --- Since are computing when alive, we can just check rules 2 and 4. And assume all
 --- other conditions are dead
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 

@@ -1,4 +1,8 @@
 --- Adder that takes in 2x2bit values and returns 3 bit sum
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 

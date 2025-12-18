@@ -1,6 +1,10 @@
 --- 8x8 conway's game of life using serial input and output to save on IO
 --- V2 uses system_memory_v3 instead of separate system memory, input shift register, and output shift register
 
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 

@@ -1,4 +1,8 @@
 --- Check if alive and 2 or 3 neighbors are alive, or dead and 3 neighbors are alive.
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -20,34 +24,34 @@ end entity NEIGHBOR_CHECK;
 architecture RTL of NEIGHBOR_CHECK is
 begin
 
-IS_ALIVE <= ME 
-    AND (E OR N OR NE OR NW OR S OR SE OR SW) 
-    AND (E OR N OR NE OR NW OR S OR SE OR W) 
-    AND (E OR N OR NE OR NW OR S OR SW OR W) 
-    AND (E OR N OR NE OR NW OR SE OR SW OR W) 
-    AND (E OR N OR NE OR S OR SE OR SW OR W) 
-    AND (E OR N OR NW OR S OR SE OR SW OR W) 
-    AND (E OR NE OR NW OR S OR SE OR SW OR W) 
-    AND (N OR NE OR NW OR S OR SE OR SW OR W) 
-    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT NW)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT S)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT SE)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT SW)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT W)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT S)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT SE)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT SW)) 
-    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT W)) 
-    AND ((NOT E) OR (NOT N) OR (NOT S) OR (NOT SE)) 
-    AND ((NOT E) OR (NOT N) OR (NOT S) OR (NOT SW)) 
-    AND ((NOT E) OR (NOT N) OR (NOT S) OR (NOT W)) 
-    AND ((NOT E) OR (NOT N) OR (NOT SE) OR (NOT SW)) 
-    AND ((NOT E) OR (NOT N) OR (NOT SE) OR (NOT W)) 
-    AND ((NOT E) OR (NOT N) OR (NOT SW) OR (NOT W)) 
-    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT S)) 
-    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT SE)) 
-    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT SW)) 
-    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT W)) 
+IS_ALIVE <= ME
+    AND (E OR N OR NE OR NW OR S OR SE OR SW)
+    AND (E OR N OR NE OR NW OR S OR SE OR W)
+    AND (E OR N OR NE OR NW OR S OR SW OR W)
+    AND (E OR N OR NE OR NW OR SE OR SW OR W)
+    AND (E OR N OR NE OR S OR SE OR SW OR W)
+    AND (E OR N OR NW OR S OR SE OR SW OR W)
+    AND (E OR NE OR NW OR S OR SE OR SW OR W)
+    AND (N OR NE OR NW OR S OR SE OR SW OR W)
+    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT NW))
+    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT S))
+    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT SE))
+    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT SW))
+    AND ((NOT E) OR (NOT N) OR (NOT NE) OR (NOT W))
+    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT S))
+    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT SE))
+    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT SW))
+    AND ((NOT E) OR (NOT N) OR (NOT NW) OR (NOT W))
+    AND ((NOT E) OR (NOT N) OR (NOT S) OR (NOT SE))
+    AND ((NOT E) OR (NOT N) OR (NOT S) OR (NOT SW))
+    AND ((NOT E) OR (NOT N) OR (NOT S) OR (NOT W))
+    AND ((NOT E) OR (NOT N) OR (NOT SE) OR (NOT SW))
+    AND ((NOT E) OR (NOT N) OR (NOT SE) OR (NOT W))
+    AND ((NOT E) OR (NOT N) OR (NOT SW) OR (NOT W))
+    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT S))
+    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT SE))
+    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT SW))
+    AND ((NOT E) OR (NOT NE) OR (NOT NW) OR (NOT W))
     AND ((NOT E) OR (NOT NE) OR (NOT S) OR (NOT SE))
     AND ((NOT E) OR (NOT NE) OR (NOT S) OR (NOT SW))
     AND ((NOT E) OR (NOT NE) OR (NOT S) OR (NOT W))
@@ -99,5 +103,5 @@ IS_ALIVE <= ME
     AND ((NOT NW) OR (NOT S) OR (NOT SW) OR (NOT W))
     AND ((NOT NW) OR (NOT SE) OR (NOT SW) OR (NOT W))
     AND ((NOT S) OR (NOT SE) OR (NOT SW) OR (NOT W));
-    
+
 end RTL;

@@ -1,6 +1,10 @@
 --- Memory for the system.
 --- V2 combines the memory with the serial input system, reducing the amount o
 --- logic used.
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 

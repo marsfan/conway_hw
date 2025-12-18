@@ -1,4 +1,8 @@
 --- Shift register that shifts data in serially and outputs parallel
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -17,7 +21,7 @@ end entity SERIAL_TO_PARALLEL;
 architecture RTL of SERIAL_TO_PARALLEL is
 
     signal SR_TMP : std_logic_vector((data_size - 1) downto 0); -- Intermediate shift register value
-    
+
 
     begin
 
@@ -39,7 +43,7 @@ architecture RTL of SERIAL_TO_PARALLEL is
                 DATA <= SR_TMP;
             end if;
         end process;
-        
+
 
 
 end architecture RTL;

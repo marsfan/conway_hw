@@ -8,6 +8,10 @@
 -- Q: Register Output
 -- On rising edge, the value of Q will be set to the value of D if WE is true.
 -- Any time RESET is set to true, the value of Q will be set to 0
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 

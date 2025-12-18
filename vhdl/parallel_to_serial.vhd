@@ -1,4 +1,8 @@
 -- Parallel to serial shift register
+
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -30,18 +34,18 @@ begin
             if LOAD_EN = '1' then
                 SR_TMP <= DATA_IN;
             elsif SHIFT_EN = '1' then
-    
+
                 -- Push out the lowest value
                 DATA <= SR_TMP(SR_TMP'low);
-                
-                -- Concatenate a zero with the upper 63 elements. 
+
+                -- Concatenate a zero with the upper 63 elements.
                 -- This means we have shifted everything down one bit, and shifted
-                -- in a zero at the top. 
+                -- in a zero at the top.
                 -- & is concatenate in VHDL
                 SR_TMP <= '0' & SR_TMP(SR_TMP'high downto (SR_TMP'low + 1));
 
              end if;
         end if;
     end process;
-    
+
 end architecture RTL;

@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+
+
 # ghdl -a is analysis
 # ghdl -e is elaboration (only needed for GCC or LLVM backends)
 # ghdl -r is run simulation
