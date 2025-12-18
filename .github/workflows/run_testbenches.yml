@@ -2,7 +2,11 @@ name: VHDL Testbenches
 
 on:
   push:
+    paths:
+      - vhdl/**
   pull_request:
+    paths:
+      - vhdl/**
 
 jobs:
   run_testbenches:
