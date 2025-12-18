@@ -12,8 +12,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
 
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
       - name: Install dependencies with apt
-        run: sudo apt-get install ghdl python3 zip -y
+        run: sudo apt-get install ghdl zip -y
 
       - name: Install Python dependencies
         run: pip install --user pipenv
