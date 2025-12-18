@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+sympy = "*"
+cocotb = "~=2.0"
+pytest = "*"
+vunit-hdl = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.13"
+
+# FIXME: Removee this section once vunit 5.0 is out. Needed to deal with GHDL on newer ubuntu versions
+[pipenv]
+allow_prereleases = true
