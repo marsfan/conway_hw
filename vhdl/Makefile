@@ -65,7 +65,7 @@ runall: $(addsuffix .run, $(ALL_MODULES))
 testall: $(addsuffix .run, $(TESTBENCHES))
 
 vsg:
-	vsg -f $(VHDL_FILES)
+	vsg -f $(VHDL_FILES) $(TEST)
 
 test:
 	python run.py --gtkwave-fmt=ghw
