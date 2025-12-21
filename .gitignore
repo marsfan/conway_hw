@@ -13,3 +13,6 @@ vhdl/vunit_out
 
 # Directory for temporary vivado project files
 vivado/
+
+# Logisim autosave file
+logisim/*.autosave

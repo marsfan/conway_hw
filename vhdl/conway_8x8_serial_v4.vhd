@@ -1,5 +1,6 @@
 --- 8x8 conway's game of life using serial input and output to save on IO
---- V3 uses system_memory_v3 instead of separate system memory, input shift register, and output shift register
+--- V4 uses system_memory_v4 instead of separate system memory, input shift register, and output shift register
+--- So one MUST ALWAYS read out a multiple of 64 bits at a time.
 
 -- This Source Code Form is subject to the terms of the Mozilla Public
 -- License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,7 +9,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity CONWAY_8X8_SERIAL_V3 is
+entity CONWAY_8X8_SERIAL_V4 is
     generic (
         data_size : positive := 64
     );
@@ -23,9 +24,9 @@ entity CONWAY_8X8_SERIAL_V3 is
         DOUT_LED  : out std_logic; -- Data output LED for debugging
         MODE_LEDS : out std_logic_vector(1 downto 0)  -- Mode LEDs for debugging
     );
-end entity CONWAY_8X8_SERIAL_V3;
+end entity CONWAY_8X8_SERIAL_V4;
 
-architecture RTL of CONWAY_8X8_SERIAL_V3 is
+architecture RTL of CONWAY_8X8_SERIAL_V4 is
 
     component PARALLEL_TO_SERIAL is
         generic (
@@ -41,7 +42,7 @@ architecture RTL of CONWAY_8X8_SERIAL_V3 is
         );
     end component PARALLEL_TO_SERIAL;
 
-    component SYSTEM_MEMORY_V3 is
+    component SYSTEM_MEMORY_V4 is
         generic (
             data_size : positive
         );
@@ -56,7 +57,7 @@ architecture RTL of CONWAY_8X8_SERIAL_V3 is
             SYSTEM_MEM_OUT : out std_logic_vector((data_size - 1) downto 0);
             SERIAL_OUT     : out std_logic
         );
-    end component SYSTEM_MEMORY_V3;
+    end component SYSTEM_MEMORY_V4;
 
     component CELL_GRID is
         port (
@@ -99,7 +100,7 @@ begin
     LOAD_OR_RUN <= LOAD_MODE OR RUN_MODE;
 
     -- The system memory that we hold everything in between cycles
-    memory : SYSTEM_MEMORY_V3
+    memory : SYSTEM_MEMORY_V4
         generic map (
             data_size => data_size
         )
