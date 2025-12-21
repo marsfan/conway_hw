@@ -64,8 +64,10 @@ runall: $(addsuffix .run, $(ALL_MODULES))
 # Run all testbenches with GHDL
 testall: $(addsuffix .run, $(TESTBENCHES))
 
+ # syntastic,summary
+
 vsg:
-	vsg -f $(VHDL_FILES) $(TEST)
+	vsg -f $(VHDL_FILES) $(TEST) -ap -c vsg.json -of syntastic
 
 test:
 	python run.py --gtkwave-fmt=ghw

@@ -1,0 +1,78 @@
+{
+    "rule": {
+        "global": {
+            "indent_size": 4
+        },
+        "group": {
+            "case::name": {
+                "case": "upper"
+            }
+        },
+        "if_002": {
+            "disable": true
+        },
+        "signal_007": {
+            "disable": true
+        },
+        "port_007": {
+            "spaces_after": 2
+        },
+        "port_008": {
+            "spaces_after": 1
+        },
+        "process_002": {
+            "number_of_spaces": 0
+        },
+        "type_mark_500": {
+            "case": "lower"
+        },
+        "library_500": {
+            "case": "lower"
+        },
+        "library_008": {
+            "disable": true
+        },
+        "use_clause_500": {
+            "case": "lower"
+        },
+        "use_clause_501": {
+            "case": "lower"
+        },
+        "generic_007": {
+            "case": "lower"
+        },
+        "generic_map_002": {
+            "case": "lower"
+        },
+        "logical_operator_500": {
+            "case": "upper"
+        },
+        "component_019": {
+            "disable": true
+        },
+        "instantiation_033": {
+            "disable": true
+        },
+        "conditional_waveforms_001": {
+            "allow_single_line": true
+        },
+        "entity_020": {
+            "disable": true
+        },
+        "architecture_027": {
+            "disable": true
+        },
+        "parameter_specification_500": {
+            "case": "lower"
+        }
+    },
+    "indent": {
+        "tokens": {
+            "use_clause": {
+                "keyword": {
+                    "token_after_library_clause": ""
+                }
+            }
+        }
+    }
+}
