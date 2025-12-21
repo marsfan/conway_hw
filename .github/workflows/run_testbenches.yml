@@ -48,3 +48,25 @@ jobs:
         with:
           name: test_results
           path: results.zip
+
+  check_style:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: pip install --user pipenv
+
+      - name: Setup Python Virtual Environment
+        run: pipenv install
+
+      - name: Run Linter
+        run: make vsg
+        working-directory: ./vhdl
