@@ -13,66 +13,86 @@ library vunit_lib;
 context vunit_lib.vunit_context;
 
 entity FULL_ADDER_TB is
-    generic (runner_cfg : string);
+    generic (
+        runner_cfg : string
+    );
 end entity FULL_ADDER_TB;
 
 architecture TEST of FULL_ADDER_TB is
 
     component FULL_ADDER is
         port (
-            A     : in std_logic;
-            B     : in std_logic;
-            C_IN  : in std_logic;
+            A     : in  std_logic;
+            B     : in  std_logic;
+            C_IN  : in  std_logic;
             SUM   : out std_logic;
             CARRY : out std_logic
         );
     end component FULL_ADDER;
 
     -- Array of test cases to evaluate
+
     type test_record is record
-        -- Adder inputs
-        A1 : std_logic;
-        A2 : std_logic;
-        CIN : std_logic;
-        -- Adder outputs
+        A1   : std_logic;
+        A2   : std_logic;
+        CIN  : std_logic;
         COUT : std_logic;
-        SUM : std_logic;
-    end record;
+        SUM  : std_logic;
+    end record test_record;
+
     type test_array_t is array (natural range <>) of test_record;
-    constant test_array : test_array_t :=
-    (('0', '0', '0', '0', '0'),
+
+    constant TEST_ARRAY : test_array_t := (
+        ('0', '0', '0', '0', '0'),
         ('0', '0', '1', '0', '1'),
         ('0', '1', '0', '0', '1'),
         ('0', '1', '1', '1', '0'),
         ('1', '0', '0', '0', '1'),
         ('1', '0', '1', '1', '0'),
         ('1', '1', '0', '1', '0'),
-        ('1', '1', '1', '1', '1'));
+        ('1', '1', '1', '1', '1')
+    );
 
-
-    signal IN1, IN2, CIN, SUM, COUT : std_logic := '0';
+    signal IN1  : std_logic_vector;
+    signal IN2  : std_logic_vector;
+    signal CIN  : std_logic_vector;
+    signal SUM  : std_logic_vector;
+    signal COUT : std_logic := '0';
 
 begin
 
-        TEST_ADDER : FULL_ADDER port map(A => IN1, B => IN2, C_IN => CIN, SUM => SUM, CARRY => COUT);
+    test_adder : FULL_ADDER
+        port map (
+            A     => IN1,
+            B     => IN2,
+            C_IN  => CIN,
+            SUM   => SUM,
+            CARRY => COUT
+        );
 
-        test_proc : process
+    test_proc : process is
+    begin
 
-        begin
-            test_runner_setup(runner, runner_cfg);
-            if run("TEST_ADDER") then
-                for i in test_array'range loop
-                    -- Set all signals
-                    IN1 <= test_array(i).A1;
-                    IN2 <= test_array(i).A2;
-                    CIN <= test_array(i).CIN;
-                    wait for 1 ns;
-                    check_equal(SUM, test_array(i).SUM, "SUM");
-                    check_equal(COUT, test_array(i).COUT, "COUT");
-                end loop;
-            end if;
-            test_runner_cleanup(runner);
+        test_runner_setup(runner, runner_cfg);
 
-        end process test_proc;
+        if run("TEST_ADDER") then
+
+            for i in TEST_ARRAY'range loop
+
+                -- Set all signals
+                IN1 <= TEST_ARRAY(i).A1;
+                IN2 <= TEST_ARRAY(i).A2;
+                CIN <= TEST_ARRAY(i).CIN;
+                wait for 1 ns;
+                check_equal(SUM, TEST_ARRAY(i).SUM, "SUM");
+                check_equal(COUT, TEST_ARRAY(i).COUT, "COUT");
+
+            end loop;
+
+        end if;
+
+        test_runner_cleanup(runner);
+
+    end process test_proc;
 
 end architecture TEST;

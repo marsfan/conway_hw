@@ -13,32 +13,34 @@ library vunit_lib;
 context vunit_lib.vunit_context;
 
 entity FULL_ADDER_3_BIT_TO_4_BIT_TB is
-    generic (runner_cfg : string);
+    generic (
+        runner_cfg : string
+    );
 end entity FULL_ADDER_3_BIT_TO_4_BIT_TB;
 
 architecture TEST of FULL_ADDER_3_BIT_TO_4_BIT_TB is
 
     component FULL_ADDER_3_BIT_TO_4_BIT is
-
-        port(
-        A   : in std_logic_vector(2 downto 0);
-        B   : in std_logic_vector(2 downto 0);
-
-        SUM : out std_logic_vector(3 downto 0)
+        port (
+            A   : in  std_logic_vector(2 downto 0);
+            B   : in  std_logic_vector(2 downto 0);
+            SUM : out std_logic_vector(3 downto 0)
         );
-
     end component FULL_ADDER_3_BIT_TO_4_BIT;
 
-    signal A, B : std_logic_vector(2 downto 0);
+    signal A   : std_logic_vector(2 downto 0);
+    signal B   : std_logic_vector(2 downto 0);
     signal SUM : std_logic_vector(3 downto 0);
+
     type test_record is record
-        -- inputs
-        A : std_logic_vector(2 downto 0);
-        B : std_logic_vector(2 downto 0);
-        SUM : std_Logic_vector(3 downto 0);
-    end record;
+        A   : std_logic_vector(2 downto 0);
+        B   : std_logic_vector(2 downto 0);
+        SUM : std_logic_vector(3 downto 0);
+    end record test_record;
+
     type test_array_t is array (natural range <>) of test_record;
-    constant test_array : test_array_t := (
+
+    constant TEST_ARRAY : test_array_t := (
         ("000", "000", "0000"),
         ("001", "000", "0001"),
         ("010", "000", "0010"),
@@ -114,26 +116,33 @@ architecture TEST of FULL_ADDER_3_BIT_TO_4_BIT_TB is
 
 begin
 
-    TEST_ADDER : FULL_ADDER_3_BIT_TO_4_BIT
+    test_adder : FULL_ADDER_3_BIT_TO_4_BIT
         port map (
-            A => A,
-            B => B,
+            A   => A,
+            B   => B,
             SUM => SUM
         );
 
-    test_proc : process
+    test_proc : process is
     begin
+
         test_runner_setup(runner, runner_cfg);
+
         if run("TEST_FULL_ADDER_3_BIT_TO_4_BIT") then
-            for i in test_array'range loop
-                A <= test_array(i).A;
-                B <= test_array(i).B;
+
+            for i in TEST_ARRAY'range loop
+
+                A <= TEST_ARRAY(i).A;
+                B <= TEST_ARRAY(i).B;
                 wait for 1 ns;
-                check_equal(SUM, test_array(i).SUM);
+                check_equal(SUM, TEST_ARRAY(i).SUM);
+
             end loop;
 
         end if;
-        test_runner_cleanup(runner);
-    end process;
 
-end architecture;
+        test_runner_cleanup(runner);
+
+    end process test_proc;
+
+end architecture TEST;

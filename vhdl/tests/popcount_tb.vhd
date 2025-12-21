@@ -3,6 +3,7 @@
 -- This Source Code Form is subject to the terms of the Mozilla Public
 -- License, v. 2.0. If a copy of the MPL was not distributed with this
 -- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -11,28 +12,30 @@ library vunit_lib;
 context vunit_lib.vunit_context;
 
 entity POPCOUNT_TB is
-    generic (runner_cfg : string);
+    generic (
+        runner_cfg : string
+    );
 end entity POPCOUNT_TB;
 
 architecture TEST of POPCOUNT_TB is
 
     component POPCOUNT is
         port (
-            N     : in std_logic;
-            NE    : in std_logic;
-            E     : in std_logic;
-            SE    : in std_logic;
-            S     : in std_logic;
-            SW    : in std_logic;
-            W     : in std_logic;
-            NW    : in std_logic;
+            N     : in  std_logic;
+            NE    : in  std_logic;
+            E     : in  std_logic;
+            SE    : in  std_logic;
+            S     : in  std_logic;
+            SW    : in  std_logic;
+            W     : in  std_logic;
+            NW    : in  std_logic;
             COUNT : out std_logic_vector(3 downto 0)
         );
     end component POPCOUNT;
 
-    --- Array of test cases to evaluate
+    -- Array of test cases to evaluate
+
     type test_record is record
-        -- Inputs
         N     : std_logic;
         NE    : std_logic;
         E     : std_logic;
@@ -41,12 +44,12 @@ architecture TEST of POPCOUNT_TB is
         SW    : std_logic;
         W     : std_logic;
         NW    : std_logic;
-
-        -- outputs
         COUNT : std_logic_vector(3 downto 0);
-    end record;
+    end record test_record;
+
     type test_array_t is array (natural range <>) of test_record;
-    constant test_array : test_array_t := (
+
+    constant TEST_ARRAY : test_array_t := (
         ('0', '0', '0', '0', '0', '0', '0', '0', "0000"),
         ('0', '0', '0', '0', '0', '0', '0', '1', "0001"),
         ('0', '0', '0', '0', '0', '0', '1', '0', "0001"),
@@ -305,45 +308,60 @@ architecture TEST of POPCOUNT_TB is
         ('1', '1', '1', '1', '1', '1', '1', '1', "1000")
     );
 
-    signal  N, NE, E, SE, S, SW, W, NW : std_logic;
+    signal N     : std_logic;
+    signal NE    : std_logic;
+    signal E     : std_logic;
+    signal SE    : std_logic;
+    signal S     : std_logic;
+    signal SW    : std_logic;
+    signal W     : std_logic;
+    signal NW    : std_logic;
     signal COUNT : std_logic_vector(3 downto 0);
 
 begin
 
-    TEST_POPCOUNT : POPCOUNT port map(
-        N =>  N,
-        NE =>  NE,
-        E =>  E,
-        SE =>  SE,
-        S =>  S,
-        SW =>  SW,
-        W =>  W,
-        NW =>  NW,
-        COUNT =>  COUNT
-    );
+    test_popcount : POPCOUNT
+        port map (
+            N     => N,
+            NE    => NE,
+            E     => E,
+            SE    => SE,
+            S     => S,
+            SW    => SW,
+            W     => W,
+            NW    => NW,
+            COUNT => COUNT
+        );
 
-    test_proc : process
+    test_proc : process is
     begin
+
         test_runner_setup(runner, runner_cfg);
+
         if run("TEST_POPCOUNT") then
-            for i in test_array'range loop
+
+            for i in TEST_ARRAY'range loop
+
                 -- Set all signal
-                N <= test_array(i).N;
-                NE <= test_array(i).NE;
-                E <= test_array(i).E;
-                SE <= test_array(i).SE;
-                S <= test_array(i).S;
-                SW <= test_array(i).SW;
-                W <= test_array(i).W;
-                NW <= test_array(i).NW;
+                N  <= TEST_ARRAY(i).N;
+                NE <= TEST_ARRAY(i).NE;
+                E  <= TEST_ARRAY(i).E;
+                SE <= TEST_ARRAY(i).SE;
+                S  <= TEST_ARRAY(i).S;
+                SW <= TEST_ARRAY(i).SW;
+                W  <= TEST_ARRAY(i).W;
+                NW <= TEST_ARRAY(i).NW;
 
                 wait for 1 ns;
                 -- Check output
-                check_equal(COUNT, test_array(i).COUNT, "COUNT");
+                check_equal(COUNT, TEST_ARRAY(i).COUNT, "COUNT");
+
             end loop;
+
         end if;
+
         test_runner_cleanup(runner);
 
-    end process;
+    end process test_proc;
 
-end architecture;
+end architecture TEST;

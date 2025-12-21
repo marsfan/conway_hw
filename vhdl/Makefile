@@ -20,8 +20,11 @@ WAVEFORMDIR=waveforms
 # All VHDL files
 VHDL_FILES=$(wildcard *.vhd)
 
+# All VHDL Testbench files
+TESTBENCH_FILES=$(wildcard tests/*_tb.vhd)
+
 # All vhdl files whose stem ends with _tb (my notation for testbench)
-TESTBENCHES=$(basename $(wildcard *_tb.vhd))
+TESTBENCHES=$(basename $(TESTBENCH_FILES))
 
 # All entities/configurations (excluding packages)
 ALL_MODULES=$(basename $(VHDL_FILES))
@@ -67,7 +70,7 @@ testall: $(addsuffix .run, $(TESTBENCHES))
  # syntastic,summary
 
 vsg:
-	vsg -f $(VHDL_FILES) $(TEST) -ap -c vsg.json -of syntastic
+	vsg -f $(VHDL_FILES) $(TESTBENCH_FILES) $(TEST) -ap -c vsg.json -of syntastic
 
 test:
 	python run.py --gtkwave-fmt=ghw

@@ -9,48 +9,46 @@ use ieee.std_logic_1164.all;
 
 library vunit_lib;
 context vunit_lib.vunit_context;
+
 entity SINGLE_CELL_BOOLEAN_LOGIC_TB is
-    generic (runner_cfg : string);
+    generic (
+        runner_cfg : string
+    );
 end entity SINGLE_CELL_BOOLEAN_LOGIC_TB;
 
 architecture TEST of SINGLE_CELL_BOOLEAN_LOGIC_TB is
 
     component SINGLE_CELL_BOOLEAN_LOGIC is
         port (
-            -- Current value of the cell
-            ME    : in std_logic;
-
-            -- Current states of neighboring cells
-            N     : in std_logic;
-            NE    : in std_logic;
-            E     : in std_logic;
-            SE    : in std_logic;
-            S     : in std_logic;
-            SW    : in std_logic;
-            W     : in std_logic;
-            NW    : in std_logic;
-
-            -- New value of the cell
+            ME       : in  std_logic;
+            N        : in  std_logic;
+            NE       : in  std_logic;
+            E        : in  std_logic;
+            SE       : in  std_logic;
+            S        : in  std_logic;
+            SW       : in  std_logic;
+            W        : in  std_logic;
+            NW       : in  std_logic;
             IS_ALIVE : out std_logic
         );
     end component SINGLE_CELL_BOOLEAN_LOGIC;
 
     type test_record is record
-        -- Inputs
-        ME    : std_logic;
-        N     : std_logic;
-        NE    : std_logic;
-        E     : std_logic;
-        SE    : std_logic;
-        S     : std_logic;
-        SW    : std_logic;
-        W     : std_logic;
-        NW    : std_logic;
-        -- Output
+        ME       : std_logic;
+        N        : std_logic;
+        NE       : std_logic;
+        E        : std_logic;
+        SE       : std_logic;
+        S        : std_logic;
+        SW       : std_logic;
+        W        : std_logic;
+        NW       : std_logic;
         IS_ALIVE : std_logic;
-    end record;
+    end record test_record;
+
     type test_array_t is array (natural range <>) of test_record;
-    constant test_array : test_array_t := (
+
+    constant TEST_ARRAY : test_array_t := (
         ('0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
         ('0', '0', '0', '0', '0', '0', '0', '0', '1', '0'),
         ('0', '0', '0', '0', '0', '0', '0', '1', '0', '0'),
@@ -565,49 +563,64 @@ architecture TEST of SINGLE_CELL_BOOLEAN_LOGIC_TB is
         ('1', '1', '1', '1', '1', '1', '1', '1', '1', '0')
     );
 
-    signal ME, N, NE, E, SE, S, SW, W, NW, IS_ALIVE : std_logic;
+    signal ME       : std_logic;
+    signal N        : std_logic;
+    signal NE       : std_logic;
+    signal E        : std_logic;
+    signal SE       : std_logic;
+    signal S        : std_logic;
+    signal SW       : std_logic;
+    signal W        : std_logic;
+    signal NW       : std_logic;
+    signal IS_ALIVE : std_logic;
 
 begin
 
     test_single_cell : SINGLE_CELL_BOOLEAN_LOGIC
         port map (
-            ME => ME,
-            N => N,
-            NE => NE,
-            E => E,
-            SE => SE,
-            S => S,
-            SW => SW,
-            W => W,
-            NW => NW,
+            ME       => ME,
+            N        => N,
+            NE       => NE,
+            E        => E,
+            SE       => SE,
+            S        => S,
+            SW       => SW,
+            W        => W,
+            NW       => NW,
             IS_ALIVE => IS_ALIVE
         );
 
-        test_proc : process
-        begin
-            test_runner_setup(runner, runner_cfg);
-            if run("TEST_SINGLE_CELL_BOOLEAN_LOGIC") then
-                for i in test_array'range loop
-                    -- Set all signals
-                    ME <= test_array(i).ME;
-                    N <= test_array(i).N;
-                    NE <= test_array(i).NE;
-                    E <= test_array(i).E;
-                    SE <= test_array(i).SE;
-                    S <= test_array(i).S;
-                    SW <= test_array(i).SW;
-                    W <= test_array(i).W;
-                    NW <= test_array(i).NW;
+    test_proc : process is
+    begin
 
-                    wait for 1 ns;
+        test_runner_setup(runner, runner_cfg);
 
-                    -- Check output
-                    check_equal(IS_ALIVE, test_array(i).IS_ALIVE, "IS_ALIVE");
-                end loop;
-            end if;
-            test_runner_cleanup(runner);
-        end process;
+        if run("TEST_SINGLE_CELL_BOOLEAN_LOGIC") then
 
+            for i in TEST_ARRAY'range loop
 
+                -- Set all signals
+                ME <= TEST_ARRAY(i).ME;
+                N  <= TEST_ARRAY(i).N;
+                NE <= TEST_ARRAY(i).NE;
+                E  <= TEST_ARRAY(i).E;
+                SE <= TEST_ARRAY(i).SE;
+                S  <= TEST_ARRAY(i).S;
+                SW <= TEST_ARRAY(i).SW;
+                W  <= TEST_ARRAY(i).W;
+                NW <= TEST_ARRAY(i).NW;
 
-end architecture;
+                wait for 1 ns;
+
+                -- Check output
+                check_equal(IS_ALIVE, TEST_ARRAY(i).IS_ALIVE, "IS_ALIVE");
+
+            end loop;
+
+        end if;
+
+        test_runner_cleanup(runner);
+
+    end process test_proc;
+
+end architecture TEST;

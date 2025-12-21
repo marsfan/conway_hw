@@ -13,36 +13,39 @@ library vunit_lib;
 context vunit_lib.vunit_context;
 
 entity FULL_ADDER_1_BIT_TO_2_BIT_TB is
-    generic (runner_cfg : string);
+    generic (
+        runner_cfg : string
+    );
 end entity FULL_ADDER_1_BIT_TO_2_BIT_TB;
 
 architecture TEST of FULL_ADDER_1_BIT_TO_2_BIT_TB is
 
     component FULL_ADDER_1_BIT_TO_2_BIT is
-
-        port(
-            A : in std_logic;
-            B : in std_logic;
+        port (
+            A   : in  std_logic;
+            B   : in  std_logic;
             SUM : out std_logic_vector(1 downto 0)
         );
-
     end component FULL_ADDER_1_BIT_TO_2_BIT;
 
-    signal A, B : std_logic;
+    signal A   : std_logic;
+    signal B   : std_logic;
     signal SUM : std_logic_vector(1 downto 0);
 
 begin
 
-    TEST_ADDER : FULL_ADDER_1_BIT_TO_2_BIT
+    test_adder : FULL_ADDER_1_BIT_TO_2_BIT
         port map (
-            A => A,
-            B => B,
+            A   => A,
+            B   => B,
             SUM => SUM
         );
 
-    test_proc : process
+    test_proc : process is
     begin
+
         test_runner_setup(runner, runner_cfg);
+
         if run("TEST_FULL_ADDER_1_BIT_TO_2_BIT") then
             A <= '0';
             B <= '0';
@@ -63,9 +66,10 @@ begin
             B <= '1';
             wait for 1 ns;
             check_equal(SUM, 2, "SUM_10");
-
         end if;
-        test_runner_cleanup(runner);
-    end process;
 
-end architecture;
+        test_runner_cleanup(runner);
+
+    end process test_proc;
+
+end architecture TEST;
