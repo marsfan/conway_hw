@@ -68,5 +68,5 @@ jobs:
         run: pipenv install
 
       - name: Run Linter
-        run: make vsg
+        run: pipenv run make vsg
         working-directory: ./vhdl
