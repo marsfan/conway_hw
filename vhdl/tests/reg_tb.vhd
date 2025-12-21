@@ -38,6 +38,24 @@ architecture TEST of REG_TB is
     signal D, Q      : std_logic_vector((WIDTH - 1) downto 0);
     signal TEST_DONE : std_logic := '0';
 
+    procedure run_clock (
+        signal LCLK : out std_logic
+    ) is
+    begin
+
+        LCLK <= '0';
+        wait for CLOCK_PERIOD / 2;
+        LCLK <= '1';
+        wait for CLOCK_PERIOD / 2;
+
+        if TEST_DONE = '1' then
+            -- End the process if TEST_DONE signal is set.
+            assert false report "end of test" severity note;
+            wait;
+        end if;
+
+    end procedure run_clock;
+
 begin
 
     -- Instantiate the register component
@@ -52,23 +70,6 @@ begin
             RESET => RESET,
             Q     => Q
         );
-
-    -- Process for running the clock signal
-    clock_process : process is
-    begin
-
-        CLK <= '0';
-        wait for CLOCK_PERIOD / 2;
-        CLK <= '1';
-        wait for CLOCK_PERIOD / 2;
-
-        if TEST_DONE = '1' then
-            -- End the process if TEST_DONE signal is set.
-            assert false report "end of test" severity note;
-            wait;
-        end if;
-
-    end process clock_process;
 
     -- Process for the actual tests
     -- NOTE: If we enable VHDL2008 we can get the to_string function for std_logic_vector
@@ -88,18 +89,18 @@ begin
         -- Set D to 0, but don't enable WE.
         D <= "00000001100";
         wait for 1 ns;
-        wait for CLOCK_PERIOD;
+        run_clock(CLK);
         -- Check that Q did not change since WE was not set
         check_equal(Q, std_logic_vector'("00000000000"), "Q stayed the same failed");
 
         -- Enable WE so that Q is now set
         WE <= '1';
-        wait for CLOCK_PERIOD;
+        run_clock(CLK);
         check_equal(Q, std_logic_vector'("00000001100"), "Q set failed");
 
         -- Disable WE and make sure Q stays set
         WE <= '1';
-        wait for CLOCK_PERIOD;
+        run_clock(CLK);
         check_equal(Q, std_logic_vector'("00000001100"), "Q stays the same (again) failed");
 
         -- Set the TEST_DONE signal to end the clocking while loop.
