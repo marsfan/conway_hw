@@ -43,7 +43,7 @@ begin
     -- Instantiate the register component
     test_reg : REG
         generic map (
-            width => 11
+            width => WIDTH
         )
         port map (
             D     => D,

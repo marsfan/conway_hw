@@ -53,10 +53,10 @@ architecture TEST of FULL_ADDER_TB is
         ('1', '1', '1', '1', '1')
     );
 
-    signal IN1  : std_logic_vector;
-    signal IN2  : std_logic_vector;
-    signal CIN  : std_logic_vector;
-    signal SUM  : std_logic_vector;
+    signal IN1  : std_logic;
+    signal IN2  : std_logic;
+    signal CIN  : std_logic;
+    signal SUM  : std_logic;
     signal COUT : std_logic := '0';
 
 begin

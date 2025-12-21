@@ -28,7 +28,7 @@ architecture TEST of FULL_ADDER_2_BIT_TO_3_BIT_TB is
         );
     end component FULL_ADDER_2_BIT_TO_3_BIT;
 
-    signal A   : std_logic_vector(2 downto 0);
+    signal A   : std_logic_vector(1 downto 0);
     signal B   : std_logic_vector(1 downto 0);
     signal SUM : std_logic_vector(2 downto 0);
 
