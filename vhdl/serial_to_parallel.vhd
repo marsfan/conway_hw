@@ -22,7 +22,7 @@ end entity SERIAL_TO_PARALLEL;
 
 architecture RTL of SERIAL_TO_PARALLEL is
 
-    signal SR_TMP : std_logic_vector((data_size - 1) downto 0); -- Intermediate shift register value
+    signal SR_TMP : std_logic_vector((data_size - 1) downto 0) := (others => '0'); -- Intermediate shift register value
 
 begin
 
@@ -32,20 +32,16 @@ begin
 
         if RST = '1' then
             SR_TMP <= (others => '0');
-            DATA   <= (others => '0');
         elsif rising_edge(CLK) AND (EN = '1') then
-            -- Shift everything up by 1 bit. This will expand out into
-            -- parallel logic!
-            for i in SR_TMP'high downto (SR_TMP'low + 1) loop
+                -- Take a slice of the bottom 63 elements, and concatenate it with the new value
+                -- This means we have shifted everying up one bit, and shifted in the new value at the bottom
+                -- & is concatenate in VHDL
+                SR_TMP <= SR_TMP((SR_TMP'high - 1) downto SR_TMP'low) & DATA_IN;
 
-                SR_TMP(i) <= SR_TMP(i - 1);
-
-            end loop;
-
-            SR_TMP(SR_TMP'low) <= DATA_IN;
-            DATA               <= SR_TMP;
         end if;
 
     end process shift_register_process;
+
+    DATA <= SR_TMP;
 
 end architecture RTL;
