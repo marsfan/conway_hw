@@ -42,17 +42,22 @@ architecture TEST of SERIAL_TO_PARALLEL_TB is
     signal DATA      : std_logic_vector((DEPTH - 1) downto 0);
     signal TEST_DONE : std_logic := '0';
 
-    procedure run_clock(signal lclk: out std_logic) is
+    procedure run_clock (
+        signal LCLK : out std_logic
+    ) is
     begin
-        lclk <= '0';
+
+        LCLK <= '0';
         wait for CLOCK_PERIOD / 2;
-        lclk <= '1';
+        LCLK <= '1';
         wait for CLOCK_PERIOD / 2;
+
         if TEST_DONE = '1' then
             -- End the process if TEST_DONE signal is set.
             assert false report "end of test" severity note;
             wait;
         end if;
+
     end procedure run_clock;
 
 begin
@@ -69,28 +74,11 @@ begin
             DATA    => DATA
         );
 
-    -- -- Process for running the clock signal
-    -- clock_process : process is
-    -- begin
-
-    --     CLK <= '0';
-    --     wait for CLOCK_PERIOD / 2;
-    --     CLK <= '1';
-    --     wait for CLOCK_PERIOD / 2;
-
-    --     if TEST_DONE = '1' then
-    --         -- End the process if TEST_DONE signal is set.
-    --         assert false report "end of test" severity note;
-    --         wait;
-    --     end if;
-
-    -- end process clock_process;
-
     test_proc : process is
     begin
 
         test_runner_setup(runner, runner_cfg);
-        EN <= '0';
+        EN      <= '0';
         DATA_IN <= '0';
 
         -- Reset system
@@ -107,7 +95,7 @@ begin
         check_equal(DATA, std_logic_vector'("000"), "No loaded when EN = '0'");
 
         -- Set enable and shift in
-        EN <= '1';
+        EN      <= '1';
         DATA_IN <= '1';
         run_clock(CLK);
         check_equal(DATA, std_logic_vector'("001"), "Loaded a byte");
@@ -122,10 +110,9 @@ begin
         run_clock(CLK);
         check_equal(DATA, std_logic_vector'("101"), "Second byte loaded");
 
-
         -- Ensure after clearing EN we get no new bytes for a few cycles
+        EN      <= '0';
         DATA_IN <= '0';
-        EN <= '0';
         run_clock(CLK);
         run_clock(CLK);
         run_clock(CLK);
@@ -141,6 +128,4 @@ begin
     end process test_proc;
 
 end architecture TEST;
-
-
 

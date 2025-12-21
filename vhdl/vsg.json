@@ -88,6 +88,12 @@
         },
         "type_004": {
             "case": "lower"
+        },
+        "procedure_501": {
+            "case": "lower"
+        },
+        "procedure_506": {
+            "case": "lower"
         }
     },
     "file_rules": [

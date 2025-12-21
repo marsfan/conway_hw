@@ -33,11 +33,10 @@ begin
         if RST = '1' then
             SR_TMP <= (others => '0');
         elsif rising_edge(CLK) AND (EN = '1') then
-                -- Take a slice of the bottom 63 elements, and concatenate it with the new value
-                -- This means we have shifted everying up one bit, and shifted in the new value at the bottom
-                -- & is concatenate in VHDL
-                SR_TMP <= SR_TMP((SR_TMP'high - 1) downto SR_TMP'low) & DATA_IN;
-
+            -- Take a slice of the bottom 63 elements, and concatenate it with the new value
+            -- This means we have shifted everying up one bit, and shifted in the new value at the bottom
+            -- & is concatenate in VHDL
+            SR_TMP <= SR_TMP((SR_TMP'high - 1) downto SR_TMP'low) & DATA_IN;
         end if;
 
     end process shift_register_process;
