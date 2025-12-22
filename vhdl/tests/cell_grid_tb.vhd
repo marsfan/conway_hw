@@ -11,12 +11,11 @@ use ieee.numeric_std.all;
 library vunit_lib;
 context vunit_lib.vunit_context;
 
-
 entity CELL_GRID_TB is
     generic (
         runner_cfg : string
     );
-end CELL_GRID_TB;
+end entity CELL_GRID_TB;
 
 architecture TEST of CELL_GRID_TB is
 
@@ -35,9 +34,8 @@ begin
     dut : CELL_GRID
         port map (
             INPUT_STATE => INPUT_STATE,
-            NEXT_STATE => NEXT_STATE
+            NEXT_STATE  => NEXT_STATE
         );
-
 
     test_proc : process is
     begin
@@ -63,19 +61,16 @@ begin
         wait for 1 ns;
         check_equal(NEXT_STATE, std_logic_vector'(x"0060400818000000"), "Beacon");
 
-        INPUT_STATE <= x"c080000000000000";
+        INPUT_STATE <= x"C080000000000000";
         wait for 1 ns;
-        check_equal(NEXT_STATE, std_logic_vector'(x"c0c0000000000000"), "Corner1");
+        check_equal(NEXT_STATE, std_logic_vector'(x"C0C0000000000000"), "Corner1");
 
         INPUT_STATE <= x"8080800000000000";
         wait for 1 ns;
-        check_equal(NEXT_STATE, std_logic_vector'(x"00c0000000000000"), "Corner2");
-
-
+        check_equal(NEXT_STATE, std_logic_vector'(x"00C0000000000000"), "Corner2");
 
         test_runner_cleanup(runner);
 
     end process test_proc;
-
 
 end architecture TEST;
