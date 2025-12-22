@@ -191,7 +191,6 @@ begin
         RUN_MODE    <= '0';
         OUTPUT_MODE <= '0';
 
-
         -- Test that LOAD_MODE has precedence over OUTPUT_MODE
         OUTPUT_MODE <= '1';
         LOAD_MODE   <= '1';
@@ -214,7 +213,6 @@ begin
         GRID_IN     <= "00110";
         run_clock(CLK);
         check_equal(SYSTEM_MEM_OUT, std_logic_vector'("00110"), "RUN has precedence over OUTPUT");
-
 
         test_runner_cleanup(runner);
 
