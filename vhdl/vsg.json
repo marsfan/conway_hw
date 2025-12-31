@@ -94,6 +94,12 @@
         },
         "procedure_506": {
             "case": "lower"
+        },
+        "function_017": {
+            "case": "lower"
+        },
+        "function_506": {
+            "case": "lower"
         }
     },
     "file_rules": [

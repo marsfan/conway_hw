@@ -65,9 +65,13 @@ architecture RTL of CONWAY_8X8_SERIAL is
     end component SYSTEM_MEMORY;
 
     component CELL_GRID is
+        generic (
+            grid_width  : positive;
+            grid_height : positive
+        );
         port (
-            INPUT_STATE : in  std_logic_vector(63 downto 0);
-            NEXT_STATE  : out std_logic_vector(63 downto 0)
+            INPUT_STATE : in  std_logic_vector((grid_width * grid_height - 1) downto 0);
+            NEXT_STATE  : out std_logic_vector((grid_width * grid_height - 1) downto 0)
         );
     end component CELL_GRID;
 
@@ -134,6 +138,10 @@ begin
 
     -- Core calculation system
     grid : CELL_GRID
+        generic map (
+            grid_width  => 8,
+            grid_height => 8
+        )
         port map (
             INPUT_STATE => MEM_OUT,
             NEXT_STATE  => NEXT_STATE

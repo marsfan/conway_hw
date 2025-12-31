@@ -20,9 +20,13 @@ end entity CELL_GRID_TB;
 architecture TEST of CELL_GRID_TB is
 
     component CELL_GRID is
+        generic (
+            grid_width  : positive;
+            grid_height : positive
+        );
         port (
-            INPUT_STATE : in  std_logic_vector(63 downto 0);
-            NEXT_STATE  : out std_logic_vector(63 downto 0)
+            INPUT_STATE : in  std_logic_vector((grid_width * grid_height - 1) downto 0);
+            NEXT_STATE  : out std_logic_vector((grid_width * grid_height - 1) downto 0)
         );
     end component CELL_GRID;
 
@@ -32,6 +36,10 @@ architecture TEST of CELL_GRID_TB is
 begin
 
     dut : CELL_GRID
+        generic map (
+            grid_width  => 8,
+            grid_height => 8
+        )
         port map (
             INPUT_STATE => INPUT_STATE,
             NEXT_STATE  => NEXT_STATE
