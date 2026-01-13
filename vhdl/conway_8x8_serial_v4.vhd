@@ -28,20 +28,6 @@ end entity CONWAY_8X8_SERIAL_V4;
 
 architecture RTL of CONWAY_8X8_SERIAL_V4 is
 
-    component PARALLEL_TO_SERIAL is
-        generic (
-            data_size : positive
-        );
-        port (
-            DATA_IN  : in  std_logic_vector((data_size - 1) downto 0);
-            LOAD_EN  : in  std_logic;
-            SHIFT_EN : in  std_logic;
-            CLK      : in  std_logic;
-            RST      : in  std_logic;
-            DATA     : out std_logic
-        );
-    end component PARALLEL_TO_SERIAL;
-
     component SYSTEM_MEMORY_V4 is
         generic (
             data_size : positive
