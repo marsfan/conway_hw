@@ -7,13 +7,10 @@
 # ghdl -r is run simulation
 # only -a expects the file extension
 
-# TODO: Figure out best way to place testbenches in sub-directory?
-
 # See https://ghdl.github.io/ghdl/quick_start/simulation/DLXModelSuite.html for better ideas on building large projects
 # FIXME: Parallel build does not work. Seems to be a limitation of GHDL trying to write to the .cf file from multiple threads
 GG=ghdl
-# TODO: Update WSL system to newer ubuntu so that I can use --std=08
-GFLAGS=--workdir=work --std=08
+GFLAGS=--workdir=work --std=08 --warn-unused
 WAVEFORMDIR=waveforms
 
 
@@ -41,10 +38,6 @@ configure:
 	-mkdir work waveforms
 	$(GG) -i $(GFLAGS) *.vhd
 
-# FIXME: This should be clearer. Maybe in some fore of %: %.vhd
-# See https://www.gnu.org/software/make/manual/make.html#Pattern-Rules
-# See https://github.com/jimtremblay/ghdl-example/blob/master/Makefile
-# Also the command `ghdl --gen-makefile`
 # See https://stackoverflow.com/questions/6979897/how-can-one-compile-vhd-under-ghdl
 # Build specified module
 %: %.vhd
@@ -66,8 +59,6 @@ runall: $(addsuffix .run, $(ALL_MODULES))
 
 # Run all testbenches with GHDL
 testall: $(addsuffix .run, $(TESTBENCHES))
-
- # syntastic,summary
 
 vsg:
 	vsg -f $(VHDL_FILES) $(TESTBENCH_FILES) $(TEST) -ap -c vsg.json -of syntastic
