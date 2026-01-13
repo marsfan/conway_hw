@@ -16,3 +16,7 @@ vivado/
 
 # Logisim autosave file
 logisim/*.autosave
+
+# Verilog build and test files
+verilog/*.out
+verilog/waveforms
