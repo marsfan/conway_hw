@@ -1,0 +1,38 @@
+name: Verilog Testbenches
+
+on:
+  push:
+    paths:
+      - verilog/**
+  pull_request:
+    paths:
+      - verilog/**
+  workflow_dispatch:
+
+jobs:
+  run_testbenches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Install dependencies with apt
+        run: sudo apt-get install iverilog zip -y
+
+      - name: Compile Verilog
+        run: make testbench
+        working-directory: ./verilog
+
+      - name: Run Tests
+        run: make test
+        working-directory: ./verilog
+
+      - name: Compress Results
+        run: zip -r results.zip verilog/waveforms
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: test_results
+          path: results.zip
