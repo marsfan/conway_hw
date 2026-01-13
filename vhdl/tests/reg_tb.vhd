@@ -99,7 +99,8 @@ begin
         check_equal(Q, std_logic_vector'("00000001100"), "Q set failed");
 
         -- Disable WE and make sure Q stays set
-        WE <= '1';
+        WE <= '0';
+        D  <= "00000001100";
         run_clock(CLK);
         check_equal(Q, std_logic_vector'("00000001100"), "Q stays the same (again) failed");
 
