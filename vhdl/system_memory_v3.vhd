@@ -75,15 +75,13 @@ begin
                 -- & is concatenate in VHDL
                 OUTPUT_SR <= OUTPUT_SR((OUTPUT_SR'high - 1) downto OUTPUT_SR'low) & SERIAL_IN;
             elsif OUTPUT_MODE = '1' then
-                -- Push out the lowest value
-                -- SERIAL_OUT <= OUTPUT_SR(OUTPUT_SR'low);
+                -- Push out the highest value
                 SERIAL_OUT <= OUTPUT_SR(OUTPUT_SR'high);
 
-                -- Concatenate a zero with the upper 63 elements.
+                -- Concatenate a zero with the lower 63 elements.
                 -- This means we have shifted everything down one bit, and shifted
                 -- in a zero at the top.
                 -- & is concatenate in VHDL
-                -- OUTPUT_SR <= '0' & OUTPUT_SR(OUTPUT_SR'high downto (OUTPUT_SR'low + 1));
                 OUTPUT_SR <= OUTPUT_SR(OUTPUT_SR'high - 1 downto (OUTPUT_SR'low)) & '0';
             end if;
         end if;
