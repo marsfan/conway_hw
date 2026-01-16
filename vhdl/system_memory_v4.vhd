@@ -39,7 +39,6 @@ architecture RTL of SYSTEM_MEMORY_V4 is
 begin
 
     -- Got this from here: https://vhdlwhiz.com/shift-register/
-    -- TODO: Re-write as a single process (testing shows the same resource use when I do that)
     shift_register_process : process(CLK, RESET) is
     begin
 
