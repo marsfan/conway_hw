@@ -28,6 +28,7 @@ end entity SYSTEM_MEMORY_V2;
 
 architecture RTL of SYSTEM_MEMORY_V2 is
 
+    signal SR_TMP : std_logic_vector((data_size - 1) downto 0) := (others => '0'); -- Intermediate shift register value.
 
 begin
 
@@ -36,18 +37,20 @@ begin
     begin
 
         if RESET = '1' then
-            DATA_OUT <= (others => '0');
+            SR_TMP <= (others => '0');
         elsif rising_edge(CLK) then
             if RUN_MODE = '1' then
-                DATA_OUT <= GRID_IN;
+                SR_TMP <= GRID_IN;
             elsif LOAD_MODE = '1' then
                 -- Take a slice of the bottom 63 elements, and concatenate it with the new value
                 -- This means we have shifted everying up one bit, and shifted in the new value at the bottom
                 -- & is concatenate in VHDL
-                DATA_OUT <= DATA_OUT((DATA_OUT'high - 1) downto DATA_OUT'low) & SERIAL_IN;
+                SR_TMP <= SR_TMP((SR_TMP'high - 1) downto SR_TMP'low) & SERIAL_IN;
             end if;
         end if;
 
     end process shift_register_process;
+
+    DATA_OUT <= SR_TMP;
 
 end architecture RTL;
