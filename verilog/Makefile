@@ -3,7 +3,8 @@
 
 
 VV=iverilog
-VFLAGS=-g2012
+VFLAGS=-g2012 -Wall -Wmacro-redefinition -Winfloop -Wsensitivity-entire-vector
+# -Wfloating-nets
 
 
 # All SystemVerilog files

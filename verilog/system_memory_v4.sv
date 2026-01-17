@@ -24,7 +24,7 @@ module SYSTEM_MEMORY_V4 #(parameter data_size = 64)
     input                      CLK,             // System clock
     input                      RESET,           // Asynchronous reset.
     output reg [data_size-1:0] SYSTEM_MEM_OUT,  // Memory output for the system to use
-    output reg [data_size-1:0] SERIAL_OUT       // Serial system output
+    output reg                 SERIAL_OUT       // Serial system output
 );
 
 always @(posedge CLK, posedge RESET) begin : shift_register_process

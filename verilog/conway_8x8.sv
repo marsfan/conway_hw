@@ -24,11 +24,20 @@ wire [63:0] GRID_OUT;
 assign GATED_CLK = CLK & CLK_EN;
 assign MEM_IN = LOAD_RUN ? GRID_OUT : INITIAL_STATE;
 
-DFF #(64) memory (MEM_IN, 1'd1, GATED_CLK, 1'd0, MEM_OUT);
+DFF #(64) memory (
+    .d(MEM_IN),
+    .we(1'd1),
+    .clk(GATED_CLK),
+    .reset(1'd0),
+    .q(MEM_OUT)
+);
 
 assign GRID_IN = LOAD_RUN ? MEM_OUT : INITIAL_STATE;
 
-CELL_GRID #(8,8) grid (GRID_IN, GRID_OUT);
+CELL_GRID #(8,8) grid (
+    .INPUT_STATE(GRID_IN),
+    .NEXT_STATE(GRID_OUT)
+);
 
 assign CURRENT_STATE = GRID_IN;
 assign NEXT_STATE = GRID_OUT;
