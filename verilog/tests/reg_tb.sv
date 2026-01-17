@@ -16,6 +16,9 @@ module reg_tb();
 
 
     initial begin
+        int errcount;
+        errcount = 0;
+
         // Configure to dump all variables to VCD file
         $dumpfile("waveforms/reg_tb.vcd");
         $dumpvars(0, reg_tb);
@@ -29,26 +32,29 @@ module reg_tb();
         reset <= 1;
         #1
 
-        assert( q == 0) else $error( "REG_TB: Reset failed");
+        assert( q == 0) else begin errcount++; $error( "REG_TB: Reset failed"); end
         reset <= 0;
 
         // Set value but don't enable WE
         d <= 11'b00000001100;
         #20 clk = 1;
         #20 clk = 0;
-        assert( q == 0) else $error( "REG_TB: Q Stayed the same failed");
+        assert( q == 0) else begin errcount++; $error( "REG_TB: Q Stayed the same failed"); end
 
 
         we <= 1;
         #20 clk = 1;
         #20 clk = 0;
-        assert( q == 11'b00000001100) else $error("REG_TB: Q set failed");
+        assert( q == 11'b00000001100) else begin errcount++; $error("REG_TB: Q set failed"); end
 
         we <= 0;
         d <= 11'd0;
         #20 clk = 1;
         #20 clk = 0;
-        assert( q == 11'b00000001100) else $error("REG_TB: Q stays the same (again) failed");
+        assert( q == 11'b00000001100) else begin errcount++; $error("REG_TB: Q stays the same (again) failed"); end
+
+        // Final fatal to ensure tb exits with a nonzero return code
+        assert(errcount == 0) else $fatal(2, "Errors occurred in test");
 
     end
 
