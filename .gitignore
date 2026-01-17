@@ -20,3 +20,4 @@ logisim/*.autosave
 # Verilog build and test files
 verilog/*.out
 verilog/waveforms
+verilog/bin

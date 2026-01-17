@@ -27,17 +27,26 @@ ALL_MODULES=$(basename $(VERILOG_FILES))
 all:
 	$(VV) $(VFLAGS) $(VERILOG_FILES)
 
-testbench:
-	$(VV) $(VFLAGS) $(VERILOG_FILES) $(TESTBENCH_FILES) -o testbench.out
+# Pattern to build a single testbench from all SV files and the testbench file
+tests/%_tb: tests/%_tb.sv
+	mkdir -p bin
+	$(VV) $(VFLAGS) $(VERILOG_FILES) $< -o bin/$(notdir $@).out
+
+# Pattern to run a single testbench, and make it depend on building the testbench first
+bin/%_tb: tests/%_tb
 	mkdir -p waveforms
+	$@.out
+
+# Build all testbenches
+testbench: $(TESTBENCHES)
 
 # Clean project
 clean:
-	rm -f waveforms/*.vcd
+	rm -rf waveforms
 	rm -f *.out
+	rm -rf bin
 
 vsg:
 	vsg -f $(VERILOG_FILES) $(TESTBENCH_FILES) $(TEST) -ap -c vsg.json -of syntastic
 
-test: testbench
-	./testbench.out
+test: $(addprefix bin/,$(notdir $(TESTBENCHES)))
