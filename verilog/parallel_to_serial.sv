@@ -28,7 +28,7 @@ always @(posedge CLK, posedge RST) begin : shift_register_process
             SR_TMP <= DATA_IN;
         end else if (SHIFT_EN) begin
             // Push out the lowest value.
-            DATA <= SR_TMP[$high(SR_TMP)];
+            DATA <= SR_TMP[$low(SR_TMP)];
 
             // Concatenate a zero with upper 63 elements
             // This means we have shifted everything down one bit, and shifted
