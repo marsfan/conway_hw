@@ -1,3 +1,6 @@
+`ifndef MY_DEFINES_SV
+`define MY_DEFINES_SV
+
 /// Check that a condition is true, if not increment ERRCOUNT and display error message
 `define CHECK(V, ERRCOUNT, MSG) assert(V) else begin ERRCOUNT++; $error(MSG); end
 
@@ -9,3 +12,5 @@
 
 /// Halt with an errorr code if ERRCOUNT is nonzerro
 `define STOP_IF_ERR(ERRCOUNT) assert(ERRCOUNT == 0) else $fatal(2)
+
+`endif
