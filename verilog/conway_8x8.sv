@@ -5,6 +5,7 @@
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
+`default_nettype none
 
 module CONWAY_8X8 (
     input [63:0]  INITIAL_STATE ,   // Input state to load system with
