@@ -4,6 +4,8 @@
 * file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
 
+`include "tests/test_utils.sv"
+
 module reg_tb();
 
     reg [10:0] d;
@@ -32,29 +34,26 @@ module reg_tb();
         reset <= 1;
         #1
 
-        assert( q == 0) else begin errcount++; $error( "REG_TB: Reset failed"); end
+        `CHECK_EQ(q, 0, errcount, "REG_TB: Reset Failed");
         reset <= 0;
 
         // Set value but don't enable WE
         d <= 11'b00000001100;
-        #20 clk = 1;
-        #20 clk = 0;
-        assert( q == 0) else begin errcount++; $error( "REG_TB: Q Stayed the same failed"); end
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(q, 0, errcount, "REG_TB: Q Stayed the same failed");
 
 
         we <= 1;
-        #20 clk = 1;
-        #20 clk = 0;
-        assert( q == 11'b00000001100) else begin errcount++; $error("REG_TB: Q set failed"); end
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(q, 11'b00000001100, errcount, "REG_TB: Q set failed");
 
         we <= 0;
         d <= 11'd0;
-        #20 clk = 1;
-        #20 clk = 0;
-        assert( q == 11'b00000001100) else begin errcount++; $error("REG_TB: Q stays the same (again) failed"); end
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(q, 11'b00000001100, errcount, "REG_TB: Q stays the same (again) failed");
 
         // Final fatal to ensure tb exits with a nonzero return code
-        assert(errcount == 0) else $fatal(2, "Errors occurred in test");
+        `STOP_IF_ERR(errcount);
 
     end
 
