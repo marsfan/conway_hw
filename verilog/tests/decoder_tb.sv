@@ -57,7 +57,7 @@ module decoder_tb();
         `CHECK_EQ(VAL_11, 1, errcount, "VAL_11 Wrong for VAL_IN = 2'b11");
 
         // Final fatal to ensure tb exits with a nonzero return code
-        assert(errcount == 0) else $fatal(2, "Errors occurred in test");
+        `STOP_IF_ERR(errcount);
 
     end
 

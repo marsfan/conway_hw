@@ -51,7 +51,7 @@ begin
         test_runner_setup(runner, runner_cfg);
 
         -- Testing a few of the different patterns from the
-        -- Wikipeida page on conway's game of life.
+        -- Wikipedia page on conway's game of life.
 
         INPUT_STATE <= x"0000001818000000";
         wait for 1 ns;
