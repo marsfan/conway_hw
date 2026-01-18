@@ -19,6 +19,9 @@
 		"scope": "verilog,systemverilog",
 		"prefix": "testbench",
 		"body": [
+			"`default_nettype none",
+			"`include \"tests/test_utils.sv\"",
+			"",
 			"module $TM_FILENAME_BASE();",
 			"",
 			"    $0",
