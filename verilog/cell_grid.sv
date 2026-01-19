@@ -12,8 +12,8 @@ module CELL_GRID #(
     parameter GRID_HEIGHT = 8
 )
 (
-    input [(GRID_WIDTH * GRID_HEIGHT)-1:0] INPUT_STATE,
-    output [(GRID_WIDTH * GRID_HEIGHT)-1:0] NEXT_STATE
+    input wire [(GRID_WIDTH * GRID_HEIGHT)-1:0] INPUT_STATE,
+    output wire [(GRID_WIDTH * GRID_HEIGHT)-1:0] NEXT_STATE
 );
 
 function create_connection(

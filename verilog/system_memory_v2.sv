@@ -11,14 +11,14 @@
 
 module SYSTEM_MEMORY_V2 #(parameter data_size)
 (
-    input [data_size-1:0] GRID_IN   ,// Input from the grid calculator
-    input SERIAL_IN ,// Serial input from external interface
+    input wire [data_size-1:0] GRID_IN   ,// Input from the grid calculator
+    input wire SERIAL_IN ,// Serial input from external interface
 
     // If both are asserted, then RUN_MODE will take priority
-    input LOAD_MODE ,                     // Indicates system is in load mode (i.e. load from serial)
-    input RUN_MODE,                       // Indcates system is in run mode (i.e. load from grid in)
-    input CLK,                            // System clock
-    input RESET,                          // Asynchronous reset.
+    input wire LOAD_MODE ,                     // Indicates system is in load mode (i.e. load from serial)
+    input wire RUN_MODE,                       // Indcates system is in run mode (i.e. load from grid in)
+    input wire CLK,                            // System clock
+    input wire RESET,                          // Asynchronous reset.
     output reg [data_size-1:0]  DATA_OUT  // Memory output
 );
 

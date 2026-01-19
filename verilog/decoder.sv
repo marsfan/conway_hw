@@ -8,11 +8,11 @@
 `default_nettype none
 
 module DECODER(
-    input [1:0] VAL_IN,
-    output reg VAL_00,
-    output reg VAL_01,
-    output reg VAL_10,
-    output reg VAL_11
+    input wire [1:0] VAL_IN,
+    output wire VAL_00,
+    output wire VAL_01,
+    output wire VAL_10,
+    output wire VAL_11
 );
 
 assign VAL_00 = VAL_IN == 2'b00 ? 1 : 0;

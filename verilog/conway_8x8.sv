@@ -8,12 +8,12 @@
 `default_nettype none
 
 module CONWAY_8X8 (
-    input [63:0]  INITIAL_STATE ,   // Input state to load system with
-    input         CLK,              // System Clock
-    input         CLK_EN,           // Gate for enabling clock to system
-    input         LOAD_RUN,         // Whether to load memory from initial state, or start running
-    input  [63:0] CURRENT_STATE,    // Output for displaying the state currently in memory
-    output [63:0] NEXT_STATE        // Output for displaying the next state to put into memory
+    input wire [63:0]  INITIAL_STATE ,   // Input state to load system with
+    input wire         CLK,              // System Clock
+    input wire         CLK_EN,           // Gate for enabling clock to system
+    input wire         LOAD_RUN,         // Whether to load memory from initial state, or start running
+    input wire  [63:0] CURRENT_STATE,    // Output for displaying the state currently in memory
+    output wire [63:0] NEXT_STATE        // Output for displaying the next state to put into memory
 );
 
 wire GATED_CLK;

@@ -8,9 +8,9 @@
 `default_nettype none
 
 module FULL_ADDER_2_BIT_TO_3_BIT(
-    input [1:0] A,
-    input [1:0] B,
-    output [2:0] SUM
+    input wire [1:0] A,
+    input wire [1:0] B,
+    output wire [2:0] SUM
 );
 
 wire CARRY_INT;

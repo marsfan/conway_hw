@@ -9,15 +9,15 @@
 `default_nettype none
 
 module POPCOUNT_ARITH(
-    input        N,
-    input        NE,
-    input        E,
-    input        SE,
-    input        S,
-    input        SW,
-    input        W,
-    input        NW,
-    output [3:0] COUNT
+    input wire        N,
+    input wire        NE,
+    input wire        E,
+    input wire        SE,
+    input wire        S,
+    input wire        SW,
+    input wire        W,
+    input wire        NW,
+    output wire [3:0] COUNT
 );
 
 

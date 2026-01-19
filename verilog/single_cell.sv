@@ -16,16 +16,16 @@
 `default_nettype none
 
 module SINGLE_CELL(
-    input ME,
-    input N,
-    input NE,
-    input E,
-    input SE,
-    input S,
-    input SW,
-    input W,
-    input NW,
-    output IS_ALIVE
+    input wire ME,
+    input wire N,
+    input wire NE,
+    input wire E,
+    input wire SE,
+    input wire S,
+    input wire SW,
+    input wire W,
+    input wire NW,
+    output wire IS_ALIVE
 );
 
 wire [3:0] ALIVE_NEIGHBORS; //Number of neighbors that are alive.

@@ -8,11 +8,11 @@
 `default_nettype none
 
 module FULL_ADDER (
-    input A,
-    input B,
-    input C_IN,
-    output SUM,
-    output CARRY
+    input wire A,
+    input wire B,
+    input wire C_IN,
+    output wire SUM,
+    output wire CARRY
 );
 
 assign SUM = A ^ B ^ C_IN;

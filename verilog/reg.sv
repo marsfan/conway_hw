@@ -17,10 +17,10 @@
 `default_nettype none
 
 module DFF #(parameter SIZE = 1)(
-    input [SIZE-1:0] d,
-    input we,
-    input clk,
-    input reset,
+    input wire [SIZE-1:0] d,
+    input wire we,
+    input wire clk,
+    input wire reset,
     output reg [SIZE-1:0]  q
 );
 

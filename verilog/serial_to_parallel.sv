@@ -9,10 +9,10 @@
 
 module SERIAL_TO_PARALLEL #(parameter data_size = 64)
 (
-    input DATA_IN,
-    input EN,
-    input CLK,
-    input RST,
+    input wire DATA_IN,
+    input wire EN,
+    input wire CLK,
+    input wire RST,
     output reg [data_size-1:0] DATA = 0
 );
 

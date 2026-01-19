@@ -15,13 +15,13 @@ module SYSTEM_MEMORY_V3 #(parameter data_size = 64)
         // RUN_MODE has priority.
         // Then LOAD_MODE
         // Then OUTPUT_MODE
-        input      [data_size-1:0] GRID_IN,         // Input from the grid calculator
-        input                      SERIAL_IN,       // Serial input from external interface
-        input                      LOAD_MODE,       // Indicates system is in load mode (i.e. load from serial)
-        input                      RUN_MODE,        // Indcates system is in run mode (i.e. load from grid in)
-        input                      OUTPUT_MODE,     // Indicates system is in output mode (i.e. shift out over serial)
-        input                      CLK,             // System clock
-        input                      RESET,           // Asynchronous reset.
+        input wire [data_size-1:0] GRID_IN,         // Input from the grid calculator
+        input wire                 SERIAL_IN,       // Serial input from external interface
+        input wire                 LOAD_MODE,       // Indicates system is in load mode (i.e. load from serial)
+        input wire                 RUN_MODE,        // Indcates system is in run mode (i.e. load from grid in)
+        input wire                 OUTPUT_MODE,     // Indicates system is in output mode (i.e. shift out over serial)
+        input wire                 CLK,             // System clock
+        input wire                 RESET,           // Asynchronous reset.
         output reg [data_size-1:0] SYSTEM_MEM_OUT , // Memory output for the system to use
         output reg                 SERIAL_OUT // Serial system output
 );

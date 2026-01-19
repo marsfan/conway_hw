@@ -9,15 +9,15 @@
 `default_nettype none
 
 module CONWAY_8X8_SERIAL_V2 (
-    input        DATA_IN,   // Serial data in
-    input [1:0]  MODE,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
-    input        RESET,     // Async system reset
-    input        CLK,       // System clock // TODO: Separate clocks for shift regs so they can run faster?
-    output       DATA_OUT,  // Serial data out
-    output       DIN_LED,   // Data input LED for debugging
-    output       CLK_LED,   // Data output LED for debugging
-    output       DOUT_LED,  // Data output LED for debugging
-    output [1:0] MODE_LEDS  // Mode LEDs for debugging
+    input wire        DATA_IN,   // Serial data in
+    input wire [1:0]  MODE,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
+    input wire        RESET,     // Async system reset
+    input wire        CLK,       // System clock // TODO: Separate clocks for shift regs so they can run faster?
+    output wire       DATA_OUT,  // Serial data out
+    output wire       DIN_LED,   // Data input LED for debugging
+    output wire       CLK_LED,   // Data output LED for debugging
+    output wire       DOUT_LED,  // Data output LED for debugging
+    output wire [1:0] MODE_LEDS  // Mode LEDs for debugging
 );
 
 localparam DATA_SIZE = 64;

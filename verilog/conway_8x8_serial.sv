@@ -8,11 +8,11 @@
 `default_nettype none
 
 module CONWAY_8X8_SERIAL (
-    input       DATA_IN, // Serial data in
-    input [1:0] MODE,    // System mode (00 = load, 01 = run, 10 = output, 11 = undefined) // TODO: Don't make undefined
-    input       RESET,   // Asynchronous system reset
-    input       CLK,     // System clock. // TODO: Separate clock for shift reg so they are faster?
-    output      DATA_OUT // Serial data out
+    input wire       DATA_IN, // Serial data in
+    input wire [1:0] MODE,    // System mode (00 = load, 01 = run, 10 = output, 11 = undefined) // TODO: Don't make undefined
+    input wire       RESET,   // Asynchronous system reset
+    input wire       CLK,     // System clock. // TODO: Separate clock for shift reg so they are faster?
+    output wire      DATA_OUT // Serial data out
 );
 
 localparam DATA_SIZE = 64;

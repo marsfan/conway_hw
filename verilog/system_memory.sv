@@ -8,12 +8,12 @@
 `default_nettype none
 
 module SYSTEM_MEMORY #(parameter data_size) (
-        input [data_size-1:0] INITIAL_IN,   // Input from external word for initialization
-        input [data_size-1:0] GRID_IN,      // Input from the grid calculator
-        input WRITE_ENABLE,                 // Enable writing to memory
-        input LOAD_RUN,                     // Whether we are in load mode or run mode. Used to select input to read from
-        input CLK,                          // System clock
-        input RESET,                        // Asynchronous reset.
+        input wire [data_size-1:0] INITIAL_IN,   // Input from external word for initialization
+        input wire [data_size-1:0] GRID_IN,      // Input from the grid calculator
+        input wire WRITE_ENABLE,                 // Enable writing to memory
+        input wire LOAD_RUN,                     // Whether we are in load mode or run mode. Used to select input to read from
+        input wire CLK,                          // System clock
+        input wire RESET,                        // Asynchronous reset.
         output reg [data_size-1:0] MEM_OUT  // Memory output
 );
 

@@ -8,9 +8,9 @@
 `default_nettype none
 
 module FULL_ADDER_1_BIT_TO_2_BIT(
-    input A,
-    input B,
-    output [1:0] SUM
+    input wire A,
+    input wire B,
+    output wire [1:0] SUM
 );
 
 FULL_ADDER adder(A, B, 1'b0, SUM[0], SUM[1]);
