@@ -5,7 +5,7 @@
 */
 
 `default_nettype none
-`include "tests/test_utils.sv"
+`include "tests/test_utils.svh"
 
 module parallel_to_serial_tb();
     localparam int DEPTH = 3;

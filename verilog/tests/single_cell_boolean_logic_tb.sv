@@ -5,7 +5,7 @@
 */
 
 `default_nettype none
-`include "tests/test_utils.sv"
+`include "tests/test_utils.svh"
 
 module single_cell_boolean_logic_tb();
 

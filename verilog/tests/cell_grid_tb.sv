@@ -4,7 +4,7 @@
 * file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
 `default_nettype none
-`include "tests/test_utils.sv"
+`include "tests/test_utils.svh"
 
 module cell_grid_tb();
 

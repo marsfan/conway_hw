@@ -5,7 +5,7 @@
 */
 
 `default_nettype none
-`include "tests/test_utils.sv"
+`include "tests/test_utils.svh"
 
 module serial_to_parallel_tb();
 

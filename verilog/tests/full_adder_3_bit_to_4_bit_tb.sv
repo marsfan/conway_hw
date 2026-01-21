@@ -5,7 +5,7 @@
 */
 
 `default_nettype none
-`include "tests/test_utils.sv"
+`include "tests/test_utils.svh"
 
 module full_adder_3_bit_to_4_bit_tb();
 
