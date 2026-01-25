@@ -21,3 +21,6 @@ logisim/*.autosave
 verilog/*.out
 verilog/waveforms
 verilog/bin
+
+# Folder for scratch files that should not be committed
+local_only

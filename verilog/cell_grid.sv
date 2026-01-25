@@ -33,19 +33,21 @@ endfunction
 
 genvar x;
 genvar y;
-generate for (x = 0; x < GRID_WIDTH; x++) begin
-    for (y = 0; y < GRID_HEIGHT; y++) begin
+// For some reason, starting at high and going down uses 2 less LUTS than going up
+// TODO: Find out why
+generate for (x = (GRID_WIDTH-1); x >= 0; x--) begin
+    for (y = (GRID_HEIGHT-1); y >= 0; y--) begin
         SINGLE_CELL c(
-                    INPUT_STATE[GRID_WIDTH * y + x],
-                    create_connection(INPUT_STATE, x,     y - 1),
-                    create_connection(INPUT_STATE, x + 1, y - 1),
-                    create_connection(INPUT_STATE, x + 1, y),
-                    create_connection(INPUT_STATE, x + 1, y + 1),
-                    create_connection(INPUT_STATE, x,     y + 1),
-                    create_connection(INPUT_STATE, x - 1, y + 1),
-                    create_connection(INPUT_STATE, x - 1, y),
-                    create_connection(INPUT_STATE, x - 1, y - 1),
-                    NEXT_STATE[GRID_WIDTH * y + x]
+            INPUT_STATE[GRID_WIDTH * y + x],
+            create_connection(INPUT_STATE, x,     y - 1),
+            create_connection(INPUT_STATE, x + 1, y - 1),
+            create_connection(INPUT_STATE, x + 1, y),
+            create_connection(INPUT_STATE, x + 1, y + 1),
+            create_connection(INPUT_STATE, x,     y + 1),
+            create_connection(INPUT_STATE, x - 1, y + 1),
+            create_connection(INPUT_STATE, x - 1, y),
+            create_connection(INPUT_STATE, x - 1, y - 1),
+            NEXT_STATE[GRID_WIDTH * y + x]
         );
     end
 end
