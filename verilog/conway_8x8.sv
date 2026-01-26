@@ -12,7 +12,7 @@ module CONWAY_8X8 (
     input wire         CLK,              // System Clock
     input wire         CLK_EN,           // Gate for enabling clock to system
     input wire         LOAD_RUN,         // Whether to load memory from initial state, or start running
-    input wire  [63:0] CURRENT_STATE,    // Output for displaying the state currently in memory
+    output wire  [63:0] CURRENT_STATE,    // Output for displaying the state currently in memory
     output wire [63:0] NEXT_STATE        // Output for displaying the next state to put into memory
 );
 
