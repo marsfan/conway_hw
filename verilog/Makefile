@@ -3,50 +3,57 @@
 
 
 VV=iverilog
-VFLAGS=-g2012 -Wall -Wmacro-redefinition -Winfloop -Wsensitivity-entire-vector
+VFLAGS=-g2012 -Wall -Wmacro-redefinition -Winfloop -Wsensitivity-entire-vector -Y.sv
 # -Wfloating-nets
 
+# Various directories we will use
+BINDIR=bin
+LIBDIR=.
+TESTDIR=tests
+WAVEFORMDIR=waveforms
 
 # All SystemVerilog files
 VERILOG_FILES=$(wildcard *.sv)
 
 # All SystemVerilog Testbench files
-TESTBENCH_FILES=$(wildcard tests/*_tb.sv)
+TESTBENCH_FILES=$(wildcard $(TESTDIR)/*_tb.sv)
 
 # All files whose stem ends with _tb (my notation for testbench)
 TESTBENCHES=$(basename $(TESTBENCH_FILES))
+
+TESTBENCH_OUT=$(basename $(subst $(TESTDIR)/,$(BINDIR)/,$(TESTBENCHES)))
 
 # All entities/configurations (excluding packages)
 ALL_MODULES=$(basename $(VERILOG_FILES))
 
 
-.PHONY: all clean distclean test
-.PHONY: $(addsuffix .run, $(ALL_MODULES))
+
+.PHONY: all clean test testbench svlint
 
 # Build all modules
 all:
 	$(VV) $(VFLAGS) $(VERILOG_FILES)
 
-# Pattern to build a single testbench from all SV files and the testbench file
-tests/%_tb: tests/%_tb.sv
-	mkdir -p bin
-	$(VV) $(VFLAGS) $(VERILOG_FILES) $< -o bin/$(notdir $@).out
+# Pattern to build a single testbench
+$(BINDIR)/%_tb: $(TESTDIR)/%_tb.sv $(VERILOG_FILES)
+	mkdir -p $(BINDIR)
+	$(VV) $(VFLAGS) -I $(TESTDIR) -y $(LIBDIR) -o $@ $<
 
 # Pattern to run a single testbench, and make it depend on building the testbench first
-bin/%_tb: tests/%_tb
-	mkdir -p waveforms
-	$@.out
+bin/%_tb.run: bin/%_tb
+	mkdir -p $(WAVEFORMDIR)
+	$<
 
 # Build all testbenches
-testbench: $(TESTBENCHES)
+testbench: $(TESTBENCH_OUT)
 
 # Clean project
 clean:
-	rm -rf waveforms
-	rm -f *.out
-	rm -rf bin
+	rm -rf $(WAVEFORMDIR)
+	rm -rf $(BINDIR)
 
-vsg:
-	vsg -f $(VERILOG_FILES) $(TESTBENCH_FILES) $(TEST) -ap -c vsg.json -of syntastic
+svlint:
+	svlint $(LIBDIR)/*.sv $(LIBDIR)/*.svh $(TESTDIR)/*.sv $(TESTDIR)/*.svh --config .svlint.toml
 
-test: $(addprefix bin/,$(notdir $(TESTBENCHES)))
+
+test: $(addsuffix .run, $(TESTBENCH_OUT))
