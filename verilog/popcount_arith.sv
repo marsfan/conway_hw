@@ -8,7 +8,7 @@
 */
 `default_nettype none
 
-module POPCOUNT_ARITH(
+module popcount_arith(
     input wire        N,
     input wire        NE,
     input wire        E,

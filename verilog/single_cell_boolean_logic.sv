@@ -15,7 +15,7 @@
 */
 `default_nettype none
 
-module SINGLE_CELL_BOOLEAN_LOGIC(
+module single_cell_boolean_logic(
     input wire ME,
     input wire N,
     input wire NE,

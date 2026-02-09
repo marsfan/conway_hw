@@ -17,7 +17,7 @@ module parallel_to_serial_tb();
     logic RST;
     logic DATA;
 
-    PARALLEL_TO_SERIAL #(DEPTH) dut(
+    parallel_to_serial #(DEPTH) dut(
         .DATA_IN(DATA_IN),
         .LOAD_EN(LOAD_EN),
         .SHIFT_EN(SHIFT_EN),

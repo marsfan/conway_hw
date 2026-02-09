@@ -42,7 +42,7 @@ module full_adder_2_bit_to_3_bit_tb();
     logic [1:0] B;
     logic [2:0] SUM;
 
-    FULL_ADDER_2_BIT_TO_3_BIT dut(
+    full_adder_2_bit_to_3_bit dut(
         .A(A),
         .B(B),
         .SUM(SUM)

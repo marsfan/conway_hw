@@ -7,7 +7,7 @@
 */
 `default_nettype none
 
-module FULL_ADDER (
+module full_adder (
     input wire A,
     input wire B,
     input wire C_IN,

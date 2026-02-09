@@ -6,7 +6,7 @@
 * file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
 
-module PARALLEL_TO_SERIAL #(parameter data_size = 64)
+module parallel_to_serial #(parameter data_size = 64)
 (
     input wire [data_size-1:0] DATA_IN,  // Parallel input
     input wire LOAD_EN,                  // Enables loading data in in parallel

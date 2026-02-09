@@ -15,7 +15,7 @@
 */
 `default_nettype none
 
-module SINGLE_CELL(
+module single_cell(
     input wire ME,
     input wire N,
     input wire NE,
@@ -35,7 +35,7 @@ wire RULE_2_ALIVE;          // Whether or not we live as per rule 2
 wire RULE_4_ALIVE;          // Whether or not we live as per rule 4
 
 // Count number of living neighbors
-POPCOUNT counter(N, NE, E, SE, S, SW, W, NW, ALIVE_NEIGHBORS);
+popcount counter(N, NE, E, SE, S, SW, W, NW, ALIVE_NEIGHBORS);
 
 // Check if number of neighbors is 2 or 3
 assign ALIVE_NEIGHBORS_2 = (ALIVE_NEIGHBORS == 2) ? 1 : 0;

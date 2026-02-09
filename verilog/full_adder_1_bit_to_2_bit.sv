@@ -7,12 +7,12 @@
 */
 `default_nettype none
 
-module FULL_ADDER_1_BIT_TO_2_BIT(
+module full_adder_1_bit_to_2_bit(
     input wire A,
     input wire B,
     output wire [1:0] SUM
 );
 
-FULL_ADDER adder(A, B, 1'b0, SUM[0], SUM[1]);
+full_adder adder(A, B, 1'b0, SUM[0], SUM[1]);
 
 endmodule

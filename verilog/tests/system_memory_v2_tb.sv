@@ -18,7 +18,7 @@ module system_memory_v2_tb();
     logic RESET;
     logic [DATA_SIZE-1:0] DATA_OUT;
 
-    SYSTEM_MEMORY_V2 #(DATA_SIZE) dut (
+    system_memory_v2 #(DATA_SIZE) dut (
         .GRID_IN(GRID_IN),
         .SERIAL_IN(SERIAL_IN),
         .LOAD_MODE(LOAD_MODE),

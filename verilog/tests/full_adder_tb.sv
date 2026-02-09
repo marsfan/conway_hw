@@ -30,7 +30,7 @@ module full_adder_tb();
 
     logic IN1, IN2, CIN, SUM, COUT;
 
-    FULL_ADDER dut(
+    full_adder dut(
         .A(IN1),
         .B(IN2),
         .C_IN(CIN),

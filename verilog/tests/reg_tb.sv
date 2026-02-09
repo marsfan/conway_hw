@@ -13,7 +13,7 @@ module reg_tb();
     wire [10:0] q;
 
 
-    DFF #(11) dut (d, we, clk, reset, q);
+    dff #(11) dut (d, we, clk, reset, q);
 
 
 

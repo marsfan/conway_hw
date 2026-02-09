@@ -19,7 +19,7 @@ module popcount_tb();
     logic NW;
     logic [3:0] COUNT;
 
-    POPCOUNT dut(
+    popcount dut(
         .N(N),
         .NE(NE),
         .E(E),

@@ -96,7 +96,7 @@ module full_adder_3_bit_to_4_bit_tb();
     logic [2:0] B;
     logic [3:0] SUM;
 
-    FULL_ADDER_3_BIT_TO_4_BIT dut(
+    full_adder_3_bit_to_4_bit dut(
         .A(A),
         .B(B),
         .SUM(SUM)

@@ -7,7 +7,7 @@
 */
 `default_nettype none
 
-module DECODER(
+module decoder(
     input wire [1:0] VAL_IN,
     output wire VAL_00,
     output wire VAL_01,

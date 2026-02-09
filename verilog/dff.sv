@@ -16,7 +16,7 @@
 */
 `default_nettype none
 
-module DFF #(parameter SIZE = 1)(
+module dff #(parameter SIZE = 1)(
     input wire [SIZE-1:0] d,
     input wire we,
     input wire clk,

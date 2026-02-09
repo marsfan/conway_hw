@@ -9,7 +9,7 @@
 */
 `default_nettype none
 
-module SYSTEM_MEMORY_V2 #(parameter data_size)
+module system_memory_v2 #(parameter data_size)
 (
     input wire [data_size-1:0] GRID_IN   ,// Input from the grid calculator
     input wire SERIAL_IN ,// Serial input from external interface

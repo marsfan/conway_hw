@@ -19,7 +19,7 @@ module system_memory_tb();
     logic [DATA_SIZE - 1:0] MEM_OUT;
 
 
-    SYSTEM_MEMORY #(DATA_SIZE) dut (
+    system_memory #(DATA_SIZE) dut (
         .INITIAL_IN(INITIAL_IN),
         .GRID_IN(GRID_IN),
         .WRITE_ENABLE(WRITE_ENABLE),

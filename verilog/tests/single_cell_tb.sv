@@ -547,7 +547,7 @@ module single_cell_tb();
     assign test_cases[510] = {1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0, 1'b0};
     assign test_cases[511] = {1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0};
 
-    SINGLE_CELL dut(
+    single_cell dut(
         .ME(ME),
         .N(N),
         .NE(NE),

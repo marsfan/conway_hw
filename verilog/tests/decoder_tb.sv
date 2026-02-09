@@ -14,7 +14,7 @@ module decoder_tb();
     reg       VAL_10;
     reg       VAL_11;
 
-    DECODER dut(
+    decoder dut(
         .VAL_IN(VAL_IN),
         .VAL_00(VAL_00),
         .VAL_01(VAL_01),

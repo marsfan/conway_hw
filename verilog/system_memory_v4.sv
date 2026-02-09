@@ -12,7 +12,7 @@
 */
 `default_nettype none
 
-module SYSTEM_MEMORY_V4 #(parameter data_size = 64)
+module system_memory_v4 #(parameter data_size = 64)
 (
     // RUN_MODE has priority.
     // Then LOAD_MODE

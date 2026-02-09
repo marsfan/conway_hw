@@ -13,7 +13,7 @@ module full_adder_1_bit_to_2_bit_tb();
     logic B;
     logic [1:0] SUM;
 
-    FULL_ADDER_1_BIT_TO_2_BIT dut(
+    full_adder_1_bit_to_2_bit dut(
         .A(A),
         .B(B),
         .SUM(SUM)

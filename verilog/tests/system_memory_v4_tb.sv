@@ -20,7 +20,7 @@ module system_memory_v4_tb();
     logic [DATA_SIZE-1:0] SYSTEM_MEM_OUT;
     logic SERIAL_OUT;
 
-    SYSTEM_MEMORY_V4 #(DATA_SIZE) dut(
+    system_memory_v4 #(DATA_SIZE) dut(
         .GRID_IN(GRID_IN),
         .SERIAL_IN(SERIAL_IN),
         .LOAD_MODE(LOAD_MODE),

@@ -7,7 +7,7 @@
 */
 `default_nettype none
 
-module FULL_ADDER_2_BIT_TO_3_BIT(
+module full_adder_2_bit_to_3_bit(
     input wire [1:0] A,
     input wire [1:0] B,
     output wire [2:0] SUM
@@ -15,7 +15,7 @@ module FULL_ADDER_2_BIT_TO_3_BIT(
 
 wire CARRY_INT;
 
-FULL_ADDER first_adder(A[0], B[0], 1'b0, SUM[0], CARRY_INT);
-FULL_ADDER second_adder(A[1], B[1], CARRY_INT, SUM[1], SUM[2]);
+full_adder first_adder(A[0], B[0], 1'b0, SUM[0], CARRY_INT);
+full_adder second_adder(A[1], B[1], CARRY_INT, SUM[1], SUM[2]);
 
 endmodule

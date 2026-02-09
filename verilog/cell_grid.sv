@@ -7,7 +7,7 @@
 */
 `default_nettype none
 
-module CELL_GRID #(
+module cell_grid #(
     parameter GRID_WIDTH = 8,
     parameter GRID_HEIGHT = 8
 )
@@ -37,7 +37,7 @@ genvar y;
 // TODO: Find out why
 generate for (x = (GRID_WIDTH-1); x >= 0; x--) begin
     for (y = (GRID_HEIGHT-1); y >= 0; y--) begin
-        SINGLE_CELL c(
+        single_cell c(
             INPUT_STATE[GRID_WIDTH * y + x],
             create_connection(INPUT_STATE, x,     y - 1),
             create_connection(INPUT_STATE, x + 1, y - 1),

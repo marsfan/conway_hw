@@ -8,7 +8,7 @@
 */
 `default_nettype none
 
-module CONWAY_8X8_SERIAL_V3 (
+module conway_8x8_serial_v3 (
     input wire        DATA_IN,   // Serial data in
     input wire [1:0]  MODE,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
     input wire        RESET,     // Async system reset
@@ -35,11 +35,11 @@ wire [DATA_SIZE - 1:0] NEXT_STATE;  // Output from cell calculation grid
 wire SERIAL_OUT;
 
 
-DECODER mode_decode(MODE, STOP_MODE, LOAD_MODE, RUN_MODE, OUTPUT_MODE);
+decoder mode_decode(MODE, STOP_MODE, LOAD_MODE, RUN_MODE, OUTPUT_MODE);
 assign LOAD_OR_RUN = LOAD_MODE || RUN_MODE;
 
 // The system memory that we hold everything in between cycles
-SYSTEM_MEMORY_V3 #(DATA_SIZE) memory (
+system_memory_v3 #(DATA_SIZE) memory (
     .GRID_IN(NEXT_STATE),
     .SERIAL_IN(DATA_IN),
     .LOAD_MODE(LOAD_MODE),
@@ -52,7 +52,7 @@ SYSTEM_MEMORY_V3 #(DATA_SIZE) memory (
 );
 
 // Core calculation system
-CELL_GRID #(GRID_WIDTH, GRID_HEIGHT) grid (
+cell_grid #(GRID_WIDTH, GRID_HEIGHT) grid (
     .INPUT_STATE(MEM_OUT),
     .NEXT_STATE(NEXT_STATE)
 );

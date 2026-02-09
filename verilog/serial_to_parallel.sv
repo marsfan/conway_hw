@@ -7,7 +7,7 @@
 */
 `default_nettype none
 
-module SERIAL_TO_PARALLEL #(parameter data_size = 64)
+module serial_to_parallel #(parameter data_size = 64)
 (
     input wire DATA_IN,
     input wire EN,

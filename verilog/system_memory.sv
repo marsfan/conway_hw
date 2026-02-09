@@ -7,7 +7,7 @@
 */
 `default_nettype none
 
-module SYSTEM_MEMORY #(parameter data_size) (
+module system_memory #(parameter data_size) (
         input wire [data_size-1:0] INITIAL_IN,   // Input from external word for initialization
         input wire [data_size-1:0] GRID_IN,      // Input from the grid calculator
         input wire WRITE_ENABLE,                 // Enable writing to memory
@@ -22,6 +22,6 @@ wire [data_size-1:0] MEM_IN;
 // MUX to select input source
 assign MEM_IN = LOAD_RUN ? GRID_IN : INITIAL_IN;
 
-DFF #(data_size) memory (MEM_IN, WRITE_ENABLE, CLK, RESET, MEM_OUT);
+dff #(data_size) memory (MEM_IN, WRITE_ENABLE, CLK, RESET, MEM_OUT);
 
 endmodule

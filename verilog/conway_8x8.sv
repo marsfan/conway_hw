@@ -7,7 +7,7 @@
 */
 `default_nettype none
 
-module CONWAY_8X8 (
+module conway_8x8 (
     input wire [63:0]  INITIAL_STATE ,   // Input state to load system with
     input wire         CLK,              // System Clock
     input wire         CLK_EN,           // Gate for enabling clock to system
@@ -25,7 +25,7 @@ wire [63:0] GRID_OUT;
 assign GATED_CLK = CLK & CLK_EN;
 assign MEM_IN = LOAD_RUN ? GRID_OUT : INITIAL_STATE;
 
-DFF #(64) memory (
+dff #(64) memory (
     .d(MEM_IN),
     .we(1'd1),
     .clk(GATED_CLK),
@@ -35,7 +35,7 @@ DFF #(64) memory (
 
 assign GRID_IN = LOAD_RUN ? MEM_OUT : INITIAL_STATE;
 
-CELL_GRID #(8,8) grid (
+cell_grid #(8,8) grid (
     .INPUT_STATE(GRID_IN),
     .NEXT_STATE(GRID_OUT)
 );

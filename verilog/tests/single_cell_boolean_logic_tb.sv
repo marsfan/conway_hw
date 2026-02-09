@@ -547,7 +547,7 @@ module single_cell_boolean_logic_tb();
     assign test_cases[510] = {1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0, 1'b0};
     assign test_cases[511] = {1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0};
 
-    SINGLE_CELL_BOOLEAN_LOGIC dut(
+    single_cell_boolean_logic dut(
         .ME(ME),
         .N(N),
         .NE(NE),

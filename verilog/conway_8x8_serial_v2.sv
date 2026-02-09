@@ -8,7 +8,7 @@
 */
 `default_nettype none
 
-module CONWAY_8X8_SERIAL_V2 (
+module conway_8x8_serial_v2 (
     input wire        DATA_IN,   // Serial data in
     input wire [1:0]  MODE,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
     input wire        RESET,     // Async system reset
@@ -35,11 +35,11 @@ wire [DATA_SIZE - 1:0] NEXT_STATE;  // Output from cell calculation grid
 wire SERIAL_OUT;
 
 
-DECODER mode_decode(MODE, STOP_MODE, LOAD_MODE, RUN_MODE, OUTPUT_MODE);
+decoder mode_decode(MODE, STOP_MODE, LOAD_MODE, RUN_MODE, OUTPUT_MODE);
 assign LOAD_OR_RUN = LOAD_MODE || RUN_MODE;
 
 // The system memory that we hold everything in between cycles
-SYSTEM_MEMORY_V2 #(DATA_SIZE) memory (
+system_memory_v2 #(DATA_SIZE) memory (
     .GRID_IN(NEXT_STATE),
     .SERIAL_IN(DATA_IN),
     .LOAD_MODE(LOAD_MODE),
@@ -52,13 +52,13 @@ SYSTEM_MEMORY_V2 #(DATA_SIZE) memory (
 assign LOAD_OR_RUN = LOAD_MODE || RUN_MODE;
 
 // Core calculation system
-CELL_GRID #(GRID_WIDTH, GRID_HEIGHT) grid (
+cell_grid #(GRID_WIDTH, GRID_HEIGHT) grid (
     .INPUT_STATE(MEM_OUT),
     .NEXT_STATE(NEXT_STATE)
 );
 
 // Parallel to serial shift register
-PARALLEL_TO_SERIAL #(DATA_SIZE) output_shift_reg (
+parallel_to_serial #(DATA_SIZE) output_shift_reg (
     .DATA_IN(NEXT_STATE),
     .LOAD_EN(LOAD_OR_RUN),
     .SHIFT_EN(OUTPUT_MODE),
