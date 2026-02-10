@@ -9,6 +9,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module system_memory_v2 #(
     parameter int unsigned DATA_SIZE
 ) (
@@ -22,6 +24,8 @@ module system_memory_v2 #(
     input  wire                   reset,     // Asynchronous reset.
     output reg  [DATA_SIZE - 1:0] data_out   // Memory output
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 // Got this from here: https://vhdlwhiz.com/shift-register/
 // Then ported to Verilog

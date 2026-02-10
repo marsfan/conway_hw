@@ -7,6 +7,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module decoder(
     input  wire [1:0] val_in,
     output wire       val_00,
@@ -14,6 +16,8 @@ module decoder(
     output wire       val_10,
     output wire       val_11
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 assign val_00 = val_in == 2'b00 ? 1 : 0;
 assign val_01 = val_in == 2'b01 ? 1 : 0;

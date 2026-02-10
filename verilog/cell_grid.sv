@@ -7,6 +7,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module cell_grid #(
     parameter int unsigned GRID_WIDTH = 8,
     parameter int unsigned GRID_HEIGHT = 8
@@ -14,6 +16,8 @@ module cell_grid #(
     input  wire [(GRID_WIDTH * GRID_HEIGHT) - 1:0] input_state,
     output wire [(GRID_WIDTH * GRID_HEIGHT) - 1:0] next_state
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 function automatic create_connection(
     input [(GRID_WIDTH * GRID_HEIGHT) - 1:0] input_array,

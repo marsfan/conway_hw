@@ -7,6 +7,9 @@
 */
 `default_nettype none
 
+
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module conway_8x8_serial (
     input  wire       data_in, // Serial data in
     input  wire [1:0] mode,    // System mode (00 = load, 01 = run, 10 = output, 11 = undefined) // TODO: Don't make undefined
@@ -14,6 +17,9 @@ module conway_8x8_serial (
     input  wire       clk,     // System clock. // TODO: Separate clock for shift reg so they are faster?
     output wire       data_out // Serial data out
 );
+
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 localparam int unsigned GRID_WIDTH = 8;
 localparam int unsigned GRID_HEIGHT = 8;

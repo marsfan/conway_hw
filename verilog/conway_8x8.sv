@@ -7,6 +7,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module conway_8x8 (
     input  wire [63:0] initial_state,   // Input state to load system with
     input  wire        clk,              // System Clock
@@ -15,6 +17,8 @@ module conway_8x8 (
     output wire [63:0] current_state,    // Output for displaying the state currently in memory
     output wire [63:0] next_state        // Output for displaying the next state to put into memory
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 logic gated_clk;
 logic [63:0] mem_in;

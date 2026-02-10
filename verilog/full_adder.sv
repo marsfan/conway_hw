@@ -7,6 +7,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module full_adder (
     input  wire a,
     input  wire b,
@@ -14,6 +16,8 @@ module full_adder (
     output wire sum,
     output wire carry
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 assign sum = a ^ b ^ c_in;
 assign carry = (a & b) | (a & c_in) | (b & c_in);

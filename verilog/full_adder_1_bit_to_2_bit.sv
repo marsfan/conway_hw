@@ -7,11 +7,15 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module full_adder_1_bit_to_2_bit(
     input  wire       a,
     input  wire       b,
     output wire [1:0] sum
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 full_adder adder(
     .a(a),

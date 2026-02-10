@@ -7,6 +7,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module popcount(
     input  wire       n,
     input  wire       ne,
@@ -18,6 +20,8 @@ module popcount(
     input  wire       nw,
     output wire [3:0] count
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 // Intermediate signals for the 2 bit values
 

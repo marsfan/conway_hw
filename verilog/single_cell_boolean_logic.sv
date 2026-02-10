@@ -15,6 +15,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module single_cell_boolean_logic(
     input  wire me,
     input  wire n,
@@ -27,6 +29,8 @@ module single_cell_boolean_logic(
     input  wire nw,
     output wire is_alive
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 
 

@@ -7,6 +7,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module serial_to_parallel #(
     parameter int unsigned DATA_SIZE = 64
 ) (
@@ -16,6 +18,8 @@ module serial_to_parallel #(
     input  wire                  rst,
     output reg [DATA_SIZE - 1:0] data = 0
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 
 always @(posedge clk, posedge rst) begin: shift_register_process

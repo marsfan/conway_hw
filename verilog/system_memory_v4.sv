@@ -12,6 +12,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module system_memory_v4 #(
     parameter int unsigned DATA_SIZE = 64
 ) (
@@ -28,6 +30,8 @@ module system_memory_v4 #(
     output reg  [DATA_SIZE - 1:0] system_mem_out,  // Memory output for the system to use
     output reg                    serial_out       // Serial system output
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 always @(posedge clk, posedge reset) begin: shift_register_process
     if (reset) begin

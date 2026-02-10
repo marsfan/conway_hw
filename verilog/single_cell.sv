@@ -15,6 +15,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module single_cell(
     input  wire me,
     input  wire n,
@@ -27,6 +29,8 @@ module single_cell(
     input  wire nw,
     output wire is_alive
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 logic [3:0] alive_neighbors;   //Number of neighbors that are alive.
 logic       alive_neighbors_2; // Number of alive neighbors is 2

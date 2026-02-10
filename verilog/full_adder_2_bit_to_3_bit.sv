@@ -7,11 +7,15 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module full_adder_2_bit_to_3_bit(
     input  wire [1:0] a,
     input  wire [1:0] b,
     output wire [2:0] sum
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 logic carry_int;
 

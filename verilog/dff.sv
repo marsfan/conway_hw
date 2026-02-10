@@ -16,6 +16,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module dff #(
     parameter int unsigned SIZE = 1
 )(
@@ -25,6 +27,8 @@ module dff #(
     input  wire              reset,
     output reg  [SIZE - 1:0] q
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 
     // parameter SIZE = 1;

@@ -8,6 +8,8 @@
 */
 `default_nettype none
 
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module popcount_arith(
     input  wire       n,
     input  wire       ne,
@@ -19,6 +21,8 @@ module popcount_arith(
     input  wire       nw,
     output wire [3:0] count
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 
 // Extend inputs to all be 4 bits wide.

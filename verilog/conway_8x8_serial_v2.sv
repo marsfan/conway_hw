@@ -8,6 +8,9 @@
 */
 `default_nettype none
 
+
+/* svlint off style_keyword_datatype */
+/* svlint off keyword_forbidden_wire_reg */
 module conway_8x8_serial_v2 (
     input  wire       data_in,   // Serial data in
     input  wire [1:0] mode,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
@@ -19,6 +22,8 @@ module conway_8x8_serial_v2 (
     output wire       dout_led,  // Data output LED for debugging
     output wire [1:0] mode_leds  // Mode LEDs for debugging
 );
+/* svlint on keyword_forbidden_wire_reg */
+/* svlint on style_keyword_datatype */
 
 localparam int unsigned GRID_WIDTH = 8;
 localparam int unsigned GRID_HEIGHT = 8;
