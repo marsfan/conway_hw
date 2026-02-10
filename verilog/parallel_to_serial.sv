@@ -6,35 +6,38 @@
 * file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
 
-module parallel_to_serial #(parameter data_size = 64)
-(
-    input wire [data_size-1:0] DATA_IN,  // Parallel input
-    input wire LOAD_EN,                  // Enables loading data in in parallel
-    input wire SHIFT_EN,                 // Enables shifting data out serially
-    input wire CLK,                      // Clock in
-    input wire RST,                      // Asynchronous Reset
-    output reg DATA                 // Serial data out.
+module parallel_to_serial #(
+    parameter int unsigned DATA_SIZE = 64
+) (
+    input  wire [DATA_SIZE - 1:0] data_in,  // Parallel input
+    input  wire                   load_en,  // Enables loading data in in parallel
+    input  wire                   shift_en,  // Enables shifting data out serially
+    input  wire                   clk,  // Clock in
+    input  wire                   rst,  // Asynchronous Reset
+    output reg                    data  // Serial data out.
 );
 
-reg [data_size - 1:0] SR_TMP = 0;
+logic [DATA_SIZE - 1:0] sr_tmp = 0;
 
-always @(posedge CLK, posedge RST) begin : shift_register_process
-    if (RST) begin
-        DATA <= 0;
-        SR_TMP <= 0;
-    end else if (CLK) begin
-        if (LOAD_EN) begin
-            SR_TMP <= DATA_IN;
-        end else if (SHIFT_EN) begin
+always @(posedge clk, posedge rst) begin: shift_register_process
+    if (rst) begin
+        data <= 0;
+        sr_tmp <= 0;
+    end else if (clk) begin
+        if (load_en) begin
+            sr_tmp <= data_in;
+        end else if (shift_en) begin
             // Push out the lowest value.
-            DATA <= SR_TMP[$low(SR_TMP)];
+            data <= sr_tmp[$low(sr_tmp)];
 
             // Concatenate a zero with upper 63 elements
             // This means we have shifted everything down one bit, and shifted
             // in a zero at the top.
-            SR_TMP <= {1'b0, SR_TMP[$high(SR_TMP):($low(SR_TMP)+1)]};
+            sr_tmp <= {1'b0, sr_tmp[$high(sr_tmp):($low(sr_tmp) + 1)]};
         end
     end
 end
 
 endmodule
+
+`default_nettype wire

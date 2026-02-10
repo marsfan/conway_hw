@@ -9,35 +9,39 @@
 */
 `default_nettype none
 
-module system_memory_v2 #(parameter data_size)
-(
-    input wire [data_size-1:0] GRID_IN   ,// Input from the grid calculator
-    input wire SERIAL_IN ,// Serial input from external interface
+module system_memory_v2 #(
+    parameter int unsigned DATA_SIZE
+) (
+    input  wire [DATA_SIZE - 1:0] grid_in,   // Input from the grid calculator
+    input  wire                   serial_in, // Serial input from external interface
 
     // If both are asserted, then RUN_MODE will take priority
-    input wire LOAD_MODE ,                     // Indicates system is in load mode (i.e. load from serial)
-    input wire RUN_MODE,                       // Indcates system is in run mode (i.e. load from grid in)
-    input wire CLK,                            // System clock
-    input wire RESET,                          // Asynchronous reset.
-    output reg [data_size-1:0]  DATA_OUT  // Memory output
+    input  wire                   load_mode, // Indicates system is in load mode (i.e. load from serial)
+    input  wire                   run_mode,  // Indcates system is in run mode (i.e. load from grid in)
+    input  wire                   clk,       // System clock
+    input  wire                   reset,     // Asynchronous reset.
+    output reg  [DATA_SIZE - 1:0] data_out   // Memory output
 );
 
 // Got this from here: https://vhdlwhiz.com/shift-register/
 // Then ported to Verilog
 
-always @(posedge CLK, posedge RESET) begin : shift_register_process
-    if (RESET) begin
-        DATA_OUT <= 0;
-    end else if (CLK) begin
-        if (RUN_MODE) begin
-            DATA_OUT <= GRID_IN;
-        end else if (LOAD_MODE) begin
+always @(posedge clk, posedge reset) begin: shift_register_process
+    if (reset) begin
+        data_out <= 0;
+    end else if (clk) begin
+        if (run_mode) begin
+            data_out <= grid_in;
+        end else if (load_mode) begin
             // Take a slice of the bottom 63 elements, and concatenate it with the new value
             // This means we have shifted everying up one bit, and shifted in the new value at the bottom
-            DATA_OUT <= {DATA_OUT[$high(DATA_OUT) - 1:0], SERIAL_IN};
+            data_out <= {data_out[$high(data_out) - 1:0], serial_in};
         end
     end
 end
 
 endmodule
 
+
+
+`default_nettype wire

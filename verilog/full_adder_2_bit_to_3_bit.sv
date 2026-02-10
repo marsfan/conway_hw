@@ -8,14 +8,28 @@
 `default_nettype none
 
 module full_adder_2_bit_to_3_bit(
-    input wire [1:0] A,
-    input wire [1:0] B,
-    output wire [2:0] SUM
+    input  wire [1:0] a,
+    input  wire [1:0] b,
+    output wire [2:0] sum
 );
 
-wire CARRY_INT;
+logic carry_int;
 
-full_adder first_adder(A[0], B[0], 1'b0, SUM[0], CARRY_INT);
-full_adder second_adder(A[1], B[1], CARRY_INT, SUM[1], SUM[2]);
+full_adder first_adder(
+    .a(a[0]),
+    .b(b[0]),
+    .c_in(1'b0),
+    .sum(sum[0]),
+    .carry(carry_int)
+);
+full_adder second_adder(
+    .a(a[1]),
+    .b(b[1]),
+    .c_in(carry_int),
+    .sum(sum[1]),
+    .carry(sum[2])
+);
 
 endmodule
+
+`default_nettype wire

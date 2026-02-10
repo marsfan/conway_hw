@@ -8,40 +8,70 @@
 `default_nettype none
 
 module popcount(
-    input wire        N,
-    input wire        NE,
-    input wire        E,
-    input wire        SE,
-    input wire        S,
-    input wire        SW,
-    input wire        W,
-    input wire        NW,
-    output wire [3:0] COUNT
+    input  wire       n,
+    input  wire       ne,
+    input  wire       e,
+    input  wire       se,
+    input  wire       s,
+    input  wire       sw,
+    input  wire       w,
+    input  wire       nw,
+    output wire [3:0] count
 );
 
 // Intermediate signals for the 2 bit values
 
-wire [1:0] SUM_1_TO_2_1;
-wire [1:0] SUM_1_TO_2_2;
-wire [1:0] SUM_1_TO_2_3;
-wire [1:0] SUM_1_TO_2_4;
+logic [1:0] sum_1_to_2_1;
+logic [1:0] sum_1_to_2_2;
+logic [1:0] sum_1_to_2_3;
+logic [1:0] sum_1_to_2_4;
 
 // Intermediate signals for the 3 bit values
-wire [2:0] SUM_2_TO_3_1;
-wire [2:0] SUM_2_TO_3_2;
+logic [2:0] sum_2_to_3_1;
+logic [2:0] sum_2_to_3_2;
 
     // First stage adders
-    full_adder_1_bit_to_2_bit adder_1_to_2_1(N, NE, SUM_1_TO_2_1);
-    full_adder_1_bit_to_2_bit adder_1_to_2_2(E, SE, SUM_1_TO_2_2);
-    full_adder_1_bit_to_2_bit adder_1_to_2_3(S, SW, SUM_1_TO_2_3);
-    full_adder_1_bit_to_2_bit adder_1_to_2_4(W, NW, SUM_1_TO_2_4);
+    full_adder_1_bit_to_2_bit adder_1_to_2_1(
+        .a(n),
+        .b(ne),
+        .sum(sum_1_to_2_1)
+    );
+    full_adder_1_bit_to_2_bit adder_1_to_2_2(
+        .a(e),
+        .b(se),
+        .sum(sum_1_to_2_2)
+    );
+    full_adder_1_bit_to_2_bit adder_1_to_2_3(
+        .a(s),
+        .b(sw),
+        .sum(sum_1_to_2_3)
+    );
+    full_adder_1_bit_to_2_bit adder_1_to_2_4(
+        .a(w),
+        .b(nw),
+        .sum(sum_1_to_2_4)
+    );
 
     // Second stage adders
-    full_adder_2_bit_to_3_bit adder_2_to_3_1(SUM_1_TO_2_1, SUM_1_TO_2_2, SUM_2_TO_3_1);
-    full_adder_2_bit_to_3_bit adder_2_to_3_2(SUM_1_TO_2_3, SUM_1_TO_2_4, SUM_2_TO_3_2);
+    full_adder_2_bit_to_3_bit adder_2_to_3_1(
+        .a(sum_1_to_2_1),
+        .b(sum_1_to_2_2),
+        .sum(sum_2_to_3_1)
+    );
+    full_adder_2_bit_to_3_bit adder_2_to_3_2(
+        .a(sum_1_to_2_3),
+        .b(sum_1_to_2_4),
+        .sum(sum_2_to_3_2)
+    );
 
     // Third stage adder
-    full_adder_3_bit_to_4_bit adder_3_to_4(SUM_2_TO_3_1, SUM_2_TO_3_2, COUNT);
+    full_adder_3_bit_to_4_bit adder_3_to_4(
+        .a(sum_2_to_3_1),
+        .b(sum_2_to_3_2),
+        .sum(count)
+    );
 
 
 endmodule
+
+`default_nettype wire

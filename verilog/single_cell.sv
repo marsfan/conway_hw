@@ -16,36 +16,48 @@
 `default_nettype none
 
 module single_cell(
-    input wire ME,
-    input wire N,
-    input wire NE,
-    input wire E,
-    input wire SE,
-    input wire S,
-    input wire SW,
-    input wire W,
-    input wire NW,
-    output wire IS_ALIVE
+    input  wire me,
+    input  wire n,
+    input  wire ne,
+    input  wire e,
+    input  wire se,
+    input  wire s,
+    input  wire sw,
+    input  wire w,
+    input  wire nw,
+    output wire is_alive
 );
 
-wire [3:0] ALIVE_NEIGHBORS; //Number of neighbors that are alive.
-wire ALIVE_NEIGHBORS_2;     // Number of alive neighbors is 2
-wire ALIVE_NEIGHBORS_3;     // Number of alive neighbors is 3
-wire RULE_2_ALIVE;          // Whether or not we live as per rule 2
-wire RULE_4_ALIVE;          // Whether or not we live as per rule 4
+logic [3:0] alive_neighbors;   //Number of neighbors that are alive.
+logic       alive_neighbors_2; // Number of alive neighbors is 2
+logic       alive_neighbors_3; // Number of alive neighbors is 3
+logic       rule_2_alive;      // Whether or not we live as per rule 2
+logic       rule_4_alive;      // Whether or not we live as per rule 4
 
 // Count number of living neighbors
-popcount counter(N, NE, E, SE, S, SW, W, NW, ALIVE_NEIGHBORS);
+popcount counter(
+    .n(n),
+    .ne(ne),
+    .e(e),
+    .se(se),
+    .s(s),
+    .sw(sw),
+    .w(w),
+    .nw(nw),
+    .count(alive_neighbors)
+);
 
 // Check if number of neighbors is 2 or 3
-assign ALIVE_NEIGHBORS_2 = (ALIVE_NEIGHBORS == 2) ? 1 : 0;
-assign ALIVE_NEIGHBORS_3 = (ALIVE_NEIGHBORS == 3) ? 1 : 0;
+assign alive_neighbors_2 = (alive_neighbors == 2) ? 1 : 0;
+assign alive_neighbors_3 = (alive_neighbors == 3) ? 1 : 0;
 
 // Evaluating rules 2 and 4
-assign RULE_2_ALIVE = (ALIVE_NEIGHBORS_2 | ALIVE_NEIGHBORS_3) & ME;
-assign RULE_4_ALIVE = ALIVE_NEIGHBORS_3 & ~ME;
+assign rule_2_alive = (alive_neighbors_2 | alive_neighbors_3) & me;
+assign rule_4_alive = alive_neighbors_3 & ~me;
 
 // If either rule is alive, then we are alive
-assign IS_ALIVE = RULE_2_ALIVE | RULE_4_ALIVE;
+assign is_alive = rule_2_alive | rule_4_alive;
 
 endmodule
+
+`default_nettype wire

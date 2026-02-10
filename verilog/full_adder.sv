@@ -8,14 +8,16 @@
 `default_nettype none
 
 module full_adder (
-    input wire A,
-    input wire B,
-    input wire C_IN,
-    output wire SUM,
-    output wire CARRY
+    input  wire a,
+    input  wire b,
+    input  wire c_in,
+    output wire sum,
+    output wire carry
 );
 
-assign SUM = A ^ B ^ C_IN;
-assign CARRY = (A & B) | (A & C_IN) | (B & C_IN);
+assign sum = a ^ b ^ c_in;
+assign carry = (a & b) | (a & c_in) | (b & c_in);
 
 endmodule
+
+`default_nettype wire

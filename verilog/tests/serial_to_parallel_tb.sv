@@ -11,18 +11,18 @@ module serial_to_parallel_tb();
 
     localparam DEPTH = 3;
 
-    logic DATA_IN;
-    logic EN;
-    logic CLK;
-    logic RST;
-    logic [DEPTH-1:0] DATA;
+    logic data_in;
+    logic en;
+    logic clk;
+    logic rst;
+    logic [DEPTH-1:0] data;
 
     serial_to_parallel #(DEPTH) dut (
-        .DATA_IN(DATA_IN),
-        .EN(EN),
-        .CLK(CLK),
-        .RST(RST),
-        .DATA(DATA)
+        .data_in(data_in),
+        .en(en),
+        .clk(clk),
+        .rst(rst),
+        .data(data)
     );
 
     initial begin
@@ -33,50 +33,50 @@ module serial_to_parallel_tb();
         $dumpfile("waveforms/serial_to_parallel_tb.vcd");
         $dumpvars(0, serial_to_parallel_tb);
 
-        EN      <= 0;
-        DATA_IN <= 0;
+        en      <= 0;
+        data_in <= 0;
 
         // Reset system
-        RST <= 1;
+        rst <= 1;
         #1
-        `CHECK_EQ(DATA, 3'b000, errcount, "Reset failed");
+        `CHECK_EQ(data, 3'b000, errcount, "Reset failed");
 
         // Clear reset flag
-        RST <= 0;
+        rst <= 0;
 
-        // Check we don't load when EN is 0
-        DATA_IN <= 1;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(DATA, 3'b000, errcount, "No loaded when EN = 0");
+        // Check we don't load when en is 0
+        data_in <= 1;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(data, 3'b000, errcount, "No loaded when en = 0");
 
         // Set enable and shift in
-        EN      <= 1;
-        DATA_IN <= 1;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(DATA, 3'b001, errcount, "Loaded a byte");
+        en      <= 1;
+        data_in <= 1;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(data, 3'b001, errcount, "Loaded a byte");
 
-        DATA_IN <= 0;
+        data_in <= 0;
         // Check it gets shifted up a byte
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(DATA, 3'b010, errcount, "Byte was shifted");
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(data, 3'b010, errcount, "Byte was shifted");
 
         // Load another byte
-        DATA_IN <= 1;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(DATA, 3'b101, errcount, "Second byte loaded");
+        data_in <= 1;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(data, 3'b101, errcount, "Second byte loaded");
 
-        // Ensure after clearing EN we get no new bytes for a few cycles
-        EN      <= 0;
-        DATA_IN <= 0;
-        `RUN_CLOCK(CLK, 20);
-        `RUN_CLOCK(CLK, 20);
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(DATA, 3'b101, errcount, "No change after clearing EN");
+        // Ensure after clearing en we get no new bytes for a few cycles
+        en      <= 0;
+        data_in <= 0;
+        `RUN_CLOCK(clk, 20);
+        `RUN_CLOCK(clk, 20);
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(data, 3'b101, errcount, "No change after clearing en");
 
         // Reset everything
-        RST <= 1;
+        rst <= 1;
         #1
-        `CHECK_EQ(DATA, 3'b000, errcount, "Reset at end failed");
+        `CHECK_EQ(data, 3'b000, errcount, "Reset at end failed");
 
 
         `STOP_IF_ERR(errcount);

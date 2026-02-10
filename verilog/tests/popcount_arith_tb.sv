@@ -1,5 +1,5 @@
 /*
-* This Source Code Form is subject to the terms of the Mozilla Public
+* This source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
@@ -10,38 +10,38 @@
 module popcount_arith_tb();
 
 
-    logic N;
-    logic NE;
-    logic E;
-    logic SE;
-    logic S;
-    logic SW;
-    logic W;
-    logic NW;
-    logic [3:0] COUNT;
+    logic n;
+    logic ne;
+    logic e;
+    logic se;
+    logic s;
+    logic sw;
+    logic w;
+    logic nw;
+    logic [3:0] count;
 
     popcount_arith dut(
-        .N(N),
-        .NE(NE),
-        .E(E),
-        .SE(SE),
-        .S(S),
-        .SW(SW),
-        .W(W),
-        .NW(NW),
-        .COUNT(COUNT)
+        .n(n),
+        .ne(ne),
+        .e(e),
+        .se(se),
+        .s(s),
+        .sw(sw),
+        .w(w),
+        .nw(nw),
+        .count(count)
     );
 
     typedef struct packed {
-        logic N;
-        logic NE;
-        logic E;
-        logic SE;
-        logic S;
-        logic SW;
-        logic W;
-        logic NW;
-        logic [3:0] COUNT;
+        logic n;
+        logic ne;
+        logic e;
+        logic se;
+        logic s;
+        logic sw;
+        logic w;
+        logic nw;
+        logic [3:0] count;
     } test_case_t;
 
     test_case_t [255:0] test_cases;
@@ -313,18 +313,18 @@ module popcount_arith_tb();
         $dumpvars(0, popcount_arith_tb);
 
         for (int i = 0; i < 256; i++) begin
-            N  <= test_cases[i].N;
-            NE <= test_cases[i].NE;
-            E  <= test_cases[i].E;
-            SE <= test_cases[i].SE;
-            S  <= test_cases[i].S;
-            SW <= test_cases[i].SW;
-            W  <= test_cases[i].W;
-            NW <= test_cases[i].NW;
+            n  <= test_cases[i].n;
+            ne <= test_cases[i].ne;
+            e  <= test_cases[i].e;
+            se <= test_cases[i].se;
+            s  <= test_cases[i].s;
+            sw <= test_cases[i].sw;
+            w  <= test_cases[i].w;
+            nw <= test_cases[i].nw;
 
             #1;
 
-            `CHECK_EQ(COUNT, test_cases[i].COUNT, errcount, i);
+            `CHECK_EQ(count, test_cases[i].count, errcount, i);
         end
 
         `STOP_IF_ERR(errcount);

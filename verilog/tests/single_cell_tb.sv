@@ -1,5 +1,5 @@
 /*
-* This Source Code Form is subject to the terms of the Mozilla Public
+* This source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
@@ -9,28 +9,28 @@
 
 module single_cell_tb();
 
-    logic ME;
-    logic N;
-    logic NE;
-    logic E;
-    logic SE;
-    logic S;
-    logic SW;
-    logic W;
-    logic NW;
-    logic IS_ALIVE;
+    logic me;
+    logic n;
+    logic ne;
+    logic e;
+    logic se;
+    logic s;
+    logic sw;
+    logic w;
+    logic nw;
+    logic is_alive;
 
     typedef struct packed {
-        logic ME;
-        logic N;
-        logic NE;
-        logic E;
-        logic SE;
-        logic S;
-        logic SW;
-        logic W;
-        logic NW;
-        logic IS_ALIVE;
+        logic me;
+        logic n;
+        logic ne;
+        logic e;
+        logic se;
+        logic s;
+        logic sw;
+        logic w;
+        logic nw;
+        logic is_alive;
     } test_case_t;
 
     test_case_t [511:0] test_cases ;
@@ -548,16 +548,16 @@ module single_cell_tb();
     assign test_cases[511] = {1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0};
 
     single_cell dut(
-        .ME(ME),
-        .N(N),
-        .NE(NE),
-        .E(E),
-        .SE(SE),
-        .S(S),
-        .SW(SW),
-        .W(W),
-        .NW(NW),
-        .IS_ALIVE(IS_ALIVE)
+        .me(me),
+        .n(n),
+        .ne(ne),
+        .e(e),
+        .se(se),
+        .s(s),
+        .sw(sw),
+        .w(w),
+        .nw(nw),
+        .is_alive(is_alive)
     );
 
     initial begin
@@ -569,17 +569,17 @@ module single_cell_tb();
         $dumpvars(0, single_cell_tb);
 
         for (int i = 0; i <$size(test_cases); i++) begin
-            ME <= test_cases[i].ME;
-            N  <= test_cases[i].N;
-            NE <= test_cases[i].NE;
-            E  <= test_cases[i].E;
-            SE <= test_cases[i].SE;
-            S  <= test_cases[i].S;
-            SW <= test_cases[i].SW;
-            W  <= test_cases[i].W;
-            NW <= test_cases[i].NW;
+            me <= test_cases[i].me;
+            n  <= test_cases[i].n;
+            ne <= test_cases[i].ne;
+            e  <= test_cases[i].e;
+            se <= test_cases[i].se;
+            s  <= test_cases[i].s;
+            sw <= test_cases[i].sw;
+            w  <= test_cases[i].w;
+            nw <= test_cases[i].nw;
 
-            #1`CHECK_EQ(IS_ALIVE, test_cases[i].IS_ALIVE, errcount, i);
+            #1`CHECK_EQ(is_alive, test_cases[i].is_alive, errcount, i);
         end
 
 

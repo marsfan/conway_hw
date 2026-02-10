@@ -7,25 +7,28 @@
 */
 `default_nettype none
 
-module serial_to_parallel #(parameter data_size = 64)
-(
-    input wire DATA_IN,
-    input wire EN,
-    input wire CLK,
-    input wire RST,
-    output reg [data_size-1:0] DATA = 0
+module serial_to_parallel #(
+    parameter int unsigned DATA_SIZE = 64
+) (
+    input  wire                  data_in,
+    input  wire                  en,
+    input  wire                  clk,
+    input  wire                  rst,
+    output reg [DATA_SIZE - 1:0] data = 0
 );
 
 
-always @(posedge CLK, posedge RST) begin : shift_register_process
-    if (RST) begin
-        DATA <= 0;
-    end else if ((CLK) && (EN)) begin
+always @(posedge clk, posedge rst) begin: shift_register_process
+    if (rst) begin
+        data <= 0;
+    end else if ((clk) && (en)) begin
         // Take a slice of the bottom 63 elements, and concatenate it with the new value
         // This means we have shifted everying up one bit, and shifted in the new value at the bottom
-        DATA <= {DATA[$high(DATA) - 1:$low(DATA)], DATA_IN};
+        data <= {data[$high(data) - 1:$low(data)], data_in};
     end
 end
 
 
 endmodule
+
+`default_nettype wire

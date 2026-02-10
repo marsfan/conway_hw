@@ -16,13 +16,16 @@
 */
 `default_nettype none
 
-module dff #(parameter SIZE = 1)(
-    input wire [SIZE-1:0] d,
-    input wire we,
-    input wire clk,
-    input wire reset,
-    output reg [SIZE-1:0]  q
+module dff #(
+    parameter int unsigned SIZE = 1
+)(
+    input  wire [SIZE - 1:0] d,
+    input  wire              we,
+    input  wire              clk,
+    input  wire              reset,
+    output reg  [SIZE - 1:0] q
 );
+
 
     // parameter SIZE = 1;
 
@@ -41,3 +44,5 @@ module dff #(parameter SIZE = 1)(
     end
 
 endmodule
+
+`default_nettype wire

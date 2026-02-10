@@ -7,21 +7,31 @@
 */
 `default_nettype none
 
-module system_memory #(parameter data_size) (
-        input wire [data_size-1:0] INITIAL_IN,   // Input from external word for initialization
-        input wire [data_size-1:0] GRID_IN,      // Input from the grid calculator
-        input wire WRITE_ENABLE,                 // Enable writing to memory
-        input wire LOAD_RUN,                     // Whether we are in load mode or run mode. Used to select input to read from
-        input wire CLK,                          // System clock
-        input wire RESET,                        // Asynchronous reset.
-        output reg [data_size-1:0] MEM_OUT  // Memory output
+module system_memory #(
+    parameter int unsigned DATA_SIZE
+) (
+    input  wire [DATA_SIZE - 1:0] initial_in,   // Input from external word for initialization
+    input  wire [DATA_SIZE - 1:0] grid_in,      // Input from the grid calculator
+    input  wire                   write_enable, // Enable writing to memory
+    input  wire                   load_run,     // Whether we are in load mode or run mode. Used to select input to read from
+    input  wire                   clk,          // System clock
+    input  wire                   reset,        // Asynchronous reset.
+    output reg  [DATA_SIZE - 1:0] mem_out       // Memory output
 );
 
-wire [data_size-1:0] MEM_IN;
+logic [DATA_SIZE - 1:0] mem_in;
 
 // MUX to select input source
-assign MEM_IN = LOAD_RUN ? GRID_IN : INITIAL_IN;
+assign mem_in = load_run ? grid_in : initial_in;
 
-dff #(data_size) memory (MEM_IN, WRITE_ENABLE, CLK, RESET, MEM_OUT);
+dff #(DATA_SIZE) memory (
+    .d(mem_in),
+    .we(write_enable),
+    .clk(clk),
+    .reset(reset),
+    .q(mem_out)
+);
 
 endmodule
+
+`default_nettype wire

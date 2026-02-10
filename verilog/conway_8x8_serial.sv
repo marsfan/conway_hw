@@ -8,65 +8,67 @@
 `default_nettype none
 
 module conway_8x8_serial (
-    input wire       DATA_IN, // Serial data in
-    input wire [1:0] MODE,    // System mode (00 = load, 01 = run, 10 = output, 11 = undefined) // TODO: Don't make undefined
-    input wire       RESET,   // Asynchronous system reset
-    input wire       CLK,     // System clock. // TODO: Separate clock for shift reg so they are faster?
-    output wire      DATA_OUT // Serial data out
+    input  wire       data_in, // Serial data in
+    input  wire [1:0] mode,    // System mode (00 = load, 01 = run, 10 = output, 11 = undefined) // TODO: Don't make undefined
+    input  wire       reset,   // Asynchronous system reset
+    input  wire       clk,     // System clock. // TODO: Separate clock for shift reg so they are faster?
+    output wire       data_out // Serial data out
 );
 
-localparam DATA_SIZE = 64;
-localparam GRID_WIDTH = 8;
-localparam GRID_HEIGHT = 8;
+localparam int unsigned GRID_WIDTH = 8;
+localparam int unsigned GRID_HEIGHT = 8;
+localparam int unsigned DATA_SIZE = GRID_WIDTH * GRID_HEIGHT;
 // FIXME: Some sort of assert that W*H=DATA_SIZE
 
-wire LOAD_MODE;  // High when mode = 00
-wire RUN_MODE;  // High when mode = 01
-wire OUTPUT_MODE;  // High when mode = 10
-wire STOP_MODE;  // High when mode = 11
-wire LOAD_OR_RUN;  // High when mode = 00 or 01
-wire [DATA_SIZE - 1:0] DATA_IN_PARALLEL;  // Input data in parallel form
-wire [DATA_SIZE - 1:0] MEM_OUT;  // Output from memory
-wire [DATA_SIZE - 1:0] NEXT_STATE;  // Output from cell calculation grid
+logic load_mode;  // High when mode = 00
+logic run_mode;  // High when mode = 01
+logic output_mode;  // High when mode = 10
+logic stop_mode;  // High when mode = 11
+logic load_or_run;  // High when mode = 00 or 01
+logic [DATA_SIZE - 1:0] data_in_parallel;  // Input data in parallel form
+logic [DATA_SIZE - 1:0] mem_out;  // Output from memory
+logic [DATA_SIZE - 1:0] next_state;  // Output from cell calculation grid
 
-decoder mode_decode(MODE, STOP_MODE, LOAD_MODE, RUN_MODE, OUTPUT_MODE);
-assign LOAD_OR_RUN = LOAD_MODE || RUN_MODE;
+decoder mode_decode(mode, stop_mode, load_mode, run_mode, output_mode);
+assign load_or_run = load_mode || run_mode;
 
 // Shift register for converting input from serial to parallel
 serial_to_parallel #(DATA_SIZE) input_shift_reg(
-    .DATA_IN(DATA_IN),
-    .EN(LOAD_MODE),
-    .CLK(CLK),
-    .RST(RESET),
-    .DATA(DATA_IN_PARALLEL)
+    .data_in(data_in),
+    .en(load_mode),
+    .clk(clk),
+    .rst(reset),
+    .data(data_in_parallel)
 );
 
 
 // The system memory that we hold everything in between cycles
 system_memory #(DATA_SIZE) memory(
-    .INITIAL_IN(DATA_IN_PARALLEL),
-    .GRID_IN(NEXT_STATE),
-    .WRITE_ENABLE(LOAD_OR_RUN),
-    .LOAD_RUN(RUN_MODE),
-    .CLK(CLK),
-    .RESET(RESET),
-    .MEM_OUT(MEM_OUT)
+    .initial_in(data_in_parallel),
+    .grid_in(next_state),
+    .write_enable(load_or_run),
+    .load_run(run_mode),
+    .clk(clk),
+    .reset(reset),
+    .mem_out(mem_out)
 );
 
 // Core calculation grid
 cell_grid #(8, 8) grid (
-    .INPUT_STATE(MEM_OUT),
-    .NEXT_STATE(NEXT_STATE)
+    .input_state(mem_out),
+    .next_state(next_state)
 );
 
 // Parallel to serial shift register
 parallel_to_serial #(DATA_SIZE) output_shift_reg (
-    .DATA_IN(NEXT_STATE),
-    .LOAD_EN(LOAD_OR_RUN),
-    .SHIFT_EN(OUTPUT_MODE),
-    .CLK(CLK),
-    .RST(RESET),
-    .DATA(DATA_OUT)
+    .data_in(next_state),
+    .load_en(load_or_run),
+    .shift_en(output_mode),
+    .clk(clk),
+    .rst(reset),
+    .data(data_out)
 );
 
 endmodule
+
+`default_nettype wire

@@ -8,11 +8,19 @@
 `default_nettype none
 
 module full_adder_1_bit_to_2_bit(
-    input wire A,
-    input wire B,
-    output wire [1:0] SUM
+    input  wire       a,
+    input  wire       b,
+    output wire [1:0] sum
 );
 
-full_adder adder(A, B, 1'b0, SUM[0], SUM[1]);
+full_adder adder(
+    .a(a),
+    .b(b),
+    .c_in(1'b0),
+    .sum(sum[0]),
+    .carry(sum[1])
+);
 
 endmodule
+
+`default_nettype wire

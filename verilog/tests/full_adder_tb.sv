@@ -10,11 +10,11 @@
 module full_adder_tb();
 
     typedef struct packed {
-        logic A1;
-        logic A2;
-        logic CIN;
-        logic COUT;
-        logic SUM;
+        logic a1;
+        logic a2;
+        logic cin;
+        logic cout;
+        logic sum;
     } test_case_t;
 
     test_case_t [7:0] test_cases;
@@ -28,14 +28,14 @@ module full_adder_tb();
     assign test_cases[6] = {1'd1, 1'd1, 1'd0, 1'd1, 1'd0};
     assign test_cases[7] = {1'd1, 1'd1, 1'd1, 1'd1, 1'd1};
 
-    logic IN1, IN2, CIN, SUM, COUT;
+    logic IN1, IN2, cin, sum, cout;
 
     full_adder dut(
-        .A(IN1),
-        .B(IN2),
-        .C_IN(CIN),
-        .SUM(SUM),
-        .CARRY(COUT)
+        .a(IN1),
+        .b(IN2),
+        .c_in(cin),
+        .sum(sum),
+        .carry(cout)
     );
 
     initial begin
@@ -47,12 +47,12 @@ module full_adder_tb();
         $dumpvars(0, full_adder_tb);
 
         for (int i = 0; i < $size(test_cases); i++) begin
-            IN1 <= test_cases[i].A1;
-            IN2 <= test_cases[i].A2;
-            CIN <= test_cases[i].CIN;
+            IN1 <= test_cases[i].a1;
+            IN2 <= test_cases[i].a2;
+            cin <= test_cases[i].cin;
             #1
-            `CHECK_EQ(SUM, test_cases[i].SUM, errcount, "SUM");
-            `CHECK_EQ(COUT, test_cases[i].COUT, errcount, "COUT");
+            `CHECK_EQ(sum, test_cases[i].sum, errcount, "sum");
+            `CHECK_EQ(cout, test_cases[i].cout, errcount, "cout");
         end
 
 

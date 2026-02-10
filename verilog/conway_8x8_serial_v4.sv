@@ -10,63 +10,65 @@
 `default_nettype none
 
 module conway_8x8_serial_v4 (
-    input wire        DATA_IN,   // Serial data in
-    input wire [1:0]  MODE,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
-    input wire        RESET,     // Async system reset
-    input wire        CLK,       // System clock // TODO: Separate clocks for shift regs so they can run faster?
-    output wire       DATA_OUT,  // Serial data out
-    output wire       DIN_LED,   // Data input LED for debugging
-    output wire       CLK_LED,   // Data output LED for debugging
-    output wire       DOUT_LED,  // Data output LED for debugging
-    output wire [1:0] MODE_LEDS  // Mode LEDs for debugging
+    input  wire       data_in,   // Serial data in
+    input  wire [1:0] mode,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
+    input  wire       reset,     // Async system reset
+    input  wire       clk,       // System clock // TODO: Separate clocks for shift regs so they can run faster?
+    output wire       data_out,  // Serial data out
+    output wire       din_led,   // Data input LED for debugging
+    output wire       clk_led,   // Data output LED for debugging
+    output wire       dout_led,  // Data output LED for debugging
+    output wire [1:0] mode_leds  // Mode LEDs for debugging
 );
 
-localparam DATA_SIZE = 64;
-localparam GRID_WIDTH = 8;
-localparam GRID_HEIGHT = 8;
+localparam int unsigned GRID_WIDTH = 8;
+localparam int unsigned GRID_HEIGHT = 8;
+localparam int unsigned DATA_SIZE = GRID_WIDTH * GRID_HEIGHT;
 // FIXME: Some sort of assert that W*H=DATA_SIZE
 
-wire LOAD_MODE;  // High when mode = 00
-wire RUN_MODE;  // High when mode = 01
-wire OUTPUT_MODE;  // High when mode = 10
-wire STOP_MODE;  // High when mode = 11
-wire LOAD_OR_RUN;  // High when mode = 00 or 01
-wire [DATA_SIZE - 1:0] MEM_OUT;  // Output from memory
-wire [DATA_SIZE - 1:0] NEXT_STATE;  // Output from cell calculation grid
-wire SERIAL_OUT;
+logic load_mode;  // High when mode = 00
+logic run_mode;  // High when mode = 01
+logic output_mode;  // High when mode = 10
+logic stop_mode;  // High when mode = 11
+logic load_or_run;  // High when mode = 00 or 01
+logic [DATA_SIZE - 1:0] mem_out;  // Output from memory
+logic [DATA_SIZE - 1:0] next_state;  // Output from cell calculation grid
+logic serial_out;
 
 
-decoder mode_decode(MODE, STOP_MODE, LOAD_MODE, RUN_MODE, OUTPUT_MODE);
-assign LOAD_OR_RUN = LOAD_MODE || RUN_MODE;
+decoder mode_decode(mode, stop_mode, load_mode, run_mode, output_mode);
+assign load_or_run = load_mode || run_mode;
 
 // The system memory that we hold everything in between cycles
 system_memory_v4 #(DATA_SIZE) memory (
-    .GRID_IN(NEXT_STATE),
-    .SERIAL_IN(DATA_IN),
-    .LOAD_MODE(LOAD_MODE),
-    .RUN_MODE(RUN_MODE),
-    .OUTPUT_MODE(OUTPUT_MODE),
-    .CLK(CLK),
-    .RESET(RESET),
-    .SYSTEM_MEM_OUT(MEM_OUT),
-    .SERIAL_OUT(SERIAL_OUT)
+    .grid_in(next_state),
+    .serial_in(data_in),
+    .load_mode(load_mode),
+    .run_mode(run_mode),
+    .output_mode(output_mode),
+    .clk(clk),
+    .reset(reset),
+    .system_mem_out(mem_out),
+    .serial_out(serial_out)
 );
 
 // Core calculation system
 cell_grid #(GRID_WIDTH, GRID_HEIGHT) grid (
-    .INPUT_STATE(MEM_OUT),
-    .NEXT_STATE(NEXT_STATE)
+    .input_state(mem_out),
+    .next_state(next_state)
 );
 
 
 // Main output
-assign DATA_OUT = SERIAL_OUT;
+assign data_out = serial_out;
 
 // LED Routing
-assign DIN_LED = DATA_IN;
-assign CLK_LED = CLK;
-assign DOUT_LED = SERIAL_OUT;
-assign MODE_LEDS = MODE;
+assign din_led = data_in;
+assign clk_led = clk;
+assign dout_led = serial_out;
+assign mode_leds = mode;
 
 
 endmodule
+
+`default_nettype wire

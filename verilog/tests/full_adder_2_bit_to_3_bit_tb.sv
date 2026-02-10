@@ -10,9 +10,9 @@
 module full_adder_2_bit_to_3_bit_tb();
 
     typedef struct packed  {
-        logic [1:0] A;
-        logic [1:0] B;
-        logic [2:0] SUM;
+        logic [1:0] a;
+        logic [1:0] b;
+        logic [2:0] sum;
     } test_case_t;
 
     test_case_t [15:0]  test_cases;
@@ -38,14 +38,14 @@ module full_adder_2_bit_to_3_bit_tb();
     assign test_cases[15] = {2'b11, 2'b11, 3'b110};
 
 
-    logic [1:0] A;
-    logic [1:0] B;
-    logic [2:0] SUM;
+    logic [1:0] a;
+    logic [1:0] b;
+    logic [2:0] sum;
 
     full_adder_2_bit_to_3_bit dut(
-        .A(A),
-        .B(B),
-        .SUM(SUM)
+        .a(a),
+        .b(b),
+        .sum(sum)
     );
 
     initial begin
@@ -57,9 +57,9 @@ module full_adder_2_bit_to_3_bit_tb();
         $dumpvars(0, full_adder_2_bit_to_3_bit_tb);
 
         for (int i =0; i < $size(test_cases); i++) begin
-            A <= test_cases[i].A;
-            B <= test_cases[i].B;
-            #1 `CHECK_EQ(SUM, test_cases[i].SUM, errcount, i);
+            a <= test_cases[i].a;
+            b <= test_cases[i].b;
+            #1 `CHECK_EQ(sum, test_cases[i].sum, errcount, i);
 
         end
 

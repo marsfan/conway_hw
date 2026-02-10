@@ -10,68 +10,71 @@
 */
 `default_nettype none
 
-module system_memory_v3 #(parameter data_size = 64)
-(
+module system_memory_v3 #(
+    parameter int unsigned DATA_SIZE = 64
+) (
         // RUN_MODE has priority.
         // Then LOAD_MODE
         // Then OUTPUT_MODE
-        input wire [data_size-1:0] GRID_IN,         // Input from the grid calculator
-        input wire                 SERIAL_IN,       // Serial input from external interface
-        input wire                 LOAD_MODE,       // Indicates system is in load mode (i.e. load from serial)
-        input wire                 RUN_MODE,        // Indcates system is in run mode (i.e. load from grid in)
-        input wire                 OUTPUT_MODE,     // Indicates system is in output mode (i.e. shift out over serial)
-        input wire                 CLK,             // System clock
-        input wire                 RESET,           // Asynchronous reset.
-        output reg [data_size-1:0] SYSTEM_MEM_OUT , // Memory output for the system to use
-        output reg                 SERIAL_OUT // Serial system output
+        input  wire [DATA_SIZE - 1:0] grid_in,        // Input from the grid calculator
+        input  wire                   serial_in,       // Serial input from external interface
+        input  wire                   load_mode,       // Indicates system is in load mode (i.e. load from serial)
+        input  wire                   run_mode,        // Indcates system is in run mode (i.e. load from grid in)
+        input  wire                   output_mode,     // Indicates system is in output mode (i.e. shift out over serial)
+        input  wire                   clk,             // System clock
+        input  wire                   reset,           // Asynchronous reset.
+        output reg  [DATA_SIZE - 1:0] system_mem_out , // Memory output for the system to use
+        output reg                    serial_out       // Serial system output
 );
 
 // Input shift register memory
-reg [data_size-1:0] INPUT_SR = 0;
+logic [DATA_SIZE - 1:0] input_sr = 0;
 
 // Output shift register memory
-reg [data_size-1:0] OUTPUT_SR = 0;
+logic [DATA_SIZE - 1:0] output_sr = 0;
 
 // Got this from here: https://vhdlwhiz.com/shift-register/
 // TODO: Re-write as a single process (testing shows the same resource use when I do that)
-always @(posedge CLK, posedge RESET) begin : input_shift_register_process
-    if (RESET) begin
-        INPUT_SR <= 0;
-    end else if (CLK) begin
-        if (RUN_MODE) begin
-            INPUT_SR <= GRID_IN;
-        end else if (LOAD_MODE) begin
+always @(posedge clk, posedge reset) begin: input_shift_register_process
+    if (reset) begin
+        input_sr <= 0;
+    end else if (clk) begin
+        if (run_mode) begin
+            input_sr <= grid_in;
+        end else if (load_mode) begin
             // Take a slice of the bottom 63 elements, and concatenate it with the new value
             // This means we have shifted everying up one bit, and shifted in the new value at the bottom
-            INPUT_SR <= {INPUT_SR[$high(INPUT_SR)-1:0], SERIAL_IN};
+            input_sr <= {input_sr[$high(input_sr) - 1:0], serial_in};
         end
     end
 end
 
-always @(posedge CLK, posedge RESET) begin : output_shift_register_process
-    if (RESET) begin
-        SERIAL_OUT <= 0;
-        OUTPUT_SR <= 0;
-    end else if (CLK) begin
-        if (RUN_MODE) begin
-            OUTPUT_SR <= GRID_IN;
-        end else if (LOAD_MODE) begin
+always @(posedge clk, posedge reset) begin: output_shift_register_process
+    if (reset) begin
+        serial_out <= 0;
+        output_sr <= 0;
+    end else if (clk) begin
+        if (run_mode) begin
+            output_sr <= grid_in;
+        end else if (load_mode) begin
             // Take a slice of the bottom 63 elements, and concatenate it with the new value
             // This means we have shifted everying up one bit, and shifted in the new value at the bottom
-            OUTPUT_SR <= {OUTPUT_SR[$high(OUTPUT_SR)-1:0], SERIAL_IN};
-        end else if (OUTPUT_MODE) begin
+            output_sr <= {output_sr[$high(output_sr) - 1:0], serial_in};
+        end else if (output_mode) begin
             // Push out the highest value
-            SERIAL_OUT <= OUTPUT_SR[$high(OUTPUT_SR)];
+            serial_out <= output_sr[$high(output_sr)];
 
             // Concatenate a zero with the upper 63 elements.
             // This means we have shifted everything down one bit, and shifted
             // in a zero at the top.
-            OUTPUT_SR <= {OUTPUT_SR[$high(OUTPUT_SR)-1:0], 1'd0};
+            output_sr <= {output_sr[$high(output_sr) - 1:0], 1'd0};
         end
     end
 end
 
 // Write input shift register to parallel output
-assign SYSTEM_MEM_OUT = INPUT_SR;
+assign system_mem_out = input_sr;
 
 endmodule
+
+`default_nettype wire

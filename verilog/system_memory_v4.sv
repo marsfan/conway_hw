@@ -12,41 +12,44 @@
 */
 `default_nettype none
 
-module system_memory_v4 #(parameter data_size = 64)
-(
+module system_memory_v4 #(
+    parameter int unsigned DATA_SIZE = 64
+) (
     // RUN_MODE has priority.
     // Then LOAD_MODE
     // Then OUTPUT_MODE
-    input wire      [data_size-1:0] GRID_IN,         // Input from the grid calculator
-    input wire                      SERIAL_IN,       // Serial input from external interface
-    input wire                      LOAD_MODE,       // Indicates system is in load mode (i.e. load from serial)
-    input wire                      RUN_MODE,        // Indcates system is in run mode (i.e. load from grid in)
-    input wire                      OUTPUT_MODE,     // Indicates system is in output mode (i.e. shift out over serial)
-    input wire                      CLK,             // System clock
-    input wire                      RESET,           // Asynchronous reset.
-    output reg [data_size-1:0] SYSTEM_MEM_OUT,  // Memory output for the system to use
-    output reg                 SERIAL_OUT       // Serial system output
+    input  wire [DATA_SIZE - 1:0] grid_in,         // Input from the grid calculator
+    input  wire                   serial_in,       // Serial input from external interface
+    input  wire                   load_mode,       // Indicates system is in load mode (i.e. load from serial)
+    input  wire                   run_mode,        // Indcates system is in run mode (i.e. load from grid in)
+    input  wire                   output_mode,     // Indicates system is in output mode (i.e. shift out over serial)
+    input  wire                   clk,             // System clock
+    input  wire                   reset,           // Asynchronous reset.
+    output reg  [DATA_SIZE - 1:0] system_mem_out,  // Memory output for the system to use
+    output reg                    serial_out       // Serial system output
 );
 
-always @(posedge CLK, posedge RESET) begin : shift_register_process
-    if (RESET) begin
-        SYSTEM_MEM_OUT <= 0;
-        SERIAL_OUT <= 0;
-    end else if (CLK) begin
-        if (RUN_MODE) begin
-            SYSTEM_MEM_OUT <= GRID_IN;
-        end else if (LOAD_MODE) begin
+always @(posedge clk, posedge reset) begin: shift_register_process
+    if (reset) begin
+        system_mem_out <= 0;
+        serial_out <= 0;
+    end else if (clk) begin
+        if (run_mode) begin
+            system_mem_out <= grid_in;
+        end else if (load_mode) begin
             // Take a slice of the bottom 63 elements, and concatenate it with the new value
             // This means we have shifted everying up one bit, and shifted in the new value at the bottom
-            SYSTEM_MEM_OUT <= {SYSTEM_MEM_OUT[$high(SYSTEM_MEM_OUT)-1:0], SERIAL_IN};
-        end else if (OUTPUT_MODE) begin
+            system_mem_out <= {system_mem_out[$high(system_mem_out) - 1:0], serial_in};
+        end else if (output_mode) begin
             // Push out the highest value
-            SERIAL_OUT <= SYSTEM_MEM_OUT[$high(SYSTEM_MEM_OUT)];
+            serial_out <= system_mem_out[$high(system_mem_out)];
 
             // Rotate data around in a circular buffer
-            SYSTEM_MEM_OUT <= {SYSTEM_MEM_OUT[$high(SYSTEM_MEM_OUT)-1:0], SYSTEM_MEM_OUT[$high(SYSTEM_MEM_OUT)]};
+            system_mem_out <= {system_mem_out[$high(system_mem_out) - 1:0], system_mem_out[$high(system_mem_out)]};
         end
     end
 end
 
 endmodule
+
+`default_nettype wire

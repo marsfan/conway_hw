@@ -9,39 +9,41 @@
 `default_nettype none
 
 module popcount_arith(
-    input wire        N,
-    input wire        NE,
-    input wire        E,
-    input wire        SE,
-    input wire        S,
-    input wire        SW,
-    input wire        W,
-    input wire        NW,
-    output wire [3:0] COUNT
+    input  wire       n,
+    input  wire       ne,
+    input  wire       e,
+    input  wire       se,
+    input  wire       s,
+    input  wire       sw,
+    input  wire       w,
+    input  wire       nw,
+    output wire [3:0] count
 );
 
 
 // Extend inputs to all be 4 bits wide.
-wire [3:0] N_EXT ;
-wire [3:0] NE_EXT;
-wire [3:0] E_EXT ;
-wire [3:0] SE_EXT;
-wire [3:0] S_EXT ;
-wire [3:0] SW_EXT;
-wire [3:0] W_EXT ;
-wire [3:0] NW_EXT;
+logic [3:0] n_ext;
+logic [3:0] ne_ext;
+logic [3:0] e_ext;
+logic [3:0] se_ext;
+logic [3:0] s_ext;
+logic [3:0] sw_ext;
+logic [3:0] w_ext;
+logic [3:0] nw_ext;
 
-assign N_EXT  = {3'b000,  N};
-assign NE_EXT = {3'b000,  NE};
-assign E_EXT  = {3'b000,  E};
-assign SE_EXT = {3'b000,  SE};
-assign S_EXT  = {3'b000,  S};
-assign SW_EXT = {3'b000,  SW};
-assign W_EXT  = {3'b000,  W};
-assign NW_EXT = {3'b000,  NW};
+assign n_ext  = {3'b000, n};
+assign ne_ext = {3'b000, ne};
+assign e_ext  = {3'b000, e};
+assign se_ext = {3'b000, se};
+assign s_ext  = {3'b000, s};
+assign sw_ext = {3'b000, sw};
+assign w_ext  = {3'b000, w};
+assign nw_ext = {3'b000, nw};
 
 // Sum all the inputs
 
-assign COUNT = N_EXT + NE_EXT + E_EXT + SE_EXT + S_EXT + SW_EXT + W_EXT + NW_EXT;
+assign count = n_ext + ne_ext + e_ext + se_ext + s_ext + sw_ext + w_ext + nw_ext;
 
 endmodule
+
+`default_nettype wire

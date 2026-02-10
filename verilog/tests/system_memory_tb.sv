@@ -10,23 +10,23 @@
 module system_memory_tb();
     localparam DATA_SIZE = 5;
 
-    logic [DATA_SIZE - 1:0] INITIAL_IN;
-    logic [DATA_SIZE - 1:0] GRID_IN;
-    logic WRITE_ENABLE;
-    logic LOAD_RUN;
-    logic CLK;
-    logic RESET;
-    logic [DATA_SIZE - 1:0] MEM_OUT;
+    logic [DATA_SIZE - 1:0] initial_in;
+    logic [DATA_SIZE - 1:0] grid_in;
+    logic write_enable;
+    logic load_run;
+    logic clk;
+    logic reset;
+    logic [DATA_SIZE - 1:0] mem_out;
 
 
     system_memory #(DATA_SIZE) dut (
-        .INITIAL_IN(INITIAL_IN),
-        .GRID_IN(GRID_IN),
-        .WRITE_ENABLE(WRITE_ENABLE),
-        .LOAD_RUN(LOAD_RUN),
-        .CLK(CLK),
-        .RESET(RESET),
-        .MEM_OUT(MEM_OUT)
+        .initial_in(initial_in),
+        .grid_in(grid_in),
+        .write_enable(write_enable),
+        .load_run(load_run),
+        .clk(clk),
+        .reset(reset),
+        .mem_out(mem_out)
     );
 
     initial begin
@@ -37,54 +37,54 @@ module system_memory_tb();
         $dumpfile("waveforms/system_memory_tb.vcd");
         $dumpvars(0, system_memory_tb);
 
-        INITIAL_IN   <= 5'b00000;
-        GRID_IN      <= 5'b00000;
-        WRITE_ENABLE <= 0;
-        LOAD_RUN     <= 0;
-        CLK          <= 0;
-        RESET        <= 0;
+        initial_in   <= 5'b00000;
+        grid_in      <= 5'b00000;
+        write_enable <= 0;
+        load_run     <= 0;
+        clk          <= 0;
+        reset        <= 0;
 
         // Reset system
-        RESET <= 1;
+        reset <= 1;
         #1
-        RESET <= 0;
+        reset <= 0;
 
-        `RUN_CLOCK(CLK, 20);
+        `RUN_CLOCK(clk, 20);
 
-        // Test that nothing is loaded when WRITE_ENABLE = 0;
-        INITIAL_IN <= 5'b11001;
-        GRID_IN    <= 5'b00110;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(MEM_OUT, 5'b00000, errcount, "No output when WE = 0");
+        // Test that nothing is loaded when write_enable = 0;
+        initial_in <= 5'b11001;
+        grid_in    <= 5'b00110;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(mem_out, 5'b00000, errcount, "No output when WE = 0");
 
-        // Set WE and confirm memory is now set from INITIAL_IN
-        WRITE_ENABLE <= 1;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(MEM_OUT, 5'b11001, errcount, "Memory Updated from INITIAL_IN");
+        // Set WE and confirm memory is now set from initial_in
+        write_enable <= 1;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(mem_out, 5'b11001, errcount, "Memory Updated from initial_in");
 
         // Clear WE and confirm value stays the same
-        WRITE_ENABLE <= 0;
-        INITIAL_IN   <= 5'b00000;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(MEM_OUT, 5'b11001, errcount, "Value stayed at old INITIAL_IN");
+        write_enable <= 0;
+        initial_in   <= 5'b00000;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(mem_out, 5'b11001, errcount, "Value stayed at old initial_in");
 
         // Set WE, switch to run mode, and confirm we are getting grid value
-        WRITE_ENABLE <= 1;
-        LOAD_RUN     <= 1;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(MEM_OUT, 5'b00110, errcount, "Memory Updated from GRID_IN");
+        write_enable <= 1;
+        load_run     <= 1;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(mem_out, 5'b00110, errcount, "Memory Updated from grid_in");
 
         // Clear WE and confirm value stays the same
-        WRITE_ENABLE <= 0;
-        GRID_IN      <= 5'b00000;
-        `RUN_CLOCK(CLK, 20);
-        `CHECK_EQ(MEM_OUT, 5'b00110, errcount, "Value stayed at old GRID_IN");
+        write_enable <= 0;
+        grid_in      <= 5'b00000;
+        `RUN_CLOCK(clk, 20);
+        `CHECK_EQ(mem_out, 5'b00110, errcount, "Value stayed at old grid_in");
 
         // Reset and confirm value is reset
-        RESET <= 1;
+        reset <= 1;
         #1
-        RESET <= 0;
-        `CHECK_EQ(MEM_OUT, 5'b00000, errcount, "Value was reset");
+        reset <= 0;
+        `CHECK_EQ(mem_out, 5'b00000, errcount, "Value was reset");
 
 
         `STOP_IF_ERR(errcount);

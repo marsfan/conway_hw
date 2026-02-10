@@ -9,14 +9,14 @@
 
 module full_adder_1_bit_to_2_bit_tb();
 
-    logic A;
-    logic B;
-    logic [1:0] SUM;
+    logic a;
+    logic b;
+    logic [1:0] sum;
 
     full_adder_1_bit_to_2_bit dut(
-        .A(A),
-        .B(B),
-        .SUM(SUM)
+        .a(a),
+        .b(b),
+        .sum(sum)
     );
 
     initial begin
@@ -28,21 +28,21 @@ module full_adder_1_bit_to_2_bit_tb();
         $dumpfile("waveforms/full_adder_1_bit_to_2_bit_tb.vcd");
         $dumpvars(0, full_adder_1_bit_to_2_bit_tb);
 
-        A <= 0;
-        B <= 0;
-        #1 `CHECK_EQ(SUM, 0, errcount, "SUM 00");
+        a <= 0;
+        b <= 0;
+        #1 `CHECK_EQ(sum, 0, errcount, "sum 00");
 
-        A <= 1;
-        B <= 0;
-        #1 `CHECK_EQ(SUM, 1, errcount, "SUM 01");
+        a <= 1;
+        b <= 0;
+        #1 `CHECK_EQ(sum, 1, errcount, "sum 01");
 
-        A <= 0;
-        B <= 1;
-        #1 `CHECK_EQ(SUM, 1, errcount, "SUM 01 v2");
+        a <= 0;
+        b <= 1;
+        #1 `CHECK_EQ(sum, 1, errcount, "sum 01 v2");
 
-        A <= 1;
-        B <= 1;
-        #1 `CHECK_EQ(SUM, 2, errcount, "SUM 10");
+        a <= 1;
+        b <= 1;
+        #1 `CHECK_EQ(sum, 2, errcount, "sum 10");
 
         `STOP_IF_ERR(errcount);
     end

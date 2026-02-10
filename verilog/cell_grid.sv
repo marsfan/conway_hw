@@ -8,50 +8,50 @@
 `default_nettype none
 
 module cell_grid #(
-    parameter GRID_WIDTH = 8,
-    parameter GRID_HEIGHT = 8
-)
-(
-    input wire [(GRID_WIDTH * GRID_HEIGHT)-1:0] INPUT_STATE,
-    output wire [(GRID_WIDTH * GRID_HEIGHT)-1:0] NEXT_STATE
+    parameter int unsigned GRID_WIDTH = 8,
+    parameter int unsigned GRID_HEIGHT = 8
+) (
+    input  wire [(GRID_WIDTH * GRID_HEIGHT) - 1:0] input_state,
+    output wire [(GRID_WIDTH * GRID_HEIGHT) - 1:0] next_state
 );
 
-function create_connection(
-    input [(GRID_WIDTH * GRID_HEIGHT)-1:0] INPUT_ARRAY,
-    input integer X,
-    input integer Y
+function automatic create_connection(
+    input [(GRID_WIDTH * GRID_HEIGHT) - 1:0] input_array,
+    input integer x,
+    input integer y
 );
     begin
 
-        if ((X >= 0) && (Y >=0) && (X < GRID_WIDTH) && (Y < GRID_HEIGHT)) begin
-            create_connection = INPUT_ARRAY[(GRID_WIDTH * Y) + X];
+        if ((x >= 0) && (y >= 0) && (x < GRID_WIDTH) && (y < GRID_HEIGHT)) begin
+            create_connection = input_array[(GRID_WIDTH * y) + x];
         end else begin
             create_connection = 0;
         end
     end
 endfunction
 
-genvar x;
-genvar y;
-// For some reason, starting at high and going down uses 2 less LUTS than going up
+// For some reason, starting at high and going down uses 2 less LUTS than
+// going up
 // TODO: Find out why
-generate for (x = (GRID_WIDTH-1); x >= 0; x--) begin
-    for (y = (GRID_HEIGHT-1); y >= 0; y--) begin
+for (genvar x = (GRID_WIDTH - 1); x >= 0; x--) begin: x_axis
+    for (genvar y = (GRID_HEIGHT - 1); y >= 0; y--) begin: y_axis
         single_cell c(
-            INPUT_STATE[GRID_WIDTH * y + x],
-            create_connection(INPUT_STATE, x,     y - 1),
-            create_connection(INPUT_STATE, x + 1, y - 1),
-            create_connection(INPUT_STATE, x + 1, y),
-            create_connection(INPUT_STATE, x + 1, y + 1),
-            create_connection(INPUT_STATE, x,     y + 1),
-            create_connection(INPUT_STATE, x - 1, y + 1),
-            create_connection(INPUT_STATE, x - 1, y),
-            create_connection(INPUT_STATE, x - 1, y - 1),
-            NEXT_STATE[GRID_WIDTH * y + x]
+            .me(input_state[GRID_WIDTH * y + x]),
+            .n(create_connection(input_state,  x,     y - 1)),
+            .ne(create_connection(input_state, x + 1, y - 1)),
+            .e(create_connection(input_state,  x + 1, y)),
+            .se(create_connection(input_state, x + 1, y + 1)),
+            .s(create_connection(input_state,  x,     y + 1)),
+            .sw(create_connection(input_state, x - 1, y + 1)),
+            .w(create_connection(input_state,  x - 1, y)),
+            .nw(create_connection(input_state, x - 1, y - 1)),
+            .is_alive(next_state[GRID_WIDTH * y + x])
         );
     end
 end
-endgenerate
+
 
 
 endmodule
+
+`default_nettype wire

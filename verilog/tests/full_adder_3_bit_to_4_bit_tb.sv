@@ -10,9 +10,9 @@
 module full_adder_3_bit_to_4_bit_tb();
 
     typedef struct packed  {
-        logic [2:0] A;
-        logic [2:0] B;
-        logic [3:0] SUM;
+        logic [2:0] a;
+        logic [2:0] b;
+        logic [3:0] sum;
     } test_case_t;
 
     test_case_t [63:0]  test_cases;
@@ -92,14 +92,14 @@ module full_adder_3_bit_to_4_bit_tb();
 
 
 
-    logic [2:0] A;
-    logic [2:0] B;
-    logic [3:0] SUM;
+    logic [2:0] a;
+    logic [2:0] b;
+    logic [3:0] sum;
 
     full_adder_3_bit_to_4_bit dut(
-        .A(A),
-        .B(B),
-        .SUM(SUM)
+        .a(a),
+        .b(b),
+        .sum(sum)
     );
 
     initial begin
@@ -111,9 +111,9 @@ module full_adder_3_bit_to_4_bit_tb();
         $dumpvars(0, full_adder_3_bit_to_4_bit_tb);
 
         for (int i =0; i < $size(test_cases); i++) begin
-            A <= test_cases[i].A;
-            B <= test_cases[i].B;
-            #1 `CHECK_EQ(SUM, test_cases[i].SUM, errcount, i);
+            a <= test_cases[i].a;
+            b <= test_cases[i].b;
+            #1 `CHECK_EQ(sum, test_cases[i].sum, errcount, i);
 
         end
 

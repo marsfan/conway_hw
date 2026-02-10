@@ -8,16 +8,18 @@
 `default_nettype none
 
 module decoder(
-    input wire [1:0] VAL_IN,
-    output wire VAL_00,
-    output wire VAL_01,
-    output wire VAL_10,
-    output wire VAL_11
+    input  wire [1:0] val_in,
+    output wire       val_00,
+    output wire       val_01,
+    output wire       val_10,
+    output wire       val_11
 );
 
-assign VAL_00 = VAL_IN == 2'b00 ? 1 : 0;
-assign VAL_01 = VAL_IN == 2'b01 ? 1 : 0;
-assign VAL_10 = VAL_IN == 2'b10 ? 1 : 0;
-assign VAL_11 = VAL_IN == 2'b11 ? 1 : 0;
+assign val_00 = val_in == 2'b00 ? 1 : 0;
+assign val_01 = val_in == 2'b01 ? 1 : 0;
+assign val_10 = val_in == 2'b10 ? 1 : 0;
+assign val_11 = val_in == 2'b11 ? 1 : 0;
 
 endmodule
+
+`default_nettype wire
