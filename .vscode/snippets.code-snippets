@@ -27,18 +27,18 @@
 			"    $0",
 			"",
 			"    initial begin",
-			"        int errcount;",
-			"        errcount = 0;",
 			"",
 			"        // Dump to VCD File",
 			"        \\$dumpfile(\"waveforms/$TM_FILENAME_BASE.vcd\");",
 			"        \\$dumpvars(0, $TM_FILENAME_BASE);",
 			"",
 			"",
-			"        `STOP_IF_ERR(errcount);",
 			"    end",
 			"",
 			"endmodule",
+			"",
+			"`default_nettype wire",
+			""
 		]
 	}
 }
