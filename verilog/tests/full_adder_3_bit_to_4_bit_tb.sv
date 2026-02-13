@@ -1,7 +1,7 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
 `default_nettype none
@@ -9,7 +9,7 @@
 
 module full_adder_3_bit_to_4_bit_tb();
 
-    typedef struct packed  {
+    typedef struct packed {
         logic [2:0] a;
         logic [2:0] b;
         logic [3:0] sum;
@@ -103,8 +103,6 @@ module full_adder_3_bit_to_4_bit_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Dump to VCD File
         $dumpfile("waveforms/full_adder_3_bit_to_4_bit_tb.vcd");
@@ -113,11 +111,12 @@ module full_adder_3_bit_to_4_bit_tb();
         for (int i =0; i < $size(test_cases); i++) begin
             a <= test_cases[i].a;
             b <= test_cases[i].b;
-            #1 `CHECK_EQ(sum, test_cases[i].sum, errcount, i);
+            #1 `CHECK_EQ(sum, test_cases[i].sum, i);
 
         end
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

@@ -3,11 +3,11 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module full_adder (
     input  wire a,
@@ -17,7 +17,7 @@ module full_adder (
     output wire carry
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
+
 
 assign sum = a ^ b ^ c_in;
 assign carry = (a & b) | (a & c_in) | (b & c_in);

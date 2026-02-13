@@ -4,12 +4,12 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module conway_8x8_serial_v2 (
     input  wire       data_in,   // Serial data in
@@ -23,7 +23,7 @@ module conway_8x8_serial_v2 (
     output wire [1:0] mode_leds  // Mode LEDs for debugging
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
+
 
 localparam int unsigned GRID_WIDTH = 8;
 localparam int unsigned GRID_HEIGHT = 8;

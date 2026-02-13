@@ -1,7 +1,7 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
 `default_nettype none
@@ -10,7 +10,7 @@
 module parallel_to_serial_tb();
     localparam int DEPTH = 3;
 
-    logic [DEPTH-1:0] data_in;
+    logic [DEPTH - 1:0] data_in;
     logic load_en;
     logic shift_en;
     logic clk;
@@ -27,8 +27,6 @@ module parallel_to_serial_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Dump to VCD File
         $dumpfile("waveforms/parallel_to_serial_tb.vcd");
@@ -49,15 +47,15 @@ module parallel_to_serial_tb();
         load_en <= 1;
         data_in <= 3'b011;
         `RUN_CLOCK(clk, 10);
-        `CHECK_EQ(data, 0, errcount, "Loaded bytes");
+        `CHECK_EQ(data, 0, "Loaded bytes");
 
         // Test we just get zeros if shift_en is not set
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "shift_en unset 1");
+        `CHECK_EQ(data, 0, "shift_en unset 1");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "shift_en unset 2");
+        `CHECK_EQ(data, 0, "shift_en unset 2");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "shift_en unset 3");
+        `CHECK_EQ(data, 0, "shift_en unset 3");
 
         // Test we read bytes out as expected
         // Setting load_en to 0 means that even though we
@@ -66,19 +64,19 @@ module parallel_to_serial_tb();
         data_in  <= 3'b000;
         shift_en <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 1, errcount, "First byte out correct");
+        `CHECK_EQ(data, 1, "First byte out correct");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 1, errcount, "Second byte out correct");
+        `CHECK_EQ(data, 1, "Second byte out correct");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Third byte out correct");
+        `CHECK_EQ(data, 0, "Third byte out correct");
 
         // Test that we just get zeros if we keep trying
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero 1");
+        `CHECK_EQ(data, 0, "Got zero 1");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero 2");
+        `CHECK_EQ(data, 0, "Got zero 2");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero 3");
+        `CHECK_EQ(data, 0, "Got zero 3");
 
         // Test that if we load then reset, there's nothing in the shift reg
         shift_en <= 0;
@@ -94,13 +92,13 @@ module parallel_to_serial_tb();
 
         shift_en <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after reset 1");
+        `CHECK_EQ(data, 0, "Got zero after reset 1");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after reset 2");
+        `CHECK_EQ(data, 0, "Got zero after reset 2");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after reset 3");
+        `CHECK_EQ(data, 0, "Got zero after reset 3");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after reset 4");
+        `CHECK_EQ(data, 0, "Got zero after reset 4");
 
         // Test that if load_en is zero, data is not loaded
         load_en  <= 0;
@@ -111,15 +109,16 @@ module parallel_to_serial_tb();
         data_in  <= 3'b000;
         shift_en <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after load_en = 0 1");
+        `CHECK_EQ(data, 0, "Got zero after load_en = 0 1");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after load_en = 0 2");
+        `CHECK_EQ(data, 0, "Got zero after load_en = 0 2");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after load_en = 0 3");
+        `CHECK_EQ(data, 0, "Got zero after load_en = 0 3");
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 0, errcount, "Got zero after load_en = 0 4");
+        `CHECK_EQ(data, 0, "Got zero after load_en = 0 4");
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

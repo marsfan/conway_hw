@@ -3,11 +3,11 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module cell_grid #(
     parameter int unsigned GRID_WIDTH = 8,
@@ -17,7 +17,7 @@ module cell_grid #(
     output wire [(GRID_WIDTH * GRID_HEIGHT) - 1:0] next_state
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
+
 
 function automatic create_connection(
     input [(GRID_WIDTH * GRID_HEIGHT) - 1:0] input_array,

@@ -1,7 +1,7 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
 `default_nettype none
@@ -39,8 +39,6 @@ module full_adder_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Dump to VCD File
         $dumpfile("waveforms/full_adder_tb.vcd");
@@ -51,12 +49,13 @@ module full_adder_tb();
             IN2 <= test_cases[i].a2;
             cin <= test_cases[i].cin;
             #1
-            `CHECK_EQ(sum, test_cases[i].sum, errcount, "sum");
-            `CHECK_EQ(cout, test_cases[i].cout, errcount, "cout");
+            `CHECK_EQ(sum, test_cases[i].sum, "sum");
+            `CHECK_EQ(cout, test_cases[i].cout, "cout");
         end
 
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

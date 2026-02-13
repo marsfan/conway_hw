@@ -1,7 +1,7 @@
 /*
 * This source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
 `default_nettype none
@@ -33,7 +33,7 @@ module single_cell_tb();
         logic is_alive;
     } test_case_t;
 
-    test_case_t [511:0] test_cases ;
+    test_case_t [511:0] test_cases;
     assign test_cases[0] = {1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
     assign test_cases[1] = {1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1, 1'b0};
     assign test_cases[2] = {1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1, 1'b0, 1'b0};
@@ -561,14 +561,12 @@ module single_cell_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Dump to VCD File
         $dumpfile("waveforms/single_cell_tb.vcd");
         $dumpvars(0, single_cell_tb);
 
-        for (int i = 0; i <$size(test_cases); i++) begin
+        for (int i = 0; i < $size(test_cases); i++) begin
             me <= test_cases[i].me;
             n  <= test_cases[i].n;
             ne <= test_cases[i].ne;
@@ -579,11 +577,12 @@ module single_cell_tb();
             w  <= test_cases[i].w;
             nw <= test_cases[i].nw;
 
-            #1`CHECK_EQ(is_alive, test_cases[i].is_alive, errcount, i);
+            #1`CHECK_EQ(is_alive, test_cases[i].is_alive, i);
         end
 
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

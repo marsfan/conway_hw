@@ -6,11 +6,11 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module system_memory_v3 #(
     parameter int unsigned DATA_SIZE = 64
@@ -29,7 +29,7 @@ module system_memory_v3 #(
     output reg                    serial_out       // Serial system output
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
+
 
 // Input shift register memory
 logic [DATA_SIZE - 1:0] input_sr = 0;
@@ -39,7 +39,7 @@ logic [DATA_SIZE - 1:0] output_sr = 0;
 
 // Got this from here: https://vhdlwhiz.com/shift-register/
 // TODO: Re-write as a single process (testing shows the same resource use when I do that)
-always @(posedge clk, posedge reset) begin: input_shift_register_process
+always_ff @(posedge clk or posedge reset) begin: input_shift_register_process
     if (reset) begin
         input_sr <= 0;
     end else if (clk) begin
@@ -53,7 +53,7 @@ always @(posedge clk, posedge reset) begin: input_shift_register_process
     end
 end
 
-always @(posedge clk, posedge reset) begin: output_shift_register_process
+always_ff @(posedge clk or posedge reset) begin: output_shift_register_process
     if (reset) begin
         serial_out <= 0;
         output_sr <= 0;

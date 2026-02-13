@@ -1,7 +1,7 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 `include "tests/test_utils.svh"
@@ -17,8 +17,6 @@ module cell_grid_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Configure to dump variables to VCD file
         $dumpfile("waveforms/cell_grid_tb.vcd");
@@ -29,31 +27,32 @@ module cell_grid_tb();
 
         input_state <= 64'h0000001818000000;
         #1
-        `CHECK_EQ(next_state, 64'h0000001818000000, errcount, "Block");
+        `CHECK_EQ(next_state, 64'h0000001818000000, "Block");
 
         input_state <= 64'h0000102828100000;
         #1
-        `CHECK_EQ(next_state, 64'h0000102828100000, errcount, "Behive");
+        `CHECK_EQ(next_state, 64'h0000102828100000, "Behive");
 
         input_state <= 64'h0000001010100000;
         #1
-        `CHECK_EQ(next_state, 64'h0000000038000000, errcount, "Blinker");
+        `CHECK_EQ(next_state, 64'h0000000038000000, "Blinker");
 
         input_state <= 64'h0060601818000000;
         #1
-        `CHECK_EQ(next_state, 64'h0060400818000000, errcount, "Beacon");
+        `CHECK_EQ(next_state, 64'h0060400818000000, "Beacon");
 
         input_state <= 64'hC080000000000000;
         #1
-        `CHECK_EQ(next_state, 64'hC0C0000000000000, errcount, "Corner1");
+        `CHECK_EQ(next_state, 64'hC0C0000000000000, "Corner1");
 
         input_state <= 64'h8080800000000000;
         #1
-        `CHECK_EQ(next_state, 64'h00C0000000000000, errcount, "Corner2");
+        `CHECK_EQ(next_state, 64'h00C0000000000000, "Corner2");
 
-        `STOP_IF_ERR(errcount);
 
 
     end
 
 endmodule
+
+`default_nettype wire

@@ -1,7 +1,7 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
 `default_nettype none
@@ -9,15 +9,15 @@
 
 module system_memory_v2_tb();
 
-    localparam DATA_SIZE = 5;
+    localparam int unsigned DATA_SIZE = 5;
 
-    logic [DATA_SIZE-1:0] grid_in;
+    logic [DATA_SIZE - 1:0] grid_in;
     logic serial_in;
     logic load_mode;
     logic run_mode;
     logic clk;
     logic reset;
-    logic [DATA_SIZE-1:0] data_out;
+    logic [DATA_SIZE - 1:0] data_out;
 
     system_memory_v2 #(DATA_SIZE) dut (
         .grid_in(grid_in),
@@ -30,8 +30,6 @@ module system_memory_v2_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Dump to VCD File
         $dumpfile("waveforms/system_memory_v2_tb.vcd");
@@ -53,13 +51,13 @@ module system_memory_v2_tb();
         grid_in   <= 5'b11001;
         serial_in <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data_out, 5'b00000, errcount, "No output when mode bits not set");
+        `CHECK_EQ(data_out, 5'b00000, "No output when mode bits not set");
 
         // Set load_mode and confirm memory is now set from serial_in
         grid_in   <= 5'b00110;
         load_mode <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data_out, 5'b00001, errcount, "Loaded one byte");
+        `CHECK_EQ(data_out, 5'b00001, "Loaded one byte");
 
         // Try loading a couple more bytes to confirm shifting works as expected
         serial_in <= 0;
@@ -67,7 +65,7 @@ module system_memory_v2_tb();
         `RUN_CLOCK(clk, 20);
         serial_in <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data_out, 5'b01001, errcount, "Loaded more bytes serially");
+        `CHECK_EQ(data_out, 5'b01001, "Loaded more bytes serially");
 
         // Set run_mode and confirm that
         // A) It takes precedence over load_mode
@@ -75,7 +73,7 @@ module system_memory_v2_tb();
         run_mode <= 1;
         grid_in  <= 5'b00110;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data_out, 5'b00110, errcount, "Loaded from grid_in");
+        `CHECK_EQ(data_out, 5'b00110, "Loaded from grid_in");
 
         // Turn off both load_mode and run_mode and confirm data is persisted after
         // a couple of clocks
@@ -85,16 +83,17 @@ module system_memory_v2_tb();
         grid_in   <= 5'b00000;
         `RUN_CLOCK(clk, 20);
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data_out, 5'b00110, errcount, "Data persisted after load.");
+        `CHECK_EQ(data_out, 5'b00110, "Data persisted after load.");
 
         // Reset and confirm value is reset
         reset <= 1;
         #1
         reset <= 0;
-        `CHECK_EQ(data_out, 5'b00000, errcount, "Data reset");
+        `CHECK_EQ(data_out, 5'b00000, "Data reset");
 
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

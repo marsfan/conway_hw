@@ -5,14 +5,14 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module system_memory_v2 #(
-    parameter int unsigned DATA_SIZE
+    parameter int unsigned DATA_SIZE = 64
 ) (
     input  wire [DATA_SIZE - 1:0] grid_in,   // Input from the grid calculator
     input  wire                   serial_in, // Serial input from external interface
@@ -25,12 +25,12 @@ module system_memory_v2 #(
     output reg  [DATA_SIZE - 1:0] data_out   // Memory output
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
+
 
 // Got this from here: https://vhdlwhiz.com/shift-register/
 // Then ported to Verilog
 
-always @(posedge clk, posedge reset) begin: shift_register_process
+always_ff @(posedge clk or posedge reset) begin: shift_register_process
     if (reset) begin
         data_out <= 0;
     end else if (clk) begin

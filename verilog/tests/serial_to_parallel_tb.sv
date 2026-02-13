@@ -1,7 +1,7 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
 `default_nettype none
@@ -9,13 +9,13 @@
 
 module serial_to_parallel_tb();
 
-    localparam DEPTH = 3;
+    localparam int unsigned DEPTH = 3;
 
     logic data_in;
     logic en;
     logic clk;
     logic rst;
-    logic [DEPTH-1:0] data;
+    logic [DEPTH - 1:0] data;
 
     serial_to_parallel #(DEPTH) dut (
         .data_in(data_in),
@@ -26,8 +26,6 @@ module serial_to_parallel_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Dump to VCD File
         $dumpfile("waveforms/serial_to_parallel_tb.vcd");
@@ -39,7 +37,7 @@ module serial_to_parallel_tb();
         // Reset system
         rst <= 1;
         #1
-        `CHECK_EQ(data, 3'b000, errcount, "Reset failed");
+        `CHECK_EQ(data, 3'b000, "Reset failed");
 
         // Clear reset flag
         rst <= 0;
@@ -47,23 +45,23 @@ module serial_to_parallel_tb();
         // Check we don't load when en is 0
         data_in <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 3'b000, errcount, "No loaded when en = 0");
+        `CHECK_EQ(data, 3'b000, "No loaded when en = 0");
 
         // Set enable and shift in
         en      <= 1;
         data_in <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 3'b001, errcount, "Loaded a byte");
+        `CHECK_EQ(data, 3'b001, "Loaded a byte");
 
         data_in <= 0;
         // Check it gets shifted up a byte
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 3'b010, errcount, "Byte was shifted");
+        `CHECK_EQ(data, 3'b010, "Byte was shifted");
 
         // Load another byte
         data_in <= 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 3'b101, errcount, "Second byte loaded");
+        `CHECK_EQ(data, 3'b101, "Second byte loaded");
 
         // Ensure after clearing en we get no new bytes for a few cycles
         en      <= 0;
@@ -71,15 +69,16 @@ module serial_to_parallel_tb();
         `RUN_CLOCK(clk, 20);
         `RUN_CLOCK(clk, 20);
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(data, 3'b101, errcount, "No change after clearing en");
+        `CHECK_EQ(data, 3'b101, "No change after clearing en");
 
         // Reset everything
         rst <= 1;
         #1
-        `CHECK_EQ(data, 3'b000, errcount, "Reset at end failed");
+        `CHECK_EQ(data, 3'b000, "Reset at end failed");
 
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

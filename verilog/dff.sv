@@ -12,11 +12,11 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module dff #(
     parameter int unsigned SIZE = 1
@@ -28,16 +28,10 @@ module dff #(
     output reg  [SIZE - 1:0] q
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
 
 
-    // parameter SIZE = 1;
 
-    // input we, clk, reset;
-    // input [SIZE-1:0] d;
-    // output reg [SIZE-1:0] q;
-
-    always @(posedge clk, posedge reset) begin
+    always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             q <= 0;
         end else begin

@@ -1,7 +1,7 @@
 /*
 * This source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
 `default_nettype none
@@ -302,8 +302,6 @@ module popcount_tb();
     assign test_cases[255] = {1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 4'b1000};
 
     initial begin
-        int errcount;
-        errcount = 0;
 
         // Dump to VCD File
         $dumpfile("waveforms/popcount_tb.vcd");
@@ -321,11 +319,12 @@ module popcount_tb();
 
             #1;
 
-            `CHECK_EQ(count, test_cases[i].count, errcount, i);
+            `CHECK_EQ(count, test_cases[i].count, i);
         end
 
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

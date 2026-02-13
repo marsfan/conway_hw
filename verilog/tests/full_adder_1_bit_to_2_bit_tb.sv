@@ -1,7 +1,7 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 `include "tests/test_utils.svh"
@@ -20,8 +20,6 @@ module full_adder_1_bit_to_2_bit_tb();
     );
 
     initial begin
-        int errcount;
-        errcount = 0;
 
 
         // Configure to dump variables to VCD file
@@ -30,21 +28,22 @@ module full_adder_1_bit_to_2_bit_tb();
 
         a <= 0;
         b <= 0;
-        #1 `CHECK_EQ(sum, 0, errcount, "sum 00");
+        #1 `CHECK_EQ(sum, 0, "sum 00");
 
         a <= 1;
         b <= 0;
-        #1 `CHECK_EQ(sum, 1, errcount, "sum 01");
+        #1 `CHECK_EQ(sum, 1, "sum 01");
 
         a <= 0;
         b <= 1;
-        #1 `CHECK_EQ(sum, 1, errcount, "sum 01 v2");
+        #1 `CHECK_EQ(sum, 1, "sum 01 v2");
 
         a <= 1;
         b <= 1;
-        #1 `CHECK_EQ(sum, 2, errcount, "sum 10");
+        #1 `CHECK_EQ(sum, 2, "sum 10");
 
-        `STOP_IF_ERR(errcount);
     end
 
 endmodule
+
+`default_nettype wire

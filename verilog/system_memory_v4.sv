@@ -8,11 +8,11 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module system_memory_v4 #(
     parameter int unsigned DATA_SIZE = 64
@@ -31,9 +31,9 @@ module system_memory_v4 #(
     output reg                    serial_out       // Serial system output
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
 
-always @(posedge clk, posedge reset) begin: shift_register_process
+
+always_ff @(posedge clk or posedge reset) begin: shift_register_process
     if (reset) begin
         system_mem_out <= 0;
         serial_out <= 0;

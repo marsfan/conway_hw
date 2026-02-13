@@ -3,10 +3,11 @@
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
+`default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module parallel_to_serial #(
     parameter int unsigned DATA_SIZE = 64
@@ -19,11 +20,11 @@ module parallel_to_serial #(
     output reg                    data  // Serial data out.
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
+
 
 logic [DATA_SIZE - 1:0] sr_tmp = 0;
 
-always @(posedge clk, posedge rst) begin: shift_register_process
+always_ff @(posedge clk or posedge rst) begin: shift_register_process
     if (rst) begin
         data <= 0;
         sr_tmp <= 0;

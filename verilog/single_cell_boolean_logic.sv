@@ -15,7 +15,7 @@
 */
 `default_nettype none
 
-/* svlint off style_keyword_datatype */
+
 /* svlint off keyword_forbidden_wire_reg */
 module single_cell_boolean_logic(
     input  wire me,
@@ -30,10 +30,10 @@ module single_cell_boolean_logic(
     output wire is_alive
 );
 /* svlint on keyword_forbidden_wire_reg */
-/* svlint on style_keyword_datatype */
 
 
 
+/* svlint off style_operator_boolean_leading_space */
 assign is_alive = (e || me || n || ne || nw || s || se)
                 && (e || me || n || ne || nw || s || sw)
                 && (e || me || n || ne || nw || s || w)
@@ -140,6 +140,7 @@ assign is_alive = (e || me || n || ne || nw || s || se)
                 && ((!nw) || (!s) || (!sw) || (!w))
                 && ((!nw) || (!se) || (!sw) || (!w))
                 && ((!s) || (!se) || (!sw) || (!w));
+/* svlint off style_operator_boolean_leading_space */
 
 endmodule
 
