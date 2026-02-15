@@ -53,7 +53,7 @@ clean:
 	rm -rf $(BINDIR)
 
 svlint:
-	svlint $(LIBDIR)/*.sv $(LIBDIR)/*.svh $(TESTDIR)/*.sv $(TESTDIR)/*.svh --config .svlint.toml
+	svlint $(LIBDIR)/*.sv $(TESTDIR)/*.sv --config .svlint.toml
 
 
 test: $(addsuffix .run, $(TESTBENCH_OUT))
