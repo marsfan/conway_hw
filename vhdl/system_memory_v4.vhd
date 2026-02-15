@@ -7,7 +7,7 @@
 
 -- This Source Code Form is subject to the terms of the Mozilla Public
 -- License, v. 2.0. If a copy of the MPL was not distributed with this
--- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+-- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -35,6 +35,7 @@ end entity SYSTEM_MEMORY_V4;
 architecture RTL of SYSTEM_MEMORY_V4 is
 
     -- Input shift register memory
+    signal SR_MEM : std_logic_vector((data_size - 1) downto 0) := (others => '0');
 
 begin
 
@@ -43,26 +44,28 @@ begin
     begin
 
         if RESET = '1' then
-            SYSTEM_MEM_OUT     <= (others => '0');
+            SR_MEM     <= (others => '0');
             SERIAL_OUT <= '0';
         elsif rising_edge(CLK) then
             if RUN_MODE = '1' then
-                SYSTEM_MEM_OUT <= GRID_IN;
+                SR_MEM <= GRID_IN;
             elsif LOAD_MODE = '1' then
                 -- Take a slice of the bottom 63 elements, and concatenate it with the new value
                 -- This means we have shifted everying up one bit, and shifted in the new value at the bottom
                 -- & is concatenate in VHDL
-                SYSTEM_MEM_OUT <= SYSTEM_MEM_OUT((SYSTEM_MEM_OUT'high - 1) downto SYSTEM_MEM_OUT'low) & SERIAL_IN;
+                SR_MEM <= SR_MEM((SR_MEM'high - 1) downto SR_MEM'low) & SERIAL_IN;
             elsif OUTPUT_MODE = '1' then
                 -- Push out the highest value
-                SERIAL_OUT <= SYSTEM_MEM_OUT(SYSTEM_MEM_OUT'high);
+                SERIAL_OUT <= SR_MEM(SR_MEM'high);
 
                 -- Rotate the data around in a circular buffer
-                SYSTEM_MEM_OUT <= SYSTEM_MEM_OUT(SYSTEM_MEM_OUT'high - 1 downto SYSTEM_MEM_OUT'low) & SYSTEM_MEM_OUT(SYSTEM_MEM_OUT'high);
+                SR_MEM <= SR_MEM(SR_MEM'high - 1 downto SR_MEM'low) & SR_MEM(SR_MEM'high);
             end if;
         end if;
 
     end process shift_register_process;
 
+    -- Write input shift register values to parallel output.
+    SYSTEM_MEM_OUT <= SR_MEM;
 
 end architecture RTL;

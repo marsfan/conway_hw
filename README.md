@@ -15,6 +15,10 @@ It is currently still under heavy development.
   can be used to build and run tests for the VHDL implementation using GHDL
   and vunit
 - [vhdl/tests](./vhdl/tests): Test benches for the VHDL implementation
+- [verilog](./verilog) This contains the implementation in Verilog, as well as
+  some helper scripts used for the Verilog implementation, and a Makefile that
+  can be used to build and run tests for the Verilog implementation using iverilog
+- [verilog/tests](./verilog/tests): Test benches for the Verilog implementation
 - [conway_fpga_driver](./conway_fpga_driver/): This contains two things.
   - An Arduino program for driving an FPGA programming with the simulation
     and reading its output.

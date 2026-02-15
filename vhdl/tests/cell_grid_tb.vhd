@@ -2,7 +2,7 @@
 
 -- This Source Code Form is subject to the terms of the Mozilla Public
 -- License, v. 2.0. If a copy of the MPL was not distributed with this
--- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+-- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -51,7 +51,7 @@ begin
         test_runner_setup(runner, runner_cfg);
 
         -- Testing a few of the different patterns from the
-        -- Wikipeida page on conway's game of life.
+        -- Wikipedia page on conway's game of life.
 
         INPUT_STATE <= x"0000001818000000";
         wait for 1 ns;

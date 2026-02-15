@@ -4,7 +4,7 @@
 
 -- This Source Code Form is subject to the terms of the Mozilla Public
 -- License, v. 2.0. If a copy of the MPL was not distributed with this
--- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+-- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -71,8 +71,8 @@ architecture RTL of CONWAY_8X8_SERIAL_V4 is
     signal OUTPUT_MODE : std_logic; -- High when mode = 10
     signal STOP_MODE   : std_logic; -- High when mode = 11
     signal LOAD_OR_RUN : std_logic; -- High when mode = 00 or 01
-    signal MEM_OUT     : std_logic_vector(63 downto 0); -- Output from memory
-    signal NEXT_STATE  : std_logic_vector(63 downto 0); -- Output from cell calculation grid
+    signal MEM_OUT     : std_logic_vector(data_size - 1 downto 0); -- Output from memory
+    signal NEXT_STATE  : std_logic_vector(data_size - 1 downto 0); -- Output from cell calculation grid
     signal SERIAL_OUT  : std_logic; -- Intermediate data output signal
 
 begin

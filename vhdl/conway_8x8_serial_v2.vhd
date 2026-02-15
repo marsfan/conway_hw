@@ -3,7 +3,7 @@
 
 -- This Source Code Form is subject to the terms of the Mozilla Public
 -- License, v. 2.0. If a copy of the MPL was not distributed with this
--- file, You can obtain one at https: //mozilla.org/MPL/2.0/.
+-- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -82,8 +82,8 @@ architecture RTL of CONWAY_8X8_SERIAL_V2 is
     signal OUTPUT_MODE : std_logic;
     signal STOP_MODE   : std_logic;
     signal LOAD_OR_RUN : std_logic;
-    signal MEM_OUT     : std_logic_vector(63 downto 0);
-    signal NEXT_STATE  : std_logic_vector(63 downto 0);
+    signal MEM_OUT     : std_logic_vector(data_size - 1 downto 0);
+    signal NEXT_STATE  : std_logic_vector(data_size - 1 downto 0);
     signal SERIAL_OUT  : std_logic;
 
 begin
