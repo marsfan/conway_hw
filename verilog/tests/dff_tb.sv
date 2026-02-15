@@ -6,7 +6,7 @@
 `default_nettype none
 `include "tests/test_utils.svh"
 
-module reg_tb();
+module dff_tb();
 
     logic [10:0] d;
     logic we, clk, reset;
@@ -21,7 +21,7 @@ module reg_tb();
 
         // Configure to dump all variables to VCD file
         $dumpfile("waveforms/reg_tb.vcd");
-        $dumpvars(0, reg_tb);
+        $dumpvars(0, dff_tb);
 
         // Initial values
         we <= 0;
