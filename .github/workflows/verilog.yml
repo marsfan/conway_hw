@@ -1,4 +1,4 @@
-name: Verilog Testbenches
+name: Verilog Tests
 
 on:
   push:
@@ -38,7 +38,34 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: test_results
-          path: results.zip
+          path: iverilog_results.zip
+
+  verilator:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Install dependencies with apt
+        run: sudo apt-get install verilator zip -y
+
+      - name: Compile Verilog
+        run: make testbench_verilator
+        working-directory: ./verilog
+
+      - name: Run Tests
+        run: make test_verilator
+        working-directory: ./verilog
+
+      - name: Compress Results
+        run: zip -r results.zip verilog/waveforms
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: test_results
+          path: verilator_results.zip
 
   svlint:
     runs-on: ubuntu-latest

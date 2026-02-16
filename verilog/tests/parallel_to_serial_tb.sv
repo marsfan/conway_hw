@@ -32,20 +32,20 @@ module parallel_to_serial_tb();
         $dumpfile("waveforms/parallel_to_serial_tb.vcd");
         $dumpvars(0, parallel_to_serial_tb);
 
-        data_in <= 3'd0;
-        load_en <= 0;
-        shift_en <= 0;
-        rst <= 0;
+        data_in = 3'd0;
+        load_en = 0;
+        shift_en = 0;
+        rst = 0;
 
         // RReset system
-        rst <= 1;
+        rst = 1;
         #1
-        rst <= 0;
+        rst = 0;
         `RUN_CLOCK(clk, 10);
 
         // Load bytes
-        load_en <= 1;
-        data_in <= 3'b011;
+        load_en = 1;
+        data_in = 3'b011;
         `RUN_CLOCK(clk, 10);
         `CHECK_EQ(data, 0, "Loaded bytes");
 
@@ -60,9 +60,9 @@ module parallel_to_serial_tb();
         // Test we read bytes out as expected
         // Setting load_en to 0 means that even though we
         // changed data_in, we persist what's in the shift reg
-        load_en  <= 0;
-        data_in  <= 3'b000;
-        shift_en <= 1;
+        load_en  = 0;
+        data_in  = 3'b000;
+        shift_en = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 1, "First byte out correct");
         `RUN_CLOCK(clk, 20);
@@ -79,18 +79,18 @@ module parallel_to_serial_tb();
         `CHECK_EQ(data, 0, "Got zero 3");
 
         // Test that if we load then reset, there's nothing in the shift reg
-        shift_en <= 0;
-        load_en  <= 1;
-        data_in  <= 3'b111;
+        shift_en = 0;
+        load_en  = 1;
+        data_in  = 3'b111;
         `RUN_CLOCK(clk, 20);
 
-        load_en <= 0;
-        data_in <= 3'b000;
-        rst     <= 1;
+        load_en = 0;
+        data_in = 3'b000;
+        rst     = 1;
         #1
-        rst     <= 0;
+        rst     = 0;
 
-        shift_en <= 1;
+        shift_en = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 0, "Got zero after reset 1");
         `RUN_CLOCK(clk, 20);
@@ -101,13 +101,13 @@ module parallel_to_serial_tb();
         `CHECK_EQ(data, 0, "Got zero after reset 4");
 
         // Test that if load_en is zero, data is not loaded
-        load_en  <= 0;
-        shift_en <= 0;
-        data_in  <= 3'b111;
+        load_en  = 0;
+        shift_en = 0;
+        data_in  = 3'b111;
         `RUN_CLOCK(clk, 20);
 
-        data_in  <= 3'b000;
-        shift_en <= 1;
+        data_in  = 3'b000;
+        shift_en = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 0, "Got zero after load_en = 0 1");
         `RUN_CLOCK(clk, 20);

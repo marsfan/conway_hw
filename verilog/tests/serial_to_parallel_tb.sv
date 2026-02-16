@@ -31,48 +31,48 @@ module serial_to_parallel_tb();
         $dumpfile("waveforms/serial_to_parallel_tb.vcd");
         $dumpvars(0, serial_to_parallel_tb);
 
-        en      <= 0;
-        data_in <= 0;
+        en      = 0;
+        data_in = 0;
 
         // Reset system
-        rst <= 1;
+        rst = 1;
         #1
         `CHECK_EQ(data, 3'b000, "Reset failed");
 
         // Clear reset flag
-        rst <= 0;
+        rst = 0;
 
         // Check we don't load when en is 0
-        data_in <= 1;
+        data_in = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 3'b000, "No loaded when en = 0");
 
         // Set enable and shift in
-        en      <= 1;
-        data_in <= 1;
+        en      = 1;
+        data_in = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 3'b001, "Loaded a byte");
 
-        data_in <= 0;
+        data_in = 0;
         // Check it gets shifted up a byte
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 3'b010, "Byte was shifted");
 
         // Load another byte
-        data_in <= 1;
+        data_in = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 3'b101, "Second byte loaded");
 
         // Ensure after clearing en we get no new bytes for a few cycles
-        en      <= 0;
-        data_in <= 0;
+        en      = 0;
+        data_in = 0;
         `RUN_CLOCK(clk, 20);
         `RUN_CLOCK(clk, 20);
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(data, 3'b101, "No change after clearing en");
 
         // Reset everything
-        rst <= 1;
+        rst = 1;
         #1
         `CHECK_EQ(data, 3'b000, "Reset at end failed");
 

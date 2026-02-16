@@ -1,4 +1,4 @@
-name: VHDL Testbenches
+name: VHDL Tests
 
 on:
   push:

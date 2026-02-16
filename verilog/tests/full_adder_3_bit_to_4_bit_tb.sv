@@ -108,9 +108,9 @@ module full_adder_3_bit_to_4_bit_tb();
         $dumpfile("waveforms/full_adder_3_bit_to_4_bit_tb.vcd");
         $dumpvars(0, full_adder_3_bit_to_4_bit_tb);
 
-        for (int i =0; i < $size(test_cases); i++) begin
-            a <= test_cases[i].a;
-            b <= test_cases[i].b;
+        for (int i = 0; i < $size(test_cases); i++) begin
+            a = test_cases[i].a;
+            b = test_cases[i].b;
             #1 `CHECK_EQ(sum, test_cases[i].sum, i);
 
         end

@@ -26,9 +26,10 @@ TESTBENCH_OUT=$(basename $(subst $(TESTDIR)/,$(BINDIR)/,$(TESTBENCHES)))
 # All entities/configurations (excluding packages)
 ALL_MODULES=$(basename $(VERILOG_FILES))
 
+VERILATOR_ENVS=WAVEFORMDIR=$(WAVEFORMDIR) BUILD_DIR=$(BINDIR)/verilator TEST_DIR=$(TESTDIR) SRC_DIR=$(LIBDIR)
+VERILATOR_MAKEFILE=Makefile.verilator
 
-
-.PHONY: all clean test testbench svlint
+.PHONY: all testbench clean svlint test testbench_verilator test_verilator
 
 # Build all modules
 all:
@@ -53,7 +54,14 @@ clean:
 	rm -rf $(BINDIR)
 
 svlint:
-	svlint $(LIBDIR)/*.sv $(TESTDIR)/*.sv --config .svlint.toml
+	svlint $(LIBDIR)/*.sv $(TESTDIR)/*.sv --config .svlint.toml $(VERILATOR_ENVS)
 
 
 test: $(addsuffix .run, $(TESTBENCH_OUT))
+
+# Build all testbenches with verilator
+testbench_verilator:
+	$(MAKE) -f $(VERILATOR_MAKEFILE) $(VERILATOR_ENVS)
+
+test_verilator:
+	$(MAKE) -f $(VERILATOR_MAKEFILE) run $(VERILATOR_ENVS)

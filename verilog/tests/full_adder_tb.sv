@@ -28,11 +28,11 @@ module full_adder_tb();
     assign test_cases[6] = {1'd1, 1'd1, 1'd0, 1'd1, 1'd0};
     assign test_cases[7] = {1'd1, 1'd1, 1'd1, 1'd1, 1'd1};
 
-    logic IN1, IN2, cin, sum, cout;
+    logic in1, in2, cin, sum, cout;
 
     full_adder dut(
-        .a(IN1),
-        .b(IN2),
+        .a(in1),
+        .b(in2),
         .c_in(cin),
         .sum(sum),
         .carry(cout)
@@ -45,9 +45,9 @@ module full_adder_tb();
         $dumpvars(0, full_adder_tb);
 
         for (int i = 0; i < $size(test_cases); i++) begin
-            IN1 <= test_cases[i].a1;
-            IN2 <= test_cases[i].a2;
-            cin <= test_cases[i].cin;
+            in1 = test_cases[i].a1;
+            in2 = test_cases[i].a2;
+            cin = test_cases[i].cin;
             #1
             `CHECK_EQ(sum, test_cases[i].sum, "sum");
             `CHECK_EQ(cout, test_cases[i].cout, "cout");

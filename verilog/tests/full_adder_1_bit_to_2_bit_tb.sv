@@ -26,20 +26,20 @@ module full_adder_1_bit_to_2_bit_tb();
         $dumpfile("waveforms/full_adder_1_bit_to_2_bit_tb.vcd");
         $dumpvars(0, full_adder_1_bit_to_2_bit_tb);
 
-        a <= 0;
-        b <= 0;
+        a = 0;
+        b = 0;
         #1 `CHECK_EQ(sum, 0, "sum 00");
 
-        a <= 1;
-        b <= 0;
+        a = 1;
+        b = 0;
         #1 `CHECK_EQ(sum, 1, "sum 01");
 
-        a <= 0;
-        b <= 1;
+        a = 0;
+        b = 1;
         #1 `CHECK_EQ(sum, 1, "sum 01 v2");
 
-        a <= 1;
-        b <= 1;
+        a = 1;
+        b = 1;
         #1 `CHECK_EQ(sum, 2, "sum 10");
 
     end

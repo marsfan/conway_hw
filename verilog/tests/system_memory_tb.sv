@@ -35,53 +35,53 @@ module system_memory_tb();
         $dumpfile("waveforms/system_memory_tb.vcd");
         $dumpvars(0, system_memory_tb);
 
-        initial_in   <= 5'b00000;
-        grid_in      <= 5'b00000;
-        write_enable <= 0;
-        load_run     <= 0;
-        clk          <= 0;
-        reset        <= 0;
+        initial_in   = 5'b00000;
+        grid_in      = 5'b00000;
+        write_enable = 0;
+        load_run     = 0;
+        clk          = 0;
+        reset        = 0;
 
         // Reset system
-        reset <= 1;
+        reset = 1;
         #1
-        reset <= 0;
+        reset = 0;
 
         `RUN_CLOCK(clk, 20);
 
         // Test that nothing is loaded when write_enable = 0;
-        initial_in <= 5'b11001;
-        grid_in    <= 5'b00110;
+        initial_in = 5'b11001;
+        grid_in    = 5'b00110;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(mem_out, 5'b00000, "No output when WE = 0");
 
         // Set WE and confirm memory is now set from initial_in
-        write_enable <= 1;
+        write_enable = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(mem_out, 5'b11001, "Memory Updated from initial_in");
 
         // Clear WE and confirm value stays the same
-        write_enable <= 0;
-        initial_in   <= 5'b00000;
+        write_enable = 0;
+        initial_in   = 5'b00000;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(mem_out, 5'b11001, "Value stayed at old initial_in");
 
         // Set WE, switch to run mode, and confirm we are getting grid value
-        write_enable <= 1;
-        load_run     <= 1;
+        write_enable = 1;
+        load_run     = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(mem_out, 5'b00110, "Memory Updated from grid_in");
 
         // Clear WE and confirm value stays the same
-        write_enable <= 0;
-        grid_in      <= 5'b00000;
+        write_enable = 0;
+        grid_in      = 5'b00000;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(mem_out, 5'b00110, "Value stayed at old grid_in");
 
         // Reset and confirm value is reset
-        reset <= 1;
+        reset = 1;
         #1
-        reset <= 0;
+        reset = 0;
         `CHECK_EQ(mem_out, 5'b00000, "Value was reset");
 
 

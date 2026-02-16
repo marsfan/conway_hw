@@ -34,14 +34,14 @@ logic load_mode;  // High when mode = 00
 logic run_mode;  // High when mode = 01
 logic output_mode;  // High when mode = 10
 logic stop_mode;  // High when mode = 11
-logic load_or_run;  // High when mode = 00 or 01
+// logic load_or_run;  // High when mode = 00 or 01
 logic [DATA_SIZE - 1:0] mem_out;  // Output from memory
 logic [DATA_SIZE - 1:0] next_state;  // Output from cell calculation grid
 logic serial_out;
 
 
 decoder mode_decode(mode, stop_mode, load_mode, run_mode, output_mode);
-assign load_or_run = load_mode || run_mode;
+// assign load_or_run = load_mode || run_mode;
 
 // The system memory that we hold everything in between cycles
 system_memory_v4 #(DATA_SIZE) memory (

@@ -1,0 +1,36 @@
+# Directories
+SRC_DIR=.
+TEST_DIR=tests
+BUILD_DIR=bin
+WAVEFORMDIR=waveforms
+
+# Verilator settings
+VERILATOR = verilator
+# --binary: creates the executable directly from SV (no C++ wrapper needed)
+# -j 0: uses all available CPU cores for the build
+VFLAGS=--trace --binary --assert --timing -j 0 -I$(SRC_DIR) -Wall
+
+# Find all SystemVerilog testbench files
+TB_SOURCES = $(wildcard $(TEST_DIR)/*_tb.sv)
+
+# Targets: e.g., test/tb_top.sv becomes build/tb_top
+TARGETS = $(patsubst $(TEST_DIR)/%.sv, $(BUILD_DIR)/%, $(TB_SOURCES))
+
+.PHONY: all clean run
+
+all: $(TARGETS)
+
+# Rule to build each testbench
+# Rebuilds if the specific TB or ANY .sv file in the root directory changes
+$(BUILD_DIR)/%: $(TEST_DIR)/%.sv $(SRC_DIR)/*.sv
+	@mkdir -p $(BUILD_DIR)
+	$(VERILATOR) $(VFLAGS) --Mdir $(BUILD_DIR)/obj_$* -o ../$* $< $(filter-out $<, $(SRC_DIR)/*.sv) --top-module $*
+
+$(BUILD_DIR)/%.run: $(BUILD_DIR)/%
+	@mkdir -p $(WAVEFORMDIR)
+	$<
+
+run: $(addsuffix .run, $(TARGETS))
+
+clean:
+	rm -rf $(BUILD_DIR)

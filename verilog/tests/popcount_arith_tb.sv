@@ -311,14 +311,14 @@ module popcount_arith_tb();
         $dumpvars(0, popcount_arith_tb);
 
         for (int i = 0; i < 256; i++) begin
-            n  <= test_cases[i].n;
-            ne <= test_cases[i].ne;
-            e  <= test_cases[i].e;
-            se <= test_cases[i].se;
-            s  <= test_cases[i].s;
-            sw <= test_cases[i].sw;
-            w  <= test_cases[i].w;
-            nw <= test_cases[i].nw;
+            n  = test_cases[i].n;
+            ne = test_cases[i].ne;
+            e  = test_cases[i].e;
+            se = test_cases[i].se;
+            s  = test_cases[i].s;
+            sw = test_cases[i].sw;
+            w  = test_cases[i].w;
+            nw = test_cases[i].nw;
 
             #1;
 

@@ -25,27 +25,27 @@ module cell_grid_tb();
         // Testing a few of the different patterns from the
         // Wikipedia page on conway's game of life.
 
-        input_state <= 64'h0000001818000000;
+        input_state = 64'h0000001818000000;
         #1
         `CHECK_EQ(next_state, 64'h0000001818000000, "Block");
 
-        input_state <= 64'h0000102828100000;
+        input_state = 64'h0000102828100000;
         #1
         `CHECK_EQ(next_state, 64'h0000102828100000, "Behive");
 
-        input_state <= 64'h0000001010100000;
+        input_state = 64'h0000001010100000;
         #1
         `CHECK_EQ(next_state, 64'h0000000038000000, "Blinker");
 
-        input_state <= 64'h0060601818000000;
+        input_state = 64'h0060601818000000;
         #1
         `CHECK_EQ(next_state, 64'h0060400818000000, "Beacon");
 
-        input_state <= 64'hC080000000000000;
+        input_state = 64'hC080000000000000;
         #1
         `CHECK_EQ(next_state, 64'hC0C0000000000000, "Corner1");
 
-        input_state <= 64'h8080800000000000;
+        input_state = 64'h8080800000000000;
         #1
         `CHECK_EQ(next_state, 64'h00C0000000000000, "Corner2");
 

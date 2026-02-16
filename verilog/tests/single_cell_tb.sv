@@ -567,15 +567,15 @@ module single_cell_tb();
         $dumpvars(0, single_cell_tb);
 
         for (int i = 0; i < $size(test_cases); i++) begin
-            me <= test_cases[i].me;
-            n  <= test_cases[i].n;
-            ne <= test_cases[i].ne;
-            e  <= test_cases[i].e;
-            se <= test_cases[i].se;
-            s  <= test_cases[i].s;
-            sw <= test_cases[i].sw;
-            w  <= test_cases[i].w;
-            nw <= test_cases[i].nw;
+            me = test_cases[i].me;
+            n  = test_cases[i].n;
+            ne = test_cases[i].ne;
+            e  = test_cases[i].e;
+            se = test_cases[i].se;
+            s  = test_cases[i].s;
+            sw = test_cases[i].sw;
+            w  = test_cases[i].w;
+            nw = test_cases[i].nw;
 
             #1`CHECK_EQ(is_alive, test_cases[i].is_alive, i);
         end

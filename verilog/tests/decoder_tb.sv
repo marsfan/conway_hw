@@ -27,28 +27,28 @@ module decoder_tb();
         $dumpfile("waveforms/decoder_tb.vcd");
         $dumpvars(0, decoder_tb);
 
-        val_in <= 2'b00;
+        val_in = 2'b00;
         #1
         `CHECK_EQ(val_00, 1, "val_00 Wrong for val_in = 2'b00");
         `CHECK_EQ(val_01, 0, "val_01 Wrong for val_in = 2'b00");
         `CHECK_EQ(val_10, 0, "val_10 Wrong for val_in = 2'b00");
         `CHECK_EQ(val_11, 0, "val_11 Wrong for val_in = 2'b00");
 
-        val_in <= 2'b01;
+        val_in = 2'b01;
         #1
         `CHECK_EQ(val_00, 0, "val_00 Wrong for val_in = 2'b01");
         `CHECK_EQ(val_01, 1, "val_01 Wrong for val_in = 2'b01");
         `CHECK_EQ(val_10, 0, "val_10 Wrong for val_in = 2'b01");
         `CHECK_EQ(val_11, 0, "val_11 Wrong for val_in = 2'b01");
 
-        val_in <= 2'b10;
+        val_in = 2'b10;
         #1
         `CHECK_EQ(val_00, 0, "val_00 Wrong for val_in = 2'b10");
         `CHECK_EQ(val_01, 0, "val_01 Wrong for val_in = 2'b10");
         `CHECK_EQ(val_10, 1, "val_10 Wrong for val_in = 2'b10");
         `CHECK_EQ(val_11, 0, "val_11 Wrong for val_in = 2'b10");
 
-        val_in <= 2'b11;
+        val_in = 2'b11;
         #1
         `CHECK_EQ(val_00, 0, "val_00 Wrong for val_in = 2'b11");
         `CHECK_EQ(val_01, 0, "val_01 Wrong for val_in = 2'b11");

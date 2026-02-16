@@ -24,29 +24,29 @@ module dff_tb();
         $dumpvars(0, dff_tb);
 
         // Initial values
-        we <= 0;
-        clk <= 0;
-        d <= 0;
+        we = 0;
+        clk = 0;
+        d = 0;
 
         // Reset register, wait 1 time unit, then cler reset
-        reset <= 1;
+        reset = 1;
         #1
 
         `CHECK_EQ(q, 0, "REG_TB: Reset Failed");
-        reset <= 0;
+        reset = 0;
 
         // Set value but don't enable WE
-        d <= 11'b00000001100;
+        d = 11'b00000001100;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(q, 0, "REG_TB: Q Stayed the same failed");
 
 
-        we <= 1;
+        we = 1;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(q, 11'b00000001100, "REG_TB: Q set failed");
 
-        we <= 0;
-        d <= 11'd0;
+        we = 0;
+        d = 11'd0;
         `RUN_CLOCK(clk, 20);
         `CHECK_EQ(q, 11'b00000001100, "REG_TB: Q stays the same (again) failed");
 
