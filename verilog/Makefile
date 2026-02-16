@@ -54,7 +54,7 @@ clean:
 	rm -rf $(BINDIR)
 
 svlint:
-	svlint $(LIBDIR)/*.sv $(TESTDIR)/*.sv --config .svlint.toml $(VERILATOR_ENVS)
+	svlint $(LIBDIR)/*.sv $(TESTDIR)/*.sv --config .svlint.toml
 
 
 test: $(addsuffix .run, $(TESTBENCH_OUT))
