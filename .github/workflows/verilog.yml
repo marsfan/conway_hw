@@ -13,7 +13,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  run_testbenches:
+  testbench_iverilog:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +40,7 @@ jobs:
           name: test_results
           path: iverilog_results.zip
 
-  verilator:
+  testbench_verilator:
     runs-on: ubuntu-latest
 
     steps:
