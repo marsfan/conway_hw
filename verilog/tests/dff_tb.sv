@@ -13,7 +13,13 @@ module dff_tb();
     logic [10:0] q;
 
 
-    dff #(11) dut (d, we, clk, reset, q);
+    dff #(11) dut (
+        .d(d),
+        .we(we),
+        .clk(clk),
+        .reset(reset),
+        .q(q)
+    );
 
 
 

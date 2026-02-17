@@ -11,7 +11,7 @@ module cell_grid_tb();
     logic [63:0] input_state;
     logic [63:0] next_state;
 
-    cell_grid #(8, 8) dut (
+    cell_grid #(.GRID_HEIGHT(8), .GRID_WIDTH(8)) dut (
         .input_state(input_state),
         .next_state(next_state)
     );
