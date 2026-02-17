@@ -1,5 +1,5 @@
-`ifndef MY_DEFINES_SV
-`define MY_DEFINES_SV
+`ifndef TEST_UTILS_SVH
+`define TEST_UTILS_SVH
 
 
 /// Check that a condition is true
@@ -12,4 +12,4 @@
 `define RUN_CLOCK(CLK, T) begin /*Run Clock Once*/ #T CLK = 1; #T CLK = 0; end
 
 
-`endif
+`endif  // TEST_UTILS_SVH

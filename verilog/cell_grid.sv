@@ -20,7 +20,7 @@ module cell_grid #(
 
 
 function automatic create_connection(
-    input [(GRID_WIDTH * GRID_HEIGHT) - 1:0] input_array,
+    input logic [(GRID_WIDTH * GRID_HEIGHT) - 1:0] input_array,
     input integer x,
     input integer y
 );
@@ -37,8 +37,8 @@ endfunction
 // For some reason, starting at high and going down uses 2 less LUTS than
 // going up
 // TODO: Find out why
-for (genvar x = (GRID_WIDTH - 1); x >= 0; x--) begin: x_axis
-    for (genvar y = (GRID_HEIGHT - 1); y >= 0; y--) begin: y_axis
+for (genvar x = (GRID_WIDTH - 1); x >= 0; x--) begin: gen_x_axis
+    for (genvar y = (GRID_HEIGHT - 1); y >= 0; y--) begin: gen_y_axis
         single_cell c(
             .me(input_state[GRID_WIDTH * y + x]),
             .n(create_connection(input_state,  x,     y - 1)),

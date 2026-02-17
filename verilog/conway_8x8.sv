@@ -39,7 +39,7 @@ dff #(64) memory (
 
 assign grid_in = load_run ? mem_out : initial_state;
 
-cell_grid #(8,8) grid (
+cell_grid #(.GRID_WIDTH(8), .GRID_HEIGHT(8)) grid (
     .input_state(grid_in),
     .next_state(grid_out)
 );

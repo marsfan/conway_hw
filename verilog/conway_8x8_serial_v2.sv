@@ -40,7 +40,13 @@ logic [DATA_SIZE - 1:0] next_state;  // Output from cell calculation grid
 logic serial_out;
 
 
-decoder mode_decode(mode, stop_mode, load_mode, run_mode, output_mode);
+decoder mode_decode(
+    .val_in(mode),
+    .val_00(stop_mode),
+    .val_01(load_mode),
+    .val_10(run_mode),
+    .val_11(output_mode)
+);
 assign load_or_run = load_mode || run_mode;
 
 // The system memory that we hold everything in between cycles
@@ -55,7 +61,7 @@ system_memory_v2 #(DATA_SIZE) memory (
 );
 
 // Core calculation system
-cell_grid #(GRID_WIDTH, GRID_HEIGHT) grid (
+cell_grid #(.GRID_WIDTH(GRID_WIDTH), .GRID_HEIGHT(GRID_HEIGHT)) grid (
     .input_state(mem_out),
     .next_state(next_state)
 );

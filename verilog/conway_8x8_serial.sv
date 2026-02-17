@@ -36,7 +36,13 @@ logic [DATA_SIZE - 1:0] data_in_parallel;  // Input data in parallel form
 logic [DATA_SIZE - 1:0] mem_out;  // Output from memory
 logic [DATA_SIZE - 1:0] next_state;  // Output from cell calculation grid
 
-decoder mode_decode(mode, stop_mode, load_mode, run_mode, output_mode);
+decoder mode_decode(
+    .val_in(mode),
+    .val_00(stop_mode),
+    .val_01(load_mode),
+    .val_10(run_mode),
+    .val_11(output_mode)
+);
 assign load_or_run = load_mode || run_mode;
 
 // Shift register for converting input from serial to parallel
@@ -61,7 +67,7 @@ system_memory #(DATA_SIZE) memory(
 );
 
 // Core calculation grid
-cell_grid #(8, 8) grid (
+cell_grid #(.GRID_WIDTH(GRID_WIDTH), .GRID_HEIGHT(GRID_HEIGHT)) grid (
     .input_state(mem_out),
     .next_state(next_state)
 );

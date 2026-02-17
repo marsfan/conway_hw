@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "dalance.svls-vscode",
-        "mshr-h.veriloghdl"
+        "mshr-h.veriloghdl",
+        "chipsalliance.verible"
     ]
 }
