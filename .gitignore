@@ -18,9 +18,9 @@ vivado/
 logisim/*.autosave
 
 # Verilog build and test files
-verilog/*.out
-verilog/waveforms
-verilog/bin
+src/*.out
+src/waveforms
+src/bin
 
 # Folder for scratch files that should not be committed
 local_only

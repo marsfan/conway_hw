@@ -25,14 +25,14 @@ jobs:
 
       - name: Compile Verilog
         run: make testbench
-        working-directory: ./verilog
+        working-directory: ./src
 
       - name: Run Tests
         run: make test
-        working-directory: ./verilog
+        working-directory: ./src
 
       - name: Compress Results
-        run: zip -r results.zip verilog/waveforms
+        run: zip -r results.zip src/waveforms
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v6
@@ -52,14 +52,14 @@ jobs:
 
       - name: Compile Verilog
         run: make testbench_verilator
-        working-directory: ./verilog
+        working-directory: ./src
 
       - name: Run Tests
         run: make test_verilator
-        working-directory: ./verilog
+        working-directory: ./src
 
       - name: Compress Results
-        run: zip -r results.zip verilog/waveforms
+        run: zip -r results.zip src/waveforms
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v6
@@ -79,4 +79,4 @@ jobs:
 
       - name: Run linter
         run: make svlint
-        working-directory: ./verilog
+        working-directory: ./src
