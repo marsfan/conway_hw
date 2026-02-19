@@ -5,7 +5,7 @@ project:
   discord: "" # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description: "Simple Conway's Game of Life Implementation" # One line description of what your project does
   language: "SystemVerilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz: 0 # Clock frequency in Hz (or 0 if not applicable)
+  clock_hz: 100 # Clock frequency in Hz (or 0 if not applicable)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x1" # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
@@ -33,9 +33,9 @@ project:
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
+  ui[0]: "DIN"
+  ui[1]: "MODE[0]"
+  ui[2]: "MODE[1]"
   ui[3]: ""
   ui[4]: ""
   ui[5]: ""
@@ -43,12 +43,12 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
+  uo[0]: "DOUT"
+  uo[1]: "DIN_LED"
+  uo[2]: "CLK_LED"
+  uo[3]: "DOUT_LED"
+  uo[4]: "MODE_LED[0]"
+  uo[5]: "MODE_LED[1]"
   uo[6]: ""
   uo[7]: ""
 
