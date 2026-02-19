@@ -1,4 +1,11 @@
 {
     "svls-vscode.svlintToml.path": "src/.svlint.toml",
     "tableformatter.common.centerAlignedHeader": false,
+    "verible.path": "./verible-v0.0-4051-g9fdb4057-win64/verible-verilog-ls.exe",
+    "verible.arguments": [
+        "--rules_config",
+        "verilog/.rules.verible_lint"
+    ],
+    "verilog.linting.linter": "verilator",
+    "verilog.formatting.verilogHDL.formatter": "verible-verilog-format"
 }
