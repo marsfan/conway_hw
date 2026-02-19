@@ -1,3 +1,4 @@
 {
-    "svls-vscode.svlintToml.path": "verilog/.svlint.toml"
+    "svls-vscode.svlintToml.path": "src/.svlint.toml",
+    "tableformatter.common.centerAlignedHeader": false,
 }
