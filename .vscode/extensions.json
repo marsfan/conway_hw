@@ -1,8 +1,8 @@
 {
-    "recommendations": [
-        "dalance.svls-vscode",
-        "mshr-h.veriloghdl",
-        "chipsalliance.verible",
-        "surfer-project.surfer"
-    ]
+  "recommendations": [
+    "dalance.svls-vscode",
+    "mshr-h.veriloghdl",
+    "chipsalliance.verible",
+    "surfer-project.surfer"
+  ]
 }
