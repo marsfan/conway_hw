@@ -4,13 +4,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# GHDL working directories
-vhdl/waveforms
-vhdl/work
-
-# vunit working directory
-vhdl/vunit_out
-
 # Directory for temporary vivado project files
 vivado/
 

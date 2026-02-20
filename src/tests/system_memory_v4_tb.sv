@@ -45,13 +45,13 @@ module system_memory_v4_tb();
         serial_in   = 0;
         load_mode   = 0;
         run_mode    = 0;
-        reset       = 0;
+        reset       = 1;
         output_mode = 0;
 
         // Reset system
-        reset = 1;
-        #1
         reset = 0;
+        #1
+        reset = 1;
         `RUN_CLOCK(clk, 20);
 
         // Test that nothing is loaded when neither MODE bit is set
@@ -98,9 +98,9 @@ module system_memory_v4_tb();
         `CHECK_EQ(serial_out, 0, "No output when OUTPUT mode not set 5");
 
         // Reset and confirm value is reset
-        reset = 1;
-        #1
         reset = 0;
+        #1
+        reset = 1;
         `CHECK_EQ(system_mem_out, 5'b00000, "Data reset");
         `CHECK_EQ(serial_out, 0, "No output when OUTPUT mode not set 6");
 
@@ -133,9 +133,9 @@ module system_memory_v4_tb();
         `CHECK_EQ(system_mem_out, 5'b01101, "System memory rotates during output 5");
         `CHECK_EQ(serial_out, 1, "Fifth byte shifted out");
 
-        reset = 1;
-        #1
         reset = 0;
+        #1
+        reset = 1;
 
         load_mode   = 0;
         run_mode    = 0;

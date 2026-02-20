@@ -18,13 +18,10 @@ module tt_um_conway (
 );
   /* svlint on keyword_forbidden_wire_reg */
 
-  logic rst_high;
-  assign rst_high = ~rst_n;
-
   conway_8x8_serial_v4 conway_mod(
     .data_in(ui_in[0]),
     .mode(ui_in[2:1]),
-    .reset(rst_high),
+    .reset(rst_n),
     .clk(clk),
     .data_out(uo_out[0]),
     .din_led(uo_out[1]),
@@ -41,6 +38,5 @@ module tt_um_conway (
   assign uo_out[7:6] = 0;
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
 
 endmodule

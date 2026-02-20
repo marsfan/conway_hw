@@ -33,8 +33,8 @@ module system_memory_v4 #(
 /* svlint on keyword_forbidden_wire_reg */
 
 
-always_ff @(posedge clk or posedge reset) begin: shift_register_process
-    if (reset) begin
+always_ff @(posedge clk or negedge reset) begin: shift_register_process
+    if (!reset) begin
         system_mem_out <= 0;
         serial_out <= 0;
     end else if (clk) begin
