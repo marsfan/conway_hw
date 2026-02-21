@@ -25,28 +25,11 @@ module popcount_arith(
 
 
 
-// Extend inputs to all be 4 bits wide.
-logic [3:0] n_ext;
-logic [3:0] ne_ext;
-logic [3:0] e_ext;
-logic [3:0] se_ext;
-logic [3:0] s_ext;
-logic [3:0] sw_ext;
-logic [3:0] w_ext;
-logic [3:0] nw_ext;
-
-assign n_ext  = {3'b000, n};
-assign ne_ext = {3'b000, ne};
-assign e_ext  = {3'b000, e};
-assign se_ext = {3'b000, se};
-assign s_ext  = {3'b000, s};
-assign sw_ext = {3'b000, sw};
-assign w_ext  = {3'b000, w};
-assign nw_ext = {3'b000, nw};
-
 // Sum all the inputs
 
-assign count = n_ext + ne_ext + e_ext + se_ext + s_ext + sw_ext + w_ext + nw_ext;
+logic [7:0] vec;
+assign vec = {n, ne, e, se, s, sw, w, nw};
+assign count = $countones(vec);
 
 endmodule
 
