@@ -24,10 +24,8 @@ project:
     - "cell_grid.sv"
     - "single_cell.sv"
     - "popcount.sv"
-    - "full_adder_1_bit_to_2_bit.sv"
-    - "full_adder_2_bit_to_3_bit.sv"
-    - "full_adder_3_bit_to_4_bit.sv"
     - "full_adder.sv"
+    - "full_adder_extending.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
