@@ -1,4 +1,5 @@
-/// Full adder that takes in 2x1bit values, returns 2 bit sum
+/// A single bit full adder, where the output is a 2 bit vector instead of
+/// separate sum and carry outputs
 
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,21 +10,22 @@
 
 
 /* svlint off keyword_forbidden_wire_reg */
-module full_adder_1_bit_to_2_bit(
+module full_adder_bit_extend (
     input  wire       a,
     input  wire       b,
+    input  wire       c,
     output wire [1:0] sum
 );
-/* svlint on keyword_forbidden_wire_reg */
+  /* svlint on keyword_forbidden_wire_reg */
 
+    full_adder adder(
+        .a(a),
+        .b(b),
+        .c_in(c),
+        .sum(sum[0]),
+        .carry(sum[1])
+    );
 
-full_adder adder(
-    .a(a),
-    .b(b),
-    .c_in(1'b0),
-    .sum(sum[0]),
-    .carry(sum[1])
-);
 
 endmodule
 

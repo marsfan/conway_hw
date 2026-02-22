@@ -23,57 +23,52 @@ module popcount(
 /* svlint on keyword_forbidden_wire_reg */
 
 
-// Intermediate signals for the 2 bit values
+    // Intermediate signals for the 2 bit values
 
-logic [1:0] sum_1_to_2_1;
-logic [1:0] sum_1_to_2_2;
-logic [1:0] sum_1_to_2_3;
-logic [1:0] sum_1_to_2_4;
+    logic [1:0] sum_1_to_2_1;
+    logic [1:0] sum_1_to_2_2;
+    logic [1:0] sum_1_to_2_3;
 
-// Intermediate signals for the 3 bit values
-logic [2:0] sum_2_to_3_1;
-logic [2:0] sum_2_to_3_2;
+    // Intermediate signals for the 3 bit values
+    logic [2:0] sum_2_to_3_1;
+
+    // Note: Carry in can be used as a way to add a single 1 bit value
+    // to an arbitrary N bit value. We can use this to reduce the
+    // number of 1-bit adders in the first stage.
+
+
 
     // First stage adders
-    full_adder_1_bit_to_2_bit adder_1_to_2_1(
+    full_adder_extending #(1) adder_1 (
         .a(n),
         .b(ne),
+        .c_in(e),
         .sum(sum_1_to_2_1)
     );
-    full_adder_1_bit_to_2_bit adder_1_to_2_2(
-        .a(e),
-        .b(se),
+
+    full_adder_extending #(1) adder_2 (
+        .a(se),
+        .b(s),
+        .c_in(sw),
         .sum(sum_1_to_2_2)
-    );
-    full_adder_1_bit_to_2_bit adder_1_to_2_3(
-        .a(s),
-        .b(sw),
-        .sum(sum_1_to_2_3)
-    );
-    full_adder_1_bit_to_2_bit adder_1_to_2_4(
-        .a(w),
-        .b(nw),
-        .sum(sum_1_to_2_4)
     );
 
     // Second stage adders
-    full_adder_2_bit_to_3_bit adder_2_to_3_1(
+    full_adder_extending #(2) adder_2_to_3(
         .a(sum_1_to_2_1),
         .b(sum_1_to_2_2),
+        .c_in(nw),
         .sum(sum_2_to_3_1)
-    );
-    full_adder_2_bit_to_3_bit adder_2_to_3_2(
-        .a(sum_1_to_2_3),
-        .b(sum_1_to_2_4),
-        .sum(sum_2_to_3_2)
     );
 
     // Third stage adder
-    full_adder_3_bit_to_4_bit adder_3_to_4(
+    full_adder_extending #(3) adder_3_to_4(
         .a(sum_2_to_3_1),
-        .b(sum_2_to_3_2),
+        .b(3'b0),
+        .c_in(w),
         .sum(count)
     );
+
 
 
 endmodule
