@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2024 Your Name
- * SPDX-License-Identifier: Apache-2.0
- */
+  * Copyright (c) 2024 Gabriel Roper
+  * SPDX-License-Identifier: Apache-2.0
+  */
 
 `default_nettype none
 
@@ -40,3 +40,5 @@ module tt_um_conway (
   // List all unused inputs to prevent warnings
 
 endmodule
+
+`default_nettype wire

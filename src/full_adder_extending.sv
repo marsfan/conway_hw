@@ -29,7 +29,7 @@ full_adder adder (
     .carry(intermediate[0])
 );
 
-for (genvar i = 1; i < INPUT_SIZE; i++) begin
+for (genvar i = 1; i < INPUT_SIZE; i++) begin: upper_bits
     full_adder adder(
         .a(a[i]),
         .b(b[i]),

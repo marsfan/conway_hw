@@ -27,7 +27,6 @@ module popcount(
 
     logic [1:0] sum_1_to_2_1;
     logic [1:0] sum_1_to_2_2;
-    logic [1:0] sum_1_to_2_3;
 
     // Intermediate signals for the 3 bit values
     logic [2:0] sum_2_to_3_1;
