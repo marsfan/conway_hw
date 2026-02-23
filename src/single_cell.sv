@@ -52,8 +52,8 @@ popcount counter(
 );
 
 // Check if number of neighbors is 2 or 3
-assign alive_neighbors_2 = (alive_neighbors == 2) ? 1 : 0;
-assign alive_neighbors_3 = (alive_neighbors == 3) ? 1 : 0;
+assign alive_neighbors_2 = (alive_neighbors == 2);
+assign alive_neighbors_3 = (alive_neighbors == 3);
 
 // Evaluating rules 2 and 4
 assign rule_2_alive = (alive_neighbors_2 | alive_neighbors_3) & me;

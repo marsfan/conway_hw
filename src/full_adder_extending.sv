@@ -18,26 +18,22 @@ module full_adder_extending #(
 );
 /* svlint on keyword_forbidden_wire_reg */
 
-logic [INPUT_SIZE - 1:0] intermediate;
+    logic [INPUT_SIZE - 1:0] intermediate;
 
+    // For a full adder, sum is a ^ b ^ c_in
+    // and carry out is (a & b) | (a & c_in) | (b & c_in);
+    // So we just need to do that for each stage, passing carry in from
+    // one to the next
 
-full_adder adder (
-    .a(a[0]),
-    .b(b[0]),
-    .c_in(c_in),
-    .sum(sum[0]),
-    .carry(intermediate[0])
-);
+    // First bit full adder
+    assign sum[0] = a[0] ^ b[0] ^ c_in;
+    assign intermediate[0] = (a[0] & b[0]) | (a[0] & c_in) | (b[0] & c_in);
 
-for (genvar i = 1; i < INPUT_SIZE; i++) begin: upper_bits
-    full_adder adder(
-        .a(a[i]),
-        .b(b[i]),
-        .c_in(intermediate[i - 1]),
-        .sum(sum[i]),
-        .carry(intermediate[i])
-    );
-end
+    for (genvar i = 1; i < INPUT_SIZE; i++) begin: upper_bits
+
+        assign sum[i] = a[i] ^ b[i] ^ intermediate[i - 1];
+        assign intermediate[i] = (a[i] & b[i]) | (a[i] & intermediate[i - 1]) | (b[i] & intermediate[i - 1]);
+    end
 
   assign sum[INPUT_SIZE] = intermediate[INPUT_SIZE - 1];
 
