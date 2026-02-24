@@ -18,7 +18,7 @@ module tt_um_conway (
 );
   /* svlint on keyword_forbidden_wire_reg */
 
-  conway_8x8_serial_v4 conway_mod(
+  conway_8x8_serial_single_mem conway_mod(
     .data_in(ui_in[0]),
     .mode(ui_in[2:1]),
     .reset(rst_n),

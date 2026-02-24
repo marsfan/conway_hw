@@ -1,5 +1,6 @@
 /// 8x8 conway's game of life using serial input and output to save on IO
-/// V3 uses system_memory_v3 instead of separate system memory, input shift register, and output shift register
+/// This version uses two shift registers to allow for maintaining the
+/// data in the system even when reading it out.
 
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,7 +11,7 @@
 
 
 /* svlint off keyword_forbidden_wire_reg */
-module conway_8x8_serial_v3 (
+module conway_8x8_serial_dual_mem (
     input  wire       data_in,   // Serial data in
     input  wire [1:0] mode,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
     input  wire       reset,     // Async system reset
@@ -49,7 +50,7 @@ decoder mode_decode(
 assign load_or_run = load_mode || run_mode;
 
 // The system memory that we hold everything in between cycles
-system_memory_v3 #(DATA_SIZE) memory (
+system_memory_dual_mem #(DATA_SIZE) memory (
     .grid_in(next_state),
     .serial_in(data_in),
     .load_mode(load_mode),

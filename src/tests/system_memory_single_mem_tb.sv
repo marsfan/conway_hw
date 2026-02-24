@@ -7,8 +7,7 @@
 `default_nettype none
 `include "tests/test_utils.svh"
 
-module system_memory_v3_tb();
-
+module system_memory_single_mem_tb();
 
     localparam int unsigned DATA_SIZE = 5;
 
@@ -22,7 +21,7 @@ module system_memory_v3_tb();
     logic [DATA_SIZE - 1:0] system_mem_out;
     logic serial_out;
 
-    system_memory_v3 #(DATA_SIZE) dut(
+    system_memory_single_mem #(DATA_SIZE) dut(
         .grid_in(grid_in),
         .serial_in(serial_in),
         .load_mode(load_mode),
@@ -34,25 +33,25 @@ module system_memory_v3_tb();
         .serial_out(serial_out)
     );
 
-
     initial begin
 
         // Dump to VCD File
-        $dumpfile("waveforms/system_memory_v3_tb.vcd");
-        $dumpvars(0, system_memory_v3_tb);
+        $dumpfile("waveforms/system_memory_single_mem_tb.vcd");
+        $dumpvars(0, system_memory_single_mem_tb);
+
 
 
         grid_in     = 5'b00000;
         serial_in   = 0;
         load_mode   = 0;
         run_mode    = 0;
-        reset       = 0;
+        reset       = 1;
         output_mode = 0;
 
         // Reset system
-        reset = 1;
-        #1
         reset = 0;
+        #1
+        reset = 1;
         `RUN_CLOCK(clk, 20);
 
         // Test that nothing is loaded when neither MODE bit is set
@@ -99,9 +98,9 @@ module system_memory_v3_tb();
         `CHECK_EQ(serial_out, 0, "No output when OUTPUT mode not set 5");
 
         // Reset and confirm value is reset
-        reset = 1;
-        #1
         reset = 0;
+        #1
+        reset = 1;
         `CHECK_EQ(system_mem_out, 5'b00000, "Data reset");
         `CHECK_EQ(serial_out, 0, "No output when OUTPUT mode not set 6");
 
@@ -115,28 +114,28 @@ module system_memory_v3_tb();
         run_mode    = 0;
         output_mode = 1;
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(system_mem_out, 5'b01101, "System memory persists during output 1");
+        `CHECK_EQ(system_mem_out, 5'b11010, "System memory rotates during output 1");
         `CHECK_EQ(serial_out, 0, "First byte shifted out");
 
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(system_mem_out, 5'b01101, "System memory persists during output 2");
+        `CHECK_EQ(system_mem_out, 5'b10101, "System memory rotates during output 2");
         `CHECK_EQ(serial_out, 1, "Second byte shifted out");
 
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(system_mem_out, 5'b01101, "System memory persists during output 3");
+        `CHECK_EQ(system_mem_out, 5'b01011, "System memory rotates during output 3");
         `CHECK_EQ(serial_out, 1, "Third byte shifted out");
 
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(system_mem_out, 5'b01101, "System memory persists during output 4");
+        `CHECK_EQ(system_mem_out, 5'b10110, "System memory rotates during output 4");
         `CHECK_EQ(serial_out, 0, "Fourth byte shifted out");
 
         `RUN_CLOCK(clk, 20);
-        `CHECK_EQ(system_mem_out, 5'b01101, "System memory persists during output 5");
+        `CHECK_EQ(system_mem_out, 5'b01101, "System memory rotates during output 5");
         `CHECK_EQ(serial_out, 1, "Fifth byte shifted out");
 
-        reset = 1;
-        #1
         reset = 0;
+        #1
+        reset = 1;
 
         load_mode   = 0;
         run_mode    = 0;

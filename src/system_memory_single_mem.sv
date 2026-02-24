@@ -1,5 +1,5 @@
 /// Memory for the system.
-/// V4 uses a single shift register for both input and outputs. To ensure
+/// This uses a single shift register for both input and outputs. To ensure
 /// that data is kept event when reading out, during readout, the data is
 /// shifted in a circular buffer, instead of being filled with zeros.
 /// This means that reading data out MUST always be done in multiples of the
@@ -14,7 +14,7 @@
 
 
 /* svlint off keyword_forbidden_wire_reg */
-module system_memory_v4 #(
+module system_memory_single_mem #(
     parameter int unsigned DATA_SIZE = 64
 ) (
     // RUN_MODE has priority.

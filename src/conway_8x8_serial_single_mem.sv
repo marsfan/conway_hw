@@ -1,5 +1,5 @@
 /// 8x8 conway's game of life using serial input and output to save on IO
-/// V2 uses system_memory_v2 instead of separate system memory and input shift register
+/// This uses system_memory_single_mem.
 
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,9 +9,8 @@
 `default_nettype none
 
 
-
 /* svlint off keyword_forbidden_wire_reg */
-module conway_8x8_serial_v2 (
+module conway_8x8_serial_single_mem (
     input  wire       data_in,   // Serial data in
     input  wire [1:0] mode,      // System Mode (00 = load, 01 = run, 10 = output, 11 = Undefined)
     input  wire       reset,     // Async system reset
@@ -34,7 +33,7 @@ logic load_mode;  // High when mode = 00
 logic run_mode;  // High when mode = 01
 logic output_mode;  // High when mode = 10
 logic stop_mode;  // High when mode = 11
-logic load_or_run;  // High when mode = 00 or 01
+// logic load_or_run;  // High when mode = 00 or 01
 logic [DATA_SIZE - 1:0] mem_out;  // Output from memory
 logic [DATA_SIZE - 1:0] next_state;  // Output from cell calculation grid
 logic serial_out;
@@ -47,17 +46,19 @@ decoder mode_decode(
     .val_10(run_mode),
     .val_11(output_mode)
 );
-assign load_or_run = load_mode || run_mode;
+// assign load_or_run = load_mode || run_mode;
 
 // The system memory that we hold everything in between cycles
-system_memory_v2 #(DATA_SIZE) memory (
+system_memory_single_mem #(DATA_SIZE) memory (
     .grid_in(next_state),
     .serial_in(data_in),
     .load_mode(load_mode),
     .run_mode(run_mode),
+    .output_mode(output_mode),
     .clk(clk),
     .reset(reset),
-    .data_out(mem_out)
+    .system_mem_out(mem_out),
+    .serial_out(serial_out)
 );
 
 // Core calculation system
@@ -66,15 +67,6 @@ cell_grid #(.GRID_WIDTH(GRID_WIDTH), .GRID_HEIGHT(GRID_HEIGHT)) grid (
     .next_state(next_state)
 );
 
-// Parallel to serial shift register
-parallel_to_serial #(DATA_SIZE) output_shift_reg (
-    .data_in(next_state),
-    .load_en(load_or_run),
-    .shift_en(output_mode),
-    .clk(clk),
-    .rst(reset),
-    .data(serial_out)
-);
 
 // Main output
 assign data_out = serial_out;

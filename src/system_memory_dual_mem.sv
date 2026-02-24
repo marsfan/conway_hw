@@ -1,7 +1,7 @@
 /// Memory for the system.
-/// V3 has both the input and output shift registers here. This allows us to load
-/// the output shift register from serial in as well, so that after load the
-/// output register holds the current state, instead of having a "lag"
+/// This memory has both the input and output shift registers here. This allows for us to
+/// read out data without modifying the internal state. The tradeoff
+/// is increase size of the memory system.
 
 /*
 * This Source Code Form is subject to the terms of the Mozilla Public
@@ -12,7 +12,7 @@
 
 
 /* svlint off keyword_forbidden_wire_reg */
-module system_memory_v3 #(
+module system_memory_dual_mem #(
     parameter int unsigned DATA_SIZE = 64
 ) (
     // RUN_MODE has priority.
