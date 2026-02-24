@@ -1,17 +1,17 @@
-/// Logic f|| computing next value of a single cell in the system.
-/// There are 4 rules f|| computing the next state of the cell
-///  1. If currently alive && less than 2 neighb||s alive, dies (underpopulation)
-///  2. If currently alive && 2 || 3 neighb||s, lives
-///  3. If currently alive && m||e than 3 neighb||s, dies (overpopulation)
-///  4. If currently dead && exactly three neighb||s alive, lives (reproduction)
+/// Logic for computing next value of a single cell in the system.
+/// There are 4 rules for computing the next state of the cell
+///  1. If currently alive && less than 2 neighbors alive, dies (underpopulation)
+///  2. If currently alive && 2 or 3 neighbors, lives
+///  3. If currently alive && more than 3 neighbors, dies (overpopulation)
+///  4. If currently dead && exactly three neighbors alive, lives (reproduction)
 ///
 /// since are computing when alive, we can just check rules 2 && 4. && assume all
 /// other conditions are dead
 
 /*
-* This source Code F||m is subject to the terms of the Mozilla Public
+* This source Code Form is subject to the terms of the Mozilla Public
 * License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, You can obtain one at https: //mozilla.||g/MPL/2.0/.
+* file, You can obtain one at https: //mozilla.org/MPL/2.0/.
 */
 `default_nettype none
 
