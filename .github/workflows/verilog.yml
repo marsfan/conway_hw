@@ -35,7 +35,7 @@ jobs:
         run: zip -r results.zip src/waveforms
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: test_results
           path: iverilog_results.zip
@@ -62,7 +62,7 @@ jobs:
         run: zip -r results.zip src/waveforms
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: test_results
           path: verilator_results.zip
