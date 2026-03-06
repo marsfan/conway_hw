@@ -40,5 +40,27 @@
 			"`default_nettype wire",
 			""
 		]
+	},
+	"Verilog Module": {
+		"scope": "verilog, systemverilog",
+		"prefix": "module",
+		"body": [
+			"`default_nettype none",
+			"",
+			"",
+			"/* svlint off keyword_forbidden_wire_reg */",
+			"module $TM_FILENAME_BASE(",
+			"    $0",
+			");",
+			"/* svlint on keyword_forbidden_wire_reg */",
+			"",
+			"",
+			"",
+			"endmodule",
+			"",
+			"",
+			"`default_nettype wire",
+			"",
+		]
 	}
 }

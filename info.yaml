@@ -18,13 +18,13 @@ project:
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "tt_um_conway.sv"
-    - "conway_8x8_serial_single_mem.sv"
-    - "system_memory_single_mem.sv"
-    - "decoder.sv"
-    - "cell_grid.sv"
+    - "conway_8x8_by_row.sv"
+    - "system_memory_by_row.sv"
+    - "single_row_processor.sv"
+    - "full_adder_extending.sv"
+    - "system_counter.sv"
     - "single_cell.sv"
     - "popcount.sv"
-    - "full_adder_extending.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
