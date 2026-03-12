@@ -129,11 +129,11 @@
         },
         "vunit-hdl": {
             "hashes": [
-                "sha256:4a0567cb2cbe17d4775ca75409ddefccfecbb2b2fba55ff6191160e49cc25231"
+                "sha256:86bc9e2e697416d63ee36ccc3f351173369b8d182351457affeecf092e74115b"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.8'",
-            "version": "==5.0.0.dev8"
+            "markers": "python_version >= '3.10'",
+            "version": "==5.0.0.dev9"
         }
     },
     "develop": {}
