@@ -68,7 +68,7 @@ module system_memory_single_mem_tb();
         `CHECK_EQ(system_mem_out, 5'b00001, "Loaded one byte");
         `CHECK_EQ(serial_out, 0, "No output when OUTPUT mode not set 2");
 
-        // Try loading a couple more bytes to confirm shifting works as expected
+        // Try loading a couple more bits to confirm shifting works as expected
         serial_in = 0;
         `RUN_CLOCK(clk, 20);
         `RUN_CLOCK(clk, 20);

@@ -12,7 +12,7 @@ module system_counter_tb();
     logic enable;
     logic reset;
     logic clk;
-    logic [2:0] count;
+    logic [1:0] count;
 
     system_counter #(4) dut(
         .enable(enable),
