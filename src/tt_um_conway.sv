@@ -18,28 +18,39 @@ module tt_um_conway (
 );
   /* svlint on keyword_forbidden_wire_reg */
 
-  conway_8x8_by_row conway_mod(
+
+  logic [1:0] red;
+  logic [1:0] green;
+  logic [1:0] blue;
+  logic hsync;
+  logic vsync;
+
+  conway_vga conway(
+    .rst_n(rst_n),
+    .int_clk(clk),
+    .ext_clk(ui_in[3]),
     .data_in(ui_in[0]),
     .mode(ui_in[2:1]),
-    .reset(rst_n),
-    .clk(clk),
-    .data_out(uo_out[0]),
-    .din_led(uo_out[1]),
-    .clk_led(uo_out[2]),
-    .dout_led(uo_out[3]),
-    .mode_leds(uo_out[5:4])
+    .data_out(uio_out[0]), // FIXME: Use a UI_OUT?
+    .red(red),
+    .green(green),
+    .blue(blue),
+    .hsync(hsync),
+    .vsync(vsync)
   );
+  assign uo_out = {hsync, blue[0], green[0], red[0], vsync, blue[1], green[1], red[1]};
+
 
 
   // All output pins must be assigned. If not used, assign to 0.
   // assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  assign uio_out[7:1] = 0;
+  assign uio_oe  = 8'b00000001;
 
-  assign uo_out[7:6] = 0;
+  // assign uo_out[7:6] = 0;
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, ui_in[7:3], uio_in};
+  wire _unused = &{ena, ui_in[7:4], uio_in};
 
 
 

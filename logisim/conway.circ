@@ -33,7 +33,7 @@
   <lib desc="#BFH-Praktika" name="9"/>
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
-  <main name="popcount"/>
+  <main name="grid_calc_row_by_row"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
     <a name="simlimit" val="1000"/>
@@ -7767,5 +7767,39 @@
     <wire from="(820,470)" to="(860,470)"/>
     <wire from="(880,440)" to="(880,460)"/>
     <wire from="(880,440)" to="(920,440)"/>
+  </circuit>
+  <circuit name="vgatest">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="vgatest"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="16.0"/>
+    <comp lib="0" loc="(700,1050)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(700,1080)" name="Clock">
+      <a name="appearance" val="NewPins"/>
+    </comp>
+    <comp lib="0" loc="(700,1130)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="x"/>
+      <a name="width" val="7"/>
+    </comp>
+    <comp lib="0" loc="(700,1160)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="y"/>
+      <a name="width" val="7"/>
+    </comp>
+    <comp lib="5" loc="(900,950)" name="RGB Video">
+      <a name="color" val="VGA256 (8 bit)"/>
+    </comp>
+    <wire from="(700,1050)" to="(900,1050)"/>
+    <wire from="(700,1080)" to="(910,1080)"/>
+    <wire from="(700,1130)" to="(940,1130)"/>
+    <wire from="(700,1160)" to="(950,1160)"/>
+    <wire from="(900,950)" to="(900,1050)"/>
+    <wire from="(910,950)" to="(910,1080)"/>
+    <wire from="(940,950)" to="(940,1130)"/>
+    <wire from="(950,950)" to="(950,1160)"/>
   </circuit>
 </project>

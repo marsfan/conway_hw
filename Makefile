@@ -4,7 +4,7 @@ PROCESS=--ihp
 
 TTOOL_CMD = $(TTOOL) $(PROCESS)
 
-.PHONY:  config configure harden stats openroad test warnings clean distclean
+.PHONY:  config configure harden stats openroad test warnings clean distclean fpga
 
 configure config:
 	$(TTOOL_CMD) --create-user-config
@@ -32,3 +32,6 @@ clean:
 distclean: clean
 	rm -f src/config_merged.json
 	rm -f src/user_config.json
+
+fpga:
+	tt/tt_fpga.py harden

@@ -46,8 +46,22 @@ logic [NUM_COLS-1:0]      prev_row;             ///< Previous states for the row
 logic [NUM_COLS-1:0]      next_row;             ///< Previous states for the row above the active row
 logic [DATA_SIZE-1:0]     system_mem_parallel;  ///< Full set of states stored in system memory
 
+
+logic stop_mode;
+logic load_mode;
+logic run_mode;
+logic output_mode;
+
+decoder mode_decode(
+    .val_in(mode),
+    .val_00(load_mode),
+    .val_01(run_mode),
+    .val_10(output_mode),
+    .val_11(stop_mode)
+);
+
 system_counter #(NUM_ROWS) counter (
-    .enable(mode == 2'b01),
+    .enable(run_mode),
     .reset(reset),
     .clk(clk),
     .count(row_count)
@@ -57,9 +71,9 @@ system_memory_by_row #(
     .DATA_SIZE(DATA_SIZE),
     .ROW_SIZE(NUM_COLS)
 ) memory (
-    .load_mode(mode == 2'b00),
-    .run_mode(mode == 2'b01),
-    .output_mode(mode == 2'b10),
+    .load_mode(load_mode),
+    .run_mode(run_mode),
+    .output_mode(output_mode),
     .serial_in(data_in),
     .top_row_in(row_new_state),
     .reset(reset),

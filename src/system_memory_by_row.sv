@@ -30,7 +30,7 @@ module system_memory_by_row #(
     input  wire                   clk,            ///< System clock
     output reg  [ROW_SIZE - 1:0]  prev_row,       ///< Row that was last shifted away when run_mode=1. Will be cleared if clocked when load_mode = 0
     output wire [DATA_SIZE - 1:0] parallel_out,   ///< Parallel output of all data in system memory (except prev_row)
-    output wire                   serial_out      ///< Value at the very top of the system memory
+    output reg                    serial_out      ///< Value at the very top of the system memory
 );
 /* svlint on keyword_forbidden_wire_reg */
 
@@ -40,7 +40,7 @@ always_ff @(posedge clk or negedge reset) begin: shift_register_process
     if (!reset) begin
         system_memory <= 0;
         prev_row <= 0;
-    end else if (clk) begin
+    end else begin
 
         // localparam int high = $high(system_memory);
 
